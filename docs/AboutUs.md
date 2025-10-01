@@ -59,3 +59,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
+### Dylan
+
+<img src="images/butanol.png" width="200px">
+
+[[github](http://github.com/Butanol)] [[portfolio](team/butanol.md)]
+
+* Role: Intellij Expert
+* Responsibilities: Code Quality
