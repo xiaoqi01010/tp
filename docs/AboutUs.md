@@ -1,11 +1,10 @@
 ---
-  layout: default.md
-  title: "About Us"
+layout: page
+title: About Us
 ---
-
 # About Us
 
-We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
+We are a team based in the [School of Computing, National University of Singapore](https://www.comp.nus.edu.sg).
 
 You can reach us at the email `seer[at]comp.nus.edu.sg`
 
@@ -21,6 +20,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Core Application Logic and Infrastructure
 
+### Xiaoqi
+
+<img src="images/xiaoqi01010.png" width="200px">
+
+[[github](https://github.com/xiaoqi01010)]
+[[portfolio](team/xiaoqi01010.md)]
+
+* Role: Developer
+
 ### Javier Enrique Wong
 
 <img src="images/jav65.png" width="200px">
@@ -29,19 +37,3 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/jav65.md)]
 
 * Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
-* Responsibilities: UI
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
