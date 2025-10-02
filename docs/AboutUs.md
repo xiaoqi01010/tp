@@ -29,3 +29,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/xiaoqi01010.md)]
 
 * Role: Developer
+
+### Javier Enrique Wong
+
+<img src="images/jav65.png" width="200px">
+
+[[github](https://github.com/jav65)]
+[[portfolio](team/jav65.md)]
+
+* Role: Project Advisor
