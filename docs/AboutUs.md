@@ -2,13 +2,23 @@
 layout: page
 title: About Us
 ---
+# About Us
 
 We are a team based in the [School of Computing, National University of Singapore](https://www.comp.nus.edu.sg).
 
 You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
-NOKnock is a CLI-based nursing home management system for tracking patients, their Next-of-Kin (NOK) contacts, and caring sessions. Designed for nursing home staff who prefer command-line interfaces for fast, efficient daily operations.
+
+### Phanuphat Srisukhawasu (Oad)
+
+<img src="images/oadultradeepfield.png" width="200px">
+
+[[github](http://github.com/oadultradeepfield)]
+[[portfolio](team/oadultradeepfield.md)]
+
+* Role: Developer
+* Responsibilities: Core Application Logic and Infrastructure
 
 ### Xiaoqi
 
@@ -19,42 +29,3 @@ NOKnock is a CLI-based nursing home management system for tracking patients, the
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
-* Responsibilities: UI
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Data
-
-### Jean Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
-
-### James Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: UI
