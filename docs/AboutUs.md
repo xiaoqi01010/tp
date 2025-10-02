@@ -20,3 +20,28 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Core Application Logic and Infrastructure
+
+### Javier Enrique Wong
+
+<img src="images/jav65.png" width="200px">
+
+[[github](https://github.com/jav65)]
+[[portfolio](team/jav65.md)]
+
+* Role: Project Advisor
+
+### Jane Doe
+
+<img src="images/johndoe.png" width="200px">
+
+[[github](http://github.com/johndoe)]
+[[portfolio](team/johndoe.md)]
+
+* Role: Team Lead
+* Responsibilities: UI
+
+### Johnny Doe
+
+<img src="images/johndoe.png" width="200px">
+
+[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
