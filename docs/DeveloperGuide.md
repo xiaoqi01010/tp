@@ -337,8 +337,30 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Patient**: A resident of the nursing home whose personal details, medical condition, and caring sessions are recorded in the system.
+* **Next-of-Kin (NOK)**: A relative or contact person linked to a patient who can be reached for updates or emergencies.
+* **Caring Session**: A scheduled or completed care activity (e.g., medication, feeding, hygiene) assigned to a patient.
+* **Recurring Session**: A caring session that automatically repeats at regular intervals (e.g., daily, weekly).
+* **Overdue Session**: A caring session that has not been completed after its scheduled time.
+* **Schedule**: A list or view of all caring sessions for one or more patients, including upcoming, completed, and overdue ones.
+* **Urgency Category**: A label indicating how critical a patient’s care needs are (e.g., High, Medium, Low).
+* **Command**: A text instruction entered by the user to perform an action (e.g., addpatient, deletesession).
+* **Command Alias**: A short version of a command for quicker input (e.g., ap for addpatient).
+* **Command History**: A record of previously executed commands that can be recalled or repeated.
+* **Model**: The component that manages the application’s data in memory, including patients, NOKs, and caring sessions.
+* **Storage**: The component that saves and retrieves data (patients, NOKs, sessions) from disk in JSON format.
+* **UI (User Interface)**: The part of the system that interacts with the user through text-based (CLI) commands and output.
+* **Undo/Redo**: Features that allow users to reverse or reapply their most recent changes.
+* **Backup**: A saved copy of all data that can be used to restore the system after a failure or data loss.
+* **Restore**: The process of loading previously backed-up data into the system.
+* **Export (CSV)**: The function that outputs patient or session data to a .csv file for sharing or external use.
+* **User Preferences**: Saved settings such as window size, UI theme (e.g., dark mode), or file locations.
+* **Dark Mode**: A display option with a darker color scheme to reduce eye strain, especially useful for night shifts.
+* **CLI (Command-Line Interface)**: A text-based interface that lets users interact with the app by typing commands.
+* **Mainstream OS**: Windows, Linux, MacOS.
+* **Data Integrity**: Ensuring that all stored information remains accurate, consistent, and free from corruption.
+* **JSON**: The data format (JavaScript Object Notation) used by NOKnock for saving and loading files.
+* **CSV**: A data format (Comma-Separated Values) used for exporting or backing up patient and session data for external use.
 
 --------------------------------------------------------------------------------------------------------------------
 
