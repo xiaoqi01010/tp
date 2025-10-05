@@ -45,3 +45,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Intellij Expert
 * Responsibilities: Code Quality
+
+### Chew Yue Yang
+
+<img src="images/chewy03.png" width="200px">
+
+[[github](http://github.com/chewy03)]
+[[portfolio](team/chewy03.md)]
+
+* Role: Developer
