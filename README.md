@@ -1,14 +1,70 @@
+# 🏥 NOKnock — Nursing Home Care Manager
+
 [![Java CI](https://github.com/AY2526S1-CS2103T-W09-2/tp/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/AY2526S1-CS2103T-W09-2/tp/actions/workflows/gradle.yml)
+
+NOKnock is a desktop application that helps **nursing home staff** manage **patients, next-of-kin (NOK)**, and **caring sessions** efficiently and safely.  
+It is designed for caregivers who prefer **fast, keyboard-based input** and need **offline reliability**.
+
+
+---
+
+## 🌐 User Interface
 
 ![Ui](docs/images/Ui.png)
 
-* This is **a sample project for Software Engineering (SE) students**.<br>
-  Example usages:
-  * as a starting point of a course project (as opposed to writing everything from scratch)
-  * as a case study
-* The project simulates an ongoing software project for a desktop application (called _AddressBook_) used for managing contact details.
-  * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC) than what students usually write in beginner-level SE modules, without being overwhelmingly big.
-  * It comes with a **reasonable level of user and developer documentation**.
-* It is named `AddressBook Level 3` (`AB3` for short) because it was initially created as a part of a series of `AddressBook` projects (`Level 1`, `Level 2`, `Level 3` ...).
-* For the detailed documentation of this project, see the **[Address Book Product Website](https://se-education.org/addressbook-level3)**.
-* This project is a **part of the se-education.org** initiative. If you would like to contribute code to this project, see [se-education.org](https://se-education.org/#contributing-to-se-edu) for more info.
+
+---
+
+## ✨ Features
+
+- **👩‍⚕️ Patient Management** – Add, edit, and view patient details.  
+- **📞 Next-of-Kin (NOK) Tracking** – Store emergency contact information linked to patients.  
+- **📅 Caring Session Scheduling** – Create, edit, and complete daily or recurring sessions.  
+- **⏰ Overdue Alerts** – Highlight missed or late care sessions automatically.  
+- **⚠️ Urgency Levels** – Prioritize patients by care level (High / Medium / Low).  
+- **📤 CSV Export** – Export patient and session data for reporting and sharing.  
+- **↩️ Undo/Redo Support** – Reverse or reapply recent commands safely.  
+- **🌙 Dark Mode** – Reduce eye strain for caregivers during night shifts.  
+- **💻 Cross-Platform Support** – Works on Windows, macOS, and Linux.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Java 17** or above must be installed on your system.  
+- Compatible with **Windows**, **macOS**, and **Linux**.
+
+### Setup
+- Refer to the guide [_Setting up and getting started_](SettingUp.md).
+
+---
+
+## 📚 Documentation
+
+- [_User Guide_](https://github.com/se-edu/addressbook-level3/tree/master/docs/UserGuide.md))
+
+- [ Developer Guide_](https://github.com/se-edu/addressbook-level3/tree/master/docs/SettingUp.md))
+
+- [_About Us_](https://github.com/se-edu/addressbook-level3/tree/master/docs/AboutUs.md))
+
+---
+
+## 🏗️ Project Goals
+
+### NOKnock aims to:
+
+- Reduce the administrative workload of nursing home staff.
+
+- Provide a clear record of all care activities.
+
+- Ensure timely communication between caregivers and next-of-kin.
+
+- Offer a safe, offline environment for patient data management.
+
+---
+
+## 🤝 Acknowledgements
+
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
+It has been adapted and extended to meet the needs of nursing home management and caregiving workflows.
