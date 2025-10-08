@@ -421,7 +421,7 @@ Goal: Add a new NOK contact to an existing patient. <br>
 **Goal:** See all sessions scheduled for the current day.  
 
 ### MSS
-1. Nurse lists today's session.  
+1. Nurse lists today's sessions.  
 2. System retrieves today’s sessions.  
 3. System displays the list of sessions, with patients, times, and care types.  
    Use case ends.  
