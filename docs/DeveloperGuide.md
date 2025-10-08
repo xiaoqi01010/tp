@@ -459,7 +459,7 @@ Goal: Add a new NOK contact to an existing patient. <br>
 4.  Users should not be able to access the file where the contacts are stored in.
 5.  All new code modules must include automated unit tests that cover at least 80% of the new logic.
 6.  A user with no prior CLI knowledge should find the features intuitive to use.
-7.  All patient and next of kin informaton must be encrypted and accessible only to authorised personnel, complying with the privacy regulations from HPAA.
+7.  All patient and next of kin information must be encrypted and accessible only to authorised personnel, complying with the privacy regulations from HPAA.
 8.  The system must provide near-instantaneous response times for searches, contact updates, and session scheduling, even during peak hours
 9.  The system needs to be highly available (e.g., 99.9% uptime) to ensure nursing staff can access it whenever needed, including during emergencies.
 *{More to be added}*
