@@ -462,11 +462,10 @@ Goal: Add a new NOK contact to an existing patient. <br>
 7. Data integrity must be guaranteed if the program exits unexpectedly (use atomic writes, journaling, or equivalent).
 8. Data should be recoverable if corrupted (automatic backups, repair utilities, or restore procedures).
 9. Stored contact data must be protected from direct user access (appropriate access control, file permissions, and storage abstractions).
-10. All patient / next-of-kin and other sensitive information must be encrypted at rest and in transit and accessible only to authorised personnel; the system must comply with applicable privacy regulations (e.g., PDPA for Singapore; HIPAA where applicable).
-11. Data should be encrypted and handled according to relevant privacy laws and organizational policies.
-12. Commands should be clear and unambiguous for non-tech-savvy users; a user with no prior CLI knowledge should find the features intuitive to use.
-13. All new code modules must include automated unit tests that cover at least **80%** of the new logic.
-14. The system must be highly available (target **>= 99.9% uptime**) to ensure staff can access it whenever needed, including during emergencies.
+10. All patient / next-of-kin and other sensitive information must be encrypted at rest and in transit, accessible only to authorised personnel, and handled in compliance with all relevant privacy laws (e.g., PDPA for Singapore, HIPAA where applicable) and organizational policies.
+11. Commands should be clear and unambiguous for non-tech-savvy users; a user with no prior CLI knowledge should find the features intuitive to use.
+12. All new code modules must include automated unit tests that cover at least **80%** of the new logic.
+13. The system must be highly available (target **>= 99.9% uptime**) to ensure staff can access it whenever needed, including during emergencies.
 
 {More to be added}
 
