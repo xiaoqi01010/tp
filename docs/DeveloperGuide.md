@@ -468,7 +468,7 @@ Goal: Add a new NOK contact to an existing patient. <br>
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Intuitive**: User should be able to understand how the feature by reading relevant parts of the user guide.
+* **Intuitive**: User should be able to understand how the feature works by reading relevant parts of the user guide.
 * **Patient**: A resident of the nursing home whose personal details, medical condition, and caring sessions are recorded in the system.
 * **Next-of-Kin (NOK)**: A relative or contact person linked to a patient who can be reached for updates or emergencies.
 * **Caring Session**: A scheduled or completed care activity (e.g., medication, feeding, hygiene) assigned to a patient.
