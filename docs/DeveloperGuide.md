@@ -476,16 +476,21 @@ Goal: Add a new NOK contact to an existing patient. <br>
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  Users should not be able to access the file where the contacts are stored in.
-5.  All new code modules must include automated unit tests that cover at least 80% of the new logic.
-6.  A user with no prior CLI knowledge should find the features intuitive to use.
-7.  All patient and next of kin information must be encrypted and accessible only to authorised personnel, complying with the privacy regulations from HPAA.
-8.  The system must provide response times of less than 200 milliseconds for searches, contact updates, and session scheduling, even during peak hours.
-9.  The system needs to be highly available (e.g., 99.9% uptime) to ensure nursing staff can access it whenever needed, including during emergencies.
-*{More to be added}*
+1. Should work on any mainstream OS as long as it has Java `17` or above installed.
+2. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+3. A user with above-average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4. Core operations (searches, contact updates, session scheduling) should have response times **<= 200 milliseconds** under normal and peak load; under extreme conditions response times must remain **<= 1 second**.
+5. Startup time should not exceed **2 seconds** on a standard laptop.
+6. The app must not crash during adding / update / delete operations.
+7. Data integrity must be guaranteed if the program exits unexpectedly (use atomic writes, journaling, or equivalent).
+8. Data should be recoverable if corrupted (automatic backups, repair utilities, or restore procedures).
+9. Stored contact data must be protected from direct user access (appropriate access control, file permissions, and storage abstractions).
+10. All patient / next-of-kin and other sensitive information must be encrypted at rest and in transit, accessible only to authorised personnel, and handled in compliance with all relevant privacy laws (e.g., PDPA for Singapore, HIPAA where applicable) and organizational policies.
+11. Commands should be clear and unambiguous for non-tech-savvy users; a user with no prior CLI knowledge should find the features intuitive to use.
+12. All new code modules must include automated unit tests that cover at least **80%** of the new logic.
+13. The system must be highly available (target **>= 99.9% uptime**) to ensure staff can access it whenever needed, including during emergencies.
+
+{More to be added}
 
 ### Glossary
 
