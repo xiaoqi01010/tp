@@ -1,5 +1,7 @@
 package seedu.noknock.model.person;
 
+/**
+ */
 public class Ward {
     private final WardType wardType;
     private final int numberOfBeds;

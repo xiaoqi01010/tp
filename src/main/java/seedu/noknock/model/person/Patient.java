@@ -14,7 +14,6 @@ public class Patient extends Person {
     private final Ward ward;
     private final List<Person> nextOfKinList = new ArrayList<>();
     /**
-     *
      * @param name
      * @param phone
      * @param email
