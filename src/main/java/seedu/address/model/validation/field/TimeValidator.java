@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+
 import seedu.address.model.validation.AbstractValidator;
 import seedu.address.model.validation.ValidationResult;
 
@@ -12,6 +13,13 @@ import seedu.address.model.validation.ValidationResult;
  * A valid time must be in the format HH:MM (24-hour) or HH:MMam/pm (12-hour).
  */
 public final class TimeValidator extends AbstractValidator<LocalTime> {
+    /**
+     * Parses a time string into a LocalTime object.
+     * Supports both 24-hour format (HH:MM) and 12-hour format with am/pm (HH:MMam/pm).
+     *
+     * @param input The time string to parse.
+     * @return A LocalTime object if parsing is successful; null otherwise.
+     */
     public static LocalTime parse(String input) {
         if (input == null) {
             return null;

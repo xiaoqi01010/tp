@@ -2,8 +2,9 @@ package seedu.address.model.validation.composition;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import seedu.address.model.validation.ValidationResult;
-import seedu.address.model.validation.field.ICValidator;
+import seedu.address.model.validation.field.IcValidator;
 import seedu.address.model.validation.field.NameValidator;
 import seedu.address.model.validation.field.TagValidator;
 import seedu.address.model.validation.field.WardValidator;
@@ -15,7 +16,7 @@ import seedu.address.model.validation.field.WardValidator;
 public final class PersonValidator {
     private final NameValidator nameValidator = new NameValidator();
     private final WardValidator wardValidator = new WardValidator();
-    private final ICValidator icValidator = new ICValidator();
+    private final IcValidator icValidator = new IcValidator();
     private final TagValidator tagValidator = new TagValidator();
 
     /**

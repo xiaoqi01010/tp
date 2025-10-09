@@ -1,6 +1,7 @@
 package seedu.address.model.validation.field;
 
 import java.util.Locale;
+
 import seedu.address.model.validation.AbstractValidator;
 import seedu.address.model.validation.ValidationResult;
 
@@ -8,7 +9,7 @@ import seedu.address.model.validation.ValidationResult;
  * Validates Singaporean IC numbers to ensure they meet specific criteria.
  * A valid IC number must start with 'S' or 'T', followed by 7 digits, and end with an uppercase letter.
  */
-public final class ICValidator extends AbstractValidator<String> {
+public final class IcValidator extends AbstractValidator<String> {
     private static final String IC_REGEX = "^[ST]\\d{7}[A-Z]$";
 
     /**

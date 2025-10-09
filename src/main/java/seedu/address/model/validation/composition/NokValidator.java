@@ -2,6 +2,7 @@ package seedu.address.model.validation.composition;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import seedu.address.model.validation.ValidationResult;
 import seedu.address.model.validation.field.NameValidator;
 import seedu.address.model.validation.field.PhoneValidator;
