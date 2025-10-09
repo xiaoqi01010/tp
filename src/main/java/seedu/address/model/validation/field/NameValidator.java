@@ -18,11 +18,7 @@ public final class NameValidator extends AbstractValidator<String> {
      */
     @Override
     public ValidationResult validate(String name) {
-        if (name == null) {
-            return fail("name",
-                "Name must not be null and must be 1-50 characters containing only letters, spaces, hyphens, and apostrophes");
-        }
-        if (name.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             return fail("name",
                 "Name must be 1-50 characters and contain only letters, spaces, hyphens, and apostrophes");
         }
