@@ -2,6 +2,7 @@ package seedu.address.model.validation.field;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalTime;
@@ -45,6 +46,7 @@ public class TimeValidatorTest {
     public void validate_invalidFormat_returnsInvalid() {
         LocalTime time = TimeValidator.parse("25:61");
         ValidationResult result = validator.validate(time);
+        assertNull(time, "Parsing an invalid time string should return null");
         assertFalse(result.valid());
         assertEquals("time", result.errors().get(0).field());
         assertEquals("Time must be in HH:MM format or 12-hour format with am/pm", result.errors().get(0).message());
@@ -54,6 +56,7 @@ public class TimeValidatorTest {
     public void validate_invalidString_returnsInvalid() {
         LocalTime time = TimeValidator.parse("notatime");
         ValidationResult result = validator.validate(time);
+        assertNull(time, "Parsing an invalid time string should return null");
         assertFalse(result.valid());
         assertEquals("time", result.errors().get(0).field());
         assertEquals("Time must be in HH:MM format or 12-hour format with am/pm", result.errors().get(0).message());
