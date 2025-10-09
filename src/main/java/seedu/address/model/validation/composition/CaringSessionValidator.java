@@ -16,7 +16,7 @@ import seedu.address.model.validation.field.TimeValidator;
  * This class uses DateValidator, TimeValidator, CareTypeValidator, and NotesValidator
  * to validate the respective fields of a caring session.
  */
-public class CaringSessionValidator {
+public final class CaringSessionValidator {
     private final DateValidator dateValidator = new DateValidator();
     private final TimeValidator timeValidator = new TimeValidator();
     private final CareTypeValidator careTypeValidator = new CareTypeValidator();
