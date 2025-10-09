@@ -9,7 +9,7 @@ import seedu.address.model.validation.ValidationResult;
  * A valid ward must start with a letter and can contain only letters and digits.
  */
 public final class WardValidator extends AbstractValidator<String> {
-    private static final String WARD_REGEX = "^[A-Za-z][A-Za-z0-9]+$";
+    private static final String WARD_REGEX = "^[A-Za-z][0-9]+$";
 
     /**
      * Validates the given ward.
