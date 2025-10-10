@@ -5,7 +5,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.noknock.model.person.NextOfKin;
+import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Person;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -33,9 +36,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
+    private Label ic;
     @FXML
-    private Label email;
+    private Label ward;
+    @FXML
+    private HBox nextOfKins;
     @FXML
     private FlowPane tags;
 
@@ -47,5 +52,20 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
+        if (person instanceof Patient) {
+            Patient patient = (Patient) person;
+            ic.setText(patient.getIC().toString());
+            ward.setText(patient.getWard().toString());
+            patient.getTags().stream()
+                    .forEach(tag -> tags.getChildren().add(new Label(tag.toString())));
+            patient.getNextOfKinList().stream().forEach(
+                    nextOfKin -> {
+                        nextOfKins.getChildren().add(new Label(nextOfKin.toString()));
+                    });
+        }
+        if (person instanceof NextOfKin) {
+            NextOfKin nextOfKin = (NextOfKin) person;
+            phone.setText(nextOfKin.getPhone().toString());
+        }
     }
 }

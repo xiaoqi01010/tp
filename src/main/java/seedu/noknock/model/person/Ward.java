@@ -22,5 +22,7 @@ public class Ward {
     public static boolean isValidWard(String ward) {
         return ward.matches(REGEX_PATTERN);
     }
-
+    public String toString() {
+        return "Ward " + room;
+    }
 }
