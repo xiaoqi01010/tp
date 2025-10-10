@@ -10,9 +10,7 @@ import seedu.noknock.model.tag.Tag;
  * Returns a next of kin object
  */
 public class NextOfKin extends Person {
-    private final Patient patient;
     private final Relationship relationship;
-    private final List<Person> nextOfKinList = new ArrayList<>();
     /**
      * @param name
      * @param phone
@@ -21,9 +19,8 @@ public class NextOfKin extends Person {
      * @param tags
      */
     public NextOfKin(Name name, Phone phone, Email email, Address address,
-                      Set<Tag> tags, Relationship relationship, Patient patient) {
+                      Set<Tag> tags, Relationship relationship) {
         super(name, phone, email, address, tags);
         this.relationship = relationship;
-        this.patient = patient;
     }
 }

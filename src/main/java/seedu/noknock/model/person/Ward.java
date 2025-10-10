@@ -3,23 +3,17 @@ package seedu.noknock.model.person;
 /**
  */
 public class Ward {
-    private final WardType wardType;
-    private final int numberOfBeds;
+    private final String room;
 
     /**
      * Return a Ward object
-     * @param wardType
-     * @param numberOfBeds
+     * @param room
      */
-    public Ward(WardType wardType, int numberOfBeds) {
-        this.wardType = wardType;
-        this.numberOfBeds = numberOfBeds;
+    public Ward(String room) {
+        this.room = room;
     }
-    public WardType getWardType() {
-        return wardType;
-    }
-    public int getNumberOfBeds() {
-        return numberOfBeds;
+    public String getRoom() {
+        return room;
     }
 
 }
