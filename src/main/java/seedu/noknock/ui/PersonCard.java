@@ -1,13 +1,13 @@
 package seedu.noknock.ui;
 
-import java.util.Comparator;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Person;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -35,9 +35,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
+    private Label ic;
     @FXML
-    private Label email;
+    private Label ward;
+    @FXML
+    private HBox nextOfKins;
     @FXML
     private FlowPane tags;
 
@@ -49,11 +51,16 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (person instanceof Patient) {
+            Patient patient = (Patient) person;
+            ic.setText(patient.getIC().toString());
+            ward.setText(patient.getWard().toString());
+            patient.getTags().stream()
+                    .forEach(tag -> tags.getChildren().add(new Label(tag.toString())));
+            patient.getNextOfKinList().stream().forEach(
+                    nextOfKin -> {
+                        nextOfKins.getChildren().add(new Label(nextOfKin.toString()));
+                    });
+        }
     }
 }

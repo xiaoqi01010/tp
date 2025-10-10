@@ -15,16 +15,22 @@ import seedu.noknock.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
-
     // Identity fields
     private final Name name;
-    private final Phone phone;
-    private final Email email;
+    private Phone phone;
+    private Email email;
 
     // Data fields
-    private final Address address;
+    private Address address = new Address("123 Main Street");
     private final Set<Tag> tags = new HashSet<>();
 
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name) {
+        requireAllNonNull(name);
+        this.name = name;
+    }
     /**
      * Every field must be present and not null.
      */
@@ -37,20 +43,19 @@ public class Person {
         this.tags.addAll(tags);
     }
 
+
     public Name getName() {
         return name;
     }
-
-    public Phone getPhone() {
-        return phone;
-    }
-
+    //Kept to prevent tests from breaking
     public Email getEmail() {
         return email;
     }
-
     public Address getAddress() {
         return address;
+    }
+    public Phone getPhone() {
+        return phone;
     }
 
     /**

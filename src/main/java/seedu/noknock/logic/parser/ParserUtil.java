@@ -11,8 +11,10 @@ import seedu.noknock.commons.util.StringUtil;
 import seedu.noknock.logic.parser.exceptions.ParseException;
 import seedu.noknock.model.person.Address;
 import seedu.noknock.model.person.Email;
+import seedu.noknock.model.person.IC;
 import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.Phone;
+import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 
 /**
@@ -22,6 +24,32 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
+    /**
+     * @param ward
+     * @return
+     * @throws ParseException
+     */
+    public static Ward parseWard(String ward) throws ParseException {
+        requireNonNull(ward);
+        String trimmedWard = ward.trim();
+        if (!Ward.isValidWard(trimmedWard)) {
+            throw new ParseException(Ward.MESSAGE_CONSTRAINTS);
+        }
+        return new Ward(trimmedWard);
+    }
+    /**
+     * @param ic
+     * @return
+     * @throws ParseException
+     */
+    public static IC parseIC(String ic) throws ParseException {
+        requireNonNull(ic);
+        String trimmedIC = ic.trim();
+        if (!IC.isValidIC(trimmedIC)) {
+            throw new ParseException(IC.MESSAGE_CONSTRAINTS);
+        }
+        return new IC(trimmedIC);
+    }
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.

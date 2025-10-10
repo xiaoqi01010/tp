@@ -1,61 +1,86 @@
 package seedu.noknock.model.person;
 
 import java.util.Objects;
-import java.util.Set;
 
-import seedu.noknock.model.tag.Tag;
+import seedu.noknock.commons.util.ToStringBuilder;
 
 /**
- * Represents a Next of Kin in the system.
- * A NextOfKin is a person related to one or more patients, but does not store patient references.
+ * Returns a next of kin object
  */
-public class NextOfKin extends Person {
-
+public final class NextOfKin extends Person {
     private final Relationship relationship;
-    private final boolean isEmergencyContact;
+    private final Phone phone;
 
     /**
-     * Constructs a {@code NextOfKin}.
+     * @param name
+     * @param phone
+     * @param relationship
      */
-    public NextOfKin(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
-                     Relationship relationship, boolean isEmergencyContact) {
-        super(name, phone, email, address, tags);
-        this.relationship = Objects.requireNonNull(relationship);
-        this.isEmergencyContact = isEmergencyContact;
+    public NextOfKin(Name name, Phone phone, Relationship relationship) {
+        super(name);
+        this.relationship = relationship;
+        this.phone = phone;
     }
-
     public Relationship getRelationship() {
         return relationship;
     }
-
-    public boolean isEmergencyContact() {
-        return isEmergencyContact;
+    public Phone getPhone() {
+        return phone;
+    }
+    /**
+     * Returns true if both persons have the same name.
+     * This defines a weaker notion of equality between two persons.
+     */
+    @Override
+    public boolean isSamePerson(Person otherPerson) {
+        if (otherPerson == this) {
+            return true;
+        }
+        if (otherPerson == null) {
+            return false;
+        }
+        if (!(otherPerson instanceof NextOfKin)) {
+            return false;
+        }
+        NextOfKin otherNok = (NextOfKin) otherPerson;
+        return otherNok.getName().equals(getName())
+                && otherNok.relationship.equals(getRelationship())
+                && otherNok.getPhone().equals(getPhone());
     }
 
+    /**
+     * Returns true if both persons have the same identity and data fields.
+     * This defines a stronger notion of equality between two persons.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
 
+        // instanceof handles nulls
         if (!(other instanceof NextOfKin)) {
             return false;
         }
 
         NextOfKin otherNok = (NextOfKin) other;
-        return super.equals(otherNok)
-                && relationship.equals(otherNok.relationship)
-                && isEmergencyContact == otherNok.isEmergencyContact;
+        return getName().equals(otherNok.getName())
+                && relationship.equals(otherNok.getRelationship())
+                && phone.equals(otherNok.getPhone());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), relationship, isEmergencyContact);
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(getName(), getRelationship(), getPhone());
     }
 
     @Override
     public String toString() {
-        return super.toString() + " Relationship: " + relationship
-                + " Emergency Contact: " + (isEmergencyContact ? "Yes" : "No");
+        return new ToStringBuilder(this)
+                .add("name", getName())
+                .add("phone", getPhone())
+                .add("relationship", getRelationship())
+                .toString();
     }
 }

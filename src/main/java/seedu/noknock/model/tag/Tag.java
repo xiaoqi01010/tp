@@ -4,8 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.noknock.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Tag in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
+ * Represents a patient in the system, extending the {@code Person} class.
+ * A patient has an identification code (IC), is assigned to a ward,
+ * and may have associated tags and a list of next of kin.
+ * This class provides methods to access and modify patient-specific information, such as next of kin and tags.
+ * Use this class to model and manage patient data within the application.
  */
 public class Tag {
 
