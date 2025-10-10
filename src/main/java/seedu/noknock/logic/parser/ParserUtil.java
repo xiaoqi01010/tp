@@ -9,7 +9,12 @@ import java.util.Set;
 import seedu.noknock.commons.core.index.Index;
 import seedu.noknock.commons.util.StringUtil;
 import seedu.noknock.logic.parser.exceptions.ParseException;
-import seedu.noknock.model.person.*;
+import seedu.noknock.model.person.Address;
+import seedu.noknock.model.person.Email;
+import seedu.noknock.model.person.IC;
+import seedu.noknock.model.person.Name;
+import seedu.noknock.model.person.Phone;
+import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 
 /**

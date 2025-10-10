@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.noknock.commons.core.LogsCenter;
-import seedu.noknock.logic.commands.AddCommand;
+import seedu.noknock.logic.commands.AddPatientCommand;
 import seedu.noknock.logic.commands.ClearCommand;
 import seedu.noknock.logic.commands.Command;
 import seedu.noknock.logic.commands.DeleteCommand;
@@ -53,7 +53,7 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
+        case AddPatientCommand.COMMAND_WORD:
             return new AddPatientCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:

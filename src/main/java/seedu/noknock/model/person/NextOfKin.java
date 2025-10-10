@@ -1,12 +1,8 @@
 package seedu.noknock.model.person;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.noknock.commons.util.ToStringBuilder;
-import seedu.noknock.model.tag.Tag;
 
 /**
  * Returns a next of kin object

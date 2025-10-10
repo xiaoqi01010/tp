@@ -2,11 +2,7 @@ package seedu.noknock.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.noknock.logic.parser.CliSyntax.*;
 import static seedu.noknock.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -26,17 +22,24 @@ import seedu.noknock.testutil.EditPersonDescriptorBuilder;
  */
 public class CommandTestUtil {
 
+    public static final String VALID_WARD_AMY = "2A";
+    public static final String VALID_IC_AMY = "S1234567A";
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
+    public static final String VALID_WARD_BOB = "2B";
+    public static final String VALID_IC_BOB = "S1234567A";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
+    //added
+    public static final String WARD_DESC_AMY = " " + PREFIX_WARD + VALID_WARD_AMY;
+    public static final String IC_DESC_AMY = " " + PREFIX_IC + VALID_IC_AMY;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;

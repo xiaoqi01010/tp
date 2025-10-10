@@ -1,15 +1,23 @@
 package seedu.noknock.logic.parser;
 
 import static seedu.noknock.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.noknock.logic.parser.CliSyntax.*;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_IC;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_WARD;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
-import seedu.noknock.logic.commands.AddCommand;
 import seedu.noknock.logic.commands.AddPatientCommand;
 import seedu.noknock.logic.parser.exceptions.ParseException;
-import seedu.noknock.model.person.*;
+import seedu.noknock.model.person.IC;
+import seedu.noknock.model.person.Name;
+import seedu.noknock.model.person.Patient;
+import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 
 /**
