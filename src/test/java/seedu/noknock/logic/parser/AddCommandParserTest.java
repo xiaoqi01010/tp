@@ -37,8 +37,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.noknock.logic.Messages;
 import seedu.noknock.logic.commands.AddCommand;
-import seedu.noknock.logic.commands.AddPatientCommand;
-import seedu.noknock.logic.commands.AddPatientCommand;
 import seedu.noknock.model.person.Address;
 import seedu.noknock.model.person.Email;
 import seedu.noknock.model.person.Name;
