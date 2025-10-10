@@ -1,41 +1,34 @@
 package seedu.noknock.logic.parser;
 
 import static seedu.noknock.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.noknock.logic.parser.CliSyntax.*;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.noknock.logic.commands.AddCommand;
+import seedu.noknock.logic.commands.AddPatientCommand;
 import seedu.noknock.logic.parser.exceptions.ParseException;
-import seedu.noknock.model.person.Address;
-import seedu.noknock.model.person.Email;
-import seedu.noknock.model.person.Name;
-import seedu.noknock.model.person.Person;
-import seedu.noknock.model.person.Phone;
+import seedu.noknock.model.person.*;
 import seedu.noknock.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddCommand object
  */
-public class AddCommandParser implements Parser<AddCommand> {
+public class AddPatientCommandParser implements Parser<AddPatientCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddCommand parse(String args) throws ParseException {
+    public AddPatientCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_WARD, PREFIX_IC, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_WARD, PREFIX_IC, PREFIX_TAG)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPatientCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
@@ -45,9 +38,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, tagList);
+        Patient patient = new Patient(name, phone, email, address, tagList);
 
-        return new AddCommand(person);
+        return new AddCommand(patient);
     }
 
     /**

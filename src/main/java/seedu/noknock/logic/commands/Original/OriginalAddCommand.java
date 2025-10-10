@@ -1,22 +1,20 @@
-package seedu.noknock.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TAG;
+package seedu.noknock.logic.commands.Original;
 
 import seedu.noknock.commons.util.ToStringBuilder;
 import seedu.noknock.logic.Messages;
+import seedu.noknock.logic.commands.Command;
+import seedu.noknock.logic.commands.CommandResult;
 import seedu.noknock.logic.commands.exceptions.CommandException;
 import seedu.noknock.model.Model;
 import seedu.noknock.model.person.Person;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.noknock.logic.parser.CliSyntax.*;
+
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends Command {
+public class OriginalAddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
@@ -43,7 +41,7 @@ public class AddCommand extends Command {
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public AddCommand(Person person) {
+    public OriginalAddCommand(Person person) {
         requireNonNull(person);
         toAdd = person;
     }
@@ -67,11 +65,11 @@ public class AddCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddCommand)) {
+        if (!(other instanceof OriginalAddCommand)) {
             return false;
         }
 
-        AddCommand otherAddCommand = (AddCommand) other;
+        OriginalAddCommand otherAddCommand = (OriginalAddCommand) other;
         return toAdd.equals(otherAddCommand.toAdd);
     }
 
