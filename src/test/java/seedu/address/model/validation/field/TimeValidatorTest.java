@@ -25,7 +25,8 @@ public class TimeValidatorTest {
         ValidationResult result = validator.validate(null);
         assertFalse(result.valid());
         assertEquals("time", result.errors().get(0).field());
-        assertEquals("Time must be in HH:MM format or 12-hour format with am/pm", result.errors().get(0).message());
+        assertEquals("Time must be in HH:MM format or 12-hour format with am/pm",
+            result.errors().get(0).message());
     }
 
     @Test
@@ -43,13 +44,22 @@ public class TimeValidatorTest {
     }
 
     @Test
+    public void validate_valid12HourWithSpace_returnsValid() {
+        LocalTime time = TimeValidator.parse("4:30 am");
+        ValidationResult result = validator.validate(time);
+        assertTrue(result.valid());
+    }
+
+
+    @Test
     public void validate_invalidFormat_returnsInvalid() {
         LocalTime time = TimeValidator.parse("25:61");
         ValidationResult result = validator.validate(time);
         assertNull(time, "Parsing an invalid time string should return null");
         assertFalse(result.valid());
         assertEquals("time", result.errors().get(0).field());
-        assertEquals("Time must be in HH:MM format or 12-hour format with am/pm", result.errors().get(0).message());
+        assertEquals("Time must be in HH:MM format or 12-hour format with am/pm",
+            result.errors().get(0).message());
     }
 
     @Test
@@ -59,6 +69,7 @@ public class TimeValidatorTest {
         assertNull(time, "Parsing an invalid time string should return null");
         assertFalse(result.valid());
         assertEquals("time", result.errors().get(0).field());
-        assertEquals("Time must be in HH:MM format or 12-hour format with am/pm", result.errors().get(0).message());
+        assertEquals("Time must be in HH:MM format or 12-hour format with am/pm",
+            result.errors().get(0).message());
     }
 }

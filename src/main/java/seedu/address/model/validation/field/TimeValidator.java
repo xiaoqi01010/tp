@@ -31,14 +31,18 @@ public final class TimeValidator extends AbstractValidator<LocalTime> {
             } catch (DateTimeParseException e) {
                 return null;
             }
-        } else if (input.toLowerCase().matches("\\d{1,2}:\\d{2}(am|pm)")) {
+        }
+
+        String formattedInput = input.replaceAll("\\s", "").toLowerCase();
+        if (formattedInput.matches("\\d{1,2}:\\d{2}(am|pm)")) {
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("h:mma", Locale.ENGLISH);
             try {
-                return LocalTime.parse(input.toUpperCase(Locale.ROOT), fmt);
+                return LocalTime.parse(formattedInput.toUpperCase(Locale.ROOT), fmt);
             } catch (DateTimeParseException e) {
                 return null;
             }
         }
+
         return null;
     }
 
