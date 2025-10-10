@@ -53,7 +53,6 @@ public final class Patient extends Person {
         return Collections.unmodifiableSet(tags);
     }
 
-
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -71,6 +70,7 @@ public final class Patient extends Person {
         }
         Patient otherPatient = (Patient) otherPerson;
         return otherPatient.getName().equals(getName())
+                && otherPatient.getWard().equals(getWard())
                 && otherPatient.getIC().equals(getIC());
     }
 
