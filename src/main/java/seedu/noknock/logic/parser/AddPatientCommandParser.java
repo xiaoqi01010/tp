@@ -33,14 +33,13 @@ public class AddPatientCommandParser implements Parser<AddPatientCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        Ward ward = ParserUtil.parseWard(argMultimap.getValue(PREFIX_WARD).get());
+        IC ic = ParserUtil.parseIC(argMultimap.getValue(PREFIX_IC).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Patient patient = new Patient(name, phone, email, address, tagList);
+        Patient patient = new Patient(name, ward, ic, tagList);
 
-        return new AddCommand(patient);
+        return new AddPatientCommand(patient);
     }
 
     /**
