@@ -22,7 +22,7 @@ public class WardValidatorTest {
         ValidationResult result = validator.validate(null);
         assertFalse(result.valid());
         assertEquals("ward", result.errors().get(0).field());
-        assertEquals("Ward must start with a letter and contain only letters and digits",
+        assertEquals("Ward must start with a letter and followed by one or more digits",
             result.errors().get(0).message());
     }
 
@@ -31,7 +31,7 @@ public class WardValidatorTest {
         ValidationResult result = validator.validate("");
         assertFalse(result.valid());
         assertEquals("ward", result.errors().get(0).field());
-        assertEquals("Ward must start with a letter and contain only letters and digits",
+        assertEquals("Ward must start with a letter and followed by one or more digits",
             result.errors().get(0).message());
     }
 
@@ -40,25 +40,25 @@ public class WardValidatorTest {
         ValidationResult result = validator.validate("1A");
         assertFalse(result.valid());
         assertEquals("ward", result.errors().get(0).field());
-        assertEquals("Ward must start with a letter and contain only letters and digits",
+        assertEquals("Ward must start with a letter and followed by one or more digits",
             result.errors().get(0).message());
 
         result = validator.validate("A-1");
         assertFalse(result.valid());
         assertEquals("ward", result.errors().get(0).field());
-        assertEquals("Ward must start with a letter and contain only letters and digits",
+        assertEquals("Ward must start with a letter and followed by one or more digits",
             result.errors().get(0).message());
 
         result = validator.validate("A_1");
         assertFalse(result.valid());
         assertEquals("ward", result.errors().get(0).field());
-        assertEquals("Ward must start with a letter and contain only letters and digits",
+        assertEquals("Ward must start with a letter and followed by one or more digits",
             result.errors().get(0).message());
 
         result = validator.validate("Ward7");
         assertFalse(result.valid());
         assertEquals("ward", result.errors().get(0).field());
-        assertEquals("Ward must start with a letter and contain only letters and digits",
+        assertEquals("Ward must start with a letter and followed by one or more digits",
             result.errors().get(0).message());
     }
 

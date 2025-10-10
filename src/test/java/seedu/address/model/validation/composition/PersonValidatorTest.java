@@ -42,7 +42,7 @@ public class PersonValidatorTest {
         ValidationResult result = validator.validate("John Doe", "1A", "S1234567D", List.of("diabetic"));
         assertFalse(result.valid());
         assertEquals("ward", result.errors().get(0).field());
-        assertEquals("Ward must start with a letter and contain only letters and digits",
+        assertEquals("Ward must start with a letter and followed by one or more digits",
             result.errors().get(0).message());
     }
 
@@ -73,7 +73,7 @@ public class PersonValidatorTest {
             result.errors().get(0).message());
 
         assertEquals("ward", result.errors().get(1).field());
-        assertEquals("Ward must start with a letter and contain only letters and digits",
+        assertEquals("Ward must start with a letter and followed by one or more digits",
             result.errors().get(1).message());
 
         assertEquals("ic", result.errors().get(2).field());

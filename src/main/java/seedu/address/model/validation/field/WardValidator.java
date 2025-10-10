@@ -20,7 +20,7 @@ public final class WardValidator extends AbstractValidator<String> {
     @Override
     public ValidationResult validate(String ward) {
         if (ward == null || ward.trim().isEmpty() || !ward.matches(WARD_REGEX)) {
-            return fail("ward", "Ward must start with a letter and contain only letters and digits");
+            return fail("ward", "Ward must start with a letter and followed by one or more digits");
         }
         return ok();
     }
