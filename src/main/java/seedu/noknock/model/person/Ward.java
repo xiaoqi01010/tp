@@ -1,7 +1,11 @@
 package seedu.noknock.model.person;
 
 /**
- */
+ * Represents a hospital ward assigned to a person.
+ * <p>
+ * A ward is identified by a room number that must be a positive integer followed by an alphabet (e.g., "2A").
+ * This class provides validation for the ward format and stores the ward information for a person.
+ * */
 public class Ward {
     public static final String REGEX_PATTERN = "\\d+[a-zA-Z]";
     public static final String MESSAGE_CONSTRAINTS = "Ward number must be a positive integer "

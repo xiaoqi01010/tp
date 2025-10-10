@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.noknock.model.person.NextOfKin;
 import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Person;
 
@@ -62,10 +61,6 @@ public class PersonCard extends UiPart<Region> {
                     nextOfKin -> {
                         nextOfKins.getChildren().add(new Label(nextOfKin.toString()));
                     });
-        }
-        if (person instanceof NextOfKin) {
-            NextOfKin nextOfKin = (NextOfKin) person;
-            phone.setText(nextOfKin.getPhone().toString());
         }
     }
 }

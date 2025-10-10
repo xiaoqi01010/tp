@@ -8,6 +8,7 @@ import static seedu.noknock.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.noknock.testutil.Assert.assertThrows;
 import static seedu.noknock.testutil.TypicalPersons.ALICE;
 import static seedu.noknock.testutil.TypicalPersons.BOB;
 
@@ -20,7 +21,7 @@ public class PersonTest {
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         Person person = new PersonBuilder().build();
-        //assertThrows(UnsupportedOperationException.class, () -> person.getTags().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> person.getTags().remove(0));
     }
 
     @Test

@@ -17,8 +17,8 @@ import seedu.noknock.model.tag.Tag;
 public class Person {
     // Identity fields
     private final Name name;
-    private Phone phone = new Phone("1234568");
-    private Email email = new Email("test@gmail.com");
+    private Phone phone;
+    private Email email;
 
     // Data fields
     private Address address = new Address("123 Main Street");
