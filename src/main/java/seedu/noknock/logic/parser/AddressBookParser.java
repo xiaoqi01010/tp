@@ -8,7 +8,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.noknock.commons.core.LogsCenter;
-import seedu.noknock.logic.commands.*;
+import seedu.noknock.logic.commands.AddCommand;
+import seedu.noknock.logic.commands.AddPatientCommand;
+import seedu.noknock.logic.commands.ClearCommand;
+import seedu.noknock.logic.commands.Command;
+import seedu.noknock.logic.commands.DeleteCommand;
+import seedu.noknock.logic.commands.EditCommand;
+import seedu.noknock.logic.commands.ExitCommand;
+import seedu.noknock.logic.commands.FindCommand;
+import seedu.noknock.logic.commands.HelpCommand;
+import seedu.noknock.logic.commands.ListCommand;
 import seedu.noknock.logic.parser.exceptions.ParseException;
 
 /**

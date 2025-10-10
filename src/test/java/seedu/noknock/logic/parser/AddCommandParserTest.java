@@ -46,7 +46,7 @@ import seedu.noknock.model.tag.Tag;
 import seedu.noknock.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
-    private AddPatientCommandParser parser = new AddPatientCommandParser();
+    private AddCommandParser parser = new AddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
