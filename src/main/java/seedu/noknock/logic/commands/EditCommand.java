@@ -24,6 +24,7 @@ import seedu.noknock.logic.commands.exceptions.CommandException;
 import seedu.noknock.model.Model;
 import seedu.noknock.model.person.Address;
 import seedu.noknock.model.person.Email;
+import seedu.noknock.model.person.IC;
 import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.Person;
 import seedu.noknock.model.person.Phone;
@@ -97,12 +98,13 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        IC updatedIc = editPersonDescriptor.getIc().orElse(personToEdit.getIc());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedIc, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
 
     @Override
@@ -135,6 +137,7 @@ public class EditCommand extends Command {
      */
     public static class EditPersonDescriptor {
         private Name name;
+        private IC ic;
         private Phone phone;
         private Email email;
         private Address address;
@@ -148,6 +151,7 @@ public class EditCommand extends Command {
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
+            setIc(toCopy.ic);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
@@ -158,7 +162,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, ic, phone, email, address, tags);
         }
 
         public void setName(Name name) {
@@ -167,6 +171,14 @@ public class EditCommand extends Command {
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
+        }
+
+        public void setIc(IC ic) {
+            this.ic = ic;
+        }
+
+        public Optional<IC> getIc() {
+            return Optional.ofNullable(ic);
         }
 
         public void setPhone(Phone phone) {

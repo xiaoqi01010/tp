@@ -17,6 +17,7 @@ import seedu.noknock.model.tag.Tag;
 public class Person {
     // Identity fields
     private final Name name;
+    private IC ic;
     private Phone phone;
     private Email email;
 
@@ -34,6 +35,14 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
+    public Person(Name name, IC ic, Phone phone, Email email, Address address, Set<Tag> tags) {
+        this(name, phone, email, address, tags);
+        this.ic = ic;
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
@@ -47,15 +56,21 @@ public class Person {
     public Name getName() {
         return name;
     }
+
+    public IC getIc() {
+        return ic;
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
     //Kept to prevent tests from breaking
     public Email getEmail() {
         return email;
     }
     public Address getAddress() {
         return address;
-    }
-    public Phone getPhone() {
-        return phone;
     }
 
     /**
@@ -105,7 +120,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, ic, phone, email, address, tags);
     }
 
     @Override
