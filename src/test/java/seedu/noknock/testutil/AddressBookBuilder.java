@@ -1,6 +1,7 @@
 package seedu.noknock.testutil;
 
 import seedu.noknock.model.AddressBook;
+import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Person;
 
 /**
@@ -23,7 +24,7 @@ public class AddressBookBuilder {
     /**
      * Adds a new {@code Person} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withPerson(Person person) {
+    public AddressBookBuilder withPerson(Patient person) {
         addressBook.addPerson(person);
         return this;
     }

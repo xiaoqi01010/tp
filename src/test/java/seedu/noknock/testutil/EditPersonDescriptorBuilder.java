@@ -5,7 +5,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.noknock.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.noknock.model.person.*;
+import seedu.noknock.model.person.Address;
+import seedu.noknock.model.person.IC;
+import seedu.noknock.model.person.Name;
+import seedu.noknock.model.person.Patient;
+import seedu.noknock.model.person.Person;
+import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 
 /**
