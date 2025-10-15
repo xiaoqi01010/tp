@@ -6,7 +6,6 @@ import java.util.Set;
 import seedu.noknock.model.person.IC;
 import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.Person;
 import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 import seedu.noknock.model.util.SampleDataUtil;
@@ -78,7 +77,7 @@ public class PatientBuilder {
     }
 
 
-    public Person build() {
+    public Patient build() {
         return new Patient(name, ward, ic, tags);
     }
 

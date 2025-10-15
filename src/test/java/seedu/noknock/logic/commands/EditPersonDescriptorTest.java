@@ -5,11 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.noknock.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.noknock.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.noknock.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.noknock.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.noknock.logic.commands.CommandTestUtil.VALID_IC_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.noknock.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.noknock.logic.commands.CommandTestUtil.VALID_WARD_BOB;
 
 import org.junit.jupiter.api.Test;
 
@@ -41,15 +40,11 @@ public class EditPersonDescriptorTest {
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different phone -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withPhone(VALID_PHONE_BOB).build();
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withWard(VALID_WARD_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different email -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withEmail(VALID_EMAIL_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
-
-        // different address -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withIC(VALID_IC_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false
@@ -61,10 +56,9 @@ public class EditPersonDescriptorTest {
     public void toStringMethod() {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         String expected = EditPersonDescriptor.class.getCanonicalName() + "{name="
-                + editPersonDescriptor.getName().orElse(null) + ", phone="
-                + editPersonDescriptor.getPhone().orElse(null) + ", email="
-                + editPersonDescriptor.getEmail().orElse(null) + ", address="
-                + editPersonDescriptor.getAddress().orElse(null) + ", tags="
+                + editPersonDescriptor.getName().orElse(null) + ", ward="
+                + editPersonDescriptor.getWard().orElse(null) + ", ic="
+                + editPersonDescriptor.getIC().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }

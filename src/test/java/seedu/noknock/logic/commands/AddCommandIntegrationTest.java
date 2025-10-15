@@ -11,6 +11,7 @@ import seedu.noknock.logic.Messages;
 import seedu.noknock.model.Model;
 import seedu.noknock.model.ModelManager;
 import seedu.noknock.model.UserPrefs;
+import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Person;
 import seedu.noknock.testutil.PatientBuilder;
 
@@ -28,7 +29,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() {
-        Person validPerson = new PatientBuilder().build();
+        Patient validPerson = new PatientBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);

@@ -12,40 +12,40 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.noknock.model.AddressBook;
-import seedu.noknock.model.person.Person;
+import seedu.noknock.model.person.Patient;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
 public class TypicalPatients {
 
-    public static final Person ALICE = new PatientBuilder().withName("Alice Pauline")
+    public static final Patient ALICE = new PatientBuilder().withName("Alice Pauline")
             .withWard("2A").withIC("S1234567A")
             .withTags("friends").build();
-    public static final Person BENSON = new PatientBuilder().withName("Benson Meier")
+    public static final Patient BENSON = new PatientBuilder().withName("Benson Meier")
             .withWard("2A").withIC("S1234567A")
             .withTags("owesMoney", "friends").build();
-    public static final Person CARL = new PatientBuilder().withName("Carl Kurz")
+    public static final Patient CARL = new PatientBuilder().withName("Carl Kurz")
             .withWard("2A").withIC("S1234567A").build();
-    public static final Person DANIEL = new PatientBuilder().withName("Daniel Meier").withWard("2A")
+    public static final Patient DANIEL = new PatientBuilder().withName("Daniel Meier").withWard("2A")
             .withIC("S1234567A").withTags("friends").build();
-    public static final Person ELLE = new PatientBuilder().withName("Elle Meyer").withWard("2A")
+    public static final Patient ELLE = new PatientBuilder().withName("Elle Meyer").withWard("2A")
             .withIC("S1234567A").build();
-    public static final Person FIONA = new PatientBuilder().withName("Fiona Kunz").withWard("2A")
+    public static final Patient FIONA = new PatientBuilder().withName("Fiona Kunz").withWard("2A")
             .withIC("S1234567A").build();
-    public static final Person GEORGE = new PatientBuilder().withName("George Best").withWard("2A")
+    public static final Patient GEORGE = new PatientBuilder().withName("George Best").withWard("2A")
             .withIC("S1234567A").build();
 
     // Manually added
-    public static final Person HOON = new PatientBuilder().withName("Hoon Meier").withWard("2A")
+    public static final Patient HOON = new PatientBuilder().withName("Hoon Meier").withWard("2A")
             .withIC("S1234567A").build();
-    public static final Person IDA = new PatientBuilder().withName("Ida Mueller").withWard("2A")
+    public static final Patient IDA = new PatientBuilder().withName("Ida Mueller").withWard("2A")
             .withIC("S1234567A").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Person AMY = new PatientBuilder().withName(VALID_NAME_AMY)
+    public static final Patient AMY = new PatientBuilder().withName(VALID_NAME_AMY)
             .withWard(VALID_WARD_AMY).withIC(VALID_IC_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final Person BOB = new PatientBuilder().withName(VALID_NAME_BOB)
+    public static final Patient BOB = new PatientBuilder().withName(VALID_NAME_BOB)
             .withWard(VALID_WARD_AMY).withIC(VALID_IC_AMY).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
@@ -58,13 +58,13 @@ public class TypicalPatients {
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
-        for (Person person : getTypicalPersons()) {
+        for (Patient person : getTypicalPersons()) {
             ab.addPerson(person);
         }
         return ab;
     }
 
-    public static List<Person> getTypicalPersons() {
+    public static List<Patient> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }
