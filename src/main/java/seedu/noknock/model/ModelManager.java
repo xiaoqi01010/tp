@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.noknock.commons.core.GuiSettings;
 import seedu.noknock.commons.core.LogsCenter;
+import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Person;
 
 /**

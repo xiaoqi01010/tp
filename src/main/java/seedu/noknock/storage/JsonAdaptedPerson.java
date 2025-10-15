@@ -49,7 +49,7 @@ class JsonAdaptedPerson {
      */
     public JsonAdaptedPerson(Patient source) {
         name = source.getName().fullName;
-        ic = source.getIc().toString();
+        ic = source.getIC().toString();
         ward = source.getWard().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)

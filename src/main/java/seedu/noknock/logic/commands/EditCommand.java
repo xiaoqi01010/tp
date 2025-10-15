@@ -67,7 +67,7 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Patient> lastShownList = model.getFilteredPersonList();
+        List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -89,13 +89,14 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Patient personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
-
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        IC updatedIc = editPersonDescriptor.getIc().orElse(personToEdit.getIc());
-        Ward updatedWard = editPersonDescriptor.getWard().orElse(personToEdit.getWard());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        assert personToEdit instanceof Patient;
+        Patient patient = (Patient) personToEdit;
+        Name updatedName = editPersonDescriptor.getName().orElse(patient.getName());
+        IC updatedIc = editPersonDescriptor.getIC().orElse(patient.getIC());
+        Ward updatedWard = editPersonDescriptor.getWard().orElse(patient.getWard());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(patient.getTags());
 
         return new Patient(updatedName, updatedWard, updatedIc, updatedTags);
     }
@@ -167,7 +168,7 @@ public class EditCommand extends Command {
             this.ic = ic;
         }
 
-        public Optional<IC> getIc() {
+        public Optional<IC> getIC() {
             return Optional.ofNullable(ic);
         }
 
