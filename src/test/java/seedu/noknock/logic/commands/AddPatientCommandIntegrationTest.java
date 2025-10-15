@@ -12,13 +12,12 @@ import seedu.noknock.model.Model;
 import seedu.noknock.model.ModelManager;
 import seedu.noknock.model.UserPrefs;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.Person;
 import seedu.noknock.testutil.PatientBuilder;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code AddCommand}.
+ * Contains integration tests (interaction with the Model) for {@code AddPatientCommand}.
  */
-public class AddCommandIntegrationTest {
+public class AddPatientCommandIntegrationTest {
 
     private Model model;
 
@@ -34,16 +33,16 @@ public class AddCommandIntegrationTest {
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);
 
-        assertCommandSuccess(new AddCommand(validPerson), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertCommandSuccess(new AddPatientCommand(validPerson), model,
+                String.format(AddPatientCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
                 expectedModel);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = model.getAddressBook().getPersonList().get(0);
-        assertCommandFailure(new AddCommand(personInList), model,
-                AddCommand.MESSAGE_DUPLICATE_PERSON);
+        Patient personInList = model.getAddressBook().getPersonList().get(0);
+        assertCommandFailure(new AddPatientCommand(personInList), model,
+                AddPatientCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
 }

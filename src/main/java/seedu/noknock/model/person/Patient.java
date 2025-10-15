@@ -14,11 +14,21 @@ import seedu.noknock.model.tag.Tag;
  *
  */
 public final class Patient extends Person {
+    public static final String DEFAULT_IC = "S0000000A";
+    public static final String DEFAULT_WARD = "1N";
     private final IC ic;
     private final Ward ward;
     private final List<Person> nextOfKinList = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
 
+    /**
+     * @param name
+     */
+    public Patient(Name name) {
+        super(name);
+        this.ic = new IC(DEFAULT_IC);
+        this.ward = new Ward(DEFAULT_WARD);
+    }
     /**
      * @param name
      * @param ward

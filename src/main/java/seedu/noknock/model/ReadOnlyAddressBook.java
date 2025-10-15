@@ -2,7 +2,6 @@ package seedu.noknock.model;
 
 import javafx.collections.ObservableList;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.Person;
 
 /**
  * Unmodifiable view of an address book

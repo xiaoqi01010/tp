@@ -2,7 +2,6 @@ package seedu.noknock.testutil;
 
 import seedu.noknock.model.AddressBook;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.Person;
 
 /**
  * A utility class to help with building Addressbook objects.
