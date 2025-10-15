@@ -31,7 +31,7 @@ import seedu.noknock.model.person.Person;
 import seedu.noknock.storage.JsonAddressBookStorage;
 import seedu.noknock.storage.JsonUserPrefsStorage;
 import seedu.noknock.storage.StorageManager;
-import seedu.noknock.testutil.PersonBuilder;
+import seedu.noknock.testutil.PatientBuilder;
 
 public class LogicManagerTest {
     private static final IOException DUMMY_IO_EXCEPTION = new IOException("dummy IO exception");
@@ -167,7 +167,7 @@ public class LogicManagerTest {
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+        Person expectedPerson = new PatientBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
