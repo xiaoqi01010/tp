@@ -16,7 +16,7 @@ import seedu.noknock.model.person.IC;
 import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.Ward;
 
-public class JsonAdaptedPersonTest {
+public class JsonAdaptedPatientTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_WARD = "+651234";
     private static final String INVALID_ADDRESS = " ";

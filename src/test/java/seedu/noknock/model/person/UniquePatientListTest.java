@@ -18,7 +18,7 @@ import seedu.noknock.model.person.exceptions.DuplicatePersonException;
 import seedu.noknock.model.person.exceptions.PersonNotFoundException;
 import seedu.noknock.testutil.PatientBuilder;
 
-public class UniquePersonListTest {
+public class UniquePatientListTest {
 
     private final UniquePersonList uniquePersonList = new UniquePersonList();
 

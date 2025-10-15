@@ -18,7 +18,7 @@ import seedu.noknock.model.AddressBook;
 import seedu.noknock.model.Model;
 import seedu.noknock.model.person.NameContainsKeywordsPredicate;
 import seedu.noknock.model.person.Person;
-import seedu.noknock.testutil.EditPersonDescriptorBuilder;
+import seedu.noknock.testutil.EditPatientDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -45,7 +45,7 @@ public class CommandTestUtil {
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_WARD_DESC = " " + PREFIX_WARD + "33"; // '33' is not allowed in ward
-    public static final String INVALID_IC_DESC = " " + PREFIX_IC + "H1234567S"; // 'H1234567S' is not allowed in IC
+    public static final String INVALID_IC_DESC = " " + PREFIX_IC + "1234567S"; // 'H1234567S' is not allowed in IC
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -55,10 +55,10 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+        DESC_AMY = new EditPatientDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withWard(VALID_WARD_AMY).withIC(VALID_IC_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+        DESC_BOB = new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withWard(VALID_WARD_AMY).withIC(VALID_IC_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }

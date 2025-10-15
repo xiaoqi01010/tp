@@ -17,7 +17,7 @@ public class PatientBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_WARD = "2A";
-    public static final String DEFAULT_IC = "S1234567A";
+    public static final String DEFAULT_IC = "T1234567A";
 
     private Name name;
     private Ward ward;

@@ -32,7 +32,8 @@ public class PatientTest {
         assertFalse(ALICE.isSamePerson(null));
 
         // same name, all other attributes different -> returns true
-        Person editedAlice = new PatientBuilder(ALICE).withWard(VALID_WARD_BOB).withIC(VALID_IC_BOB)
+        Person editedAlice = new PatientBuilder(ALICE)
+                .withWard(VALID_WARD_BOB).withIC(VALID_IC_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
@@ -80,10 +81,6 @@ public class PatientTest {
         editedAlice = new PatientBuilder(ALICE).withIC(VALID_IC_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different address -> returns false
-        editedAlice = new PatientBuilder(ALICE).build();
-        assertFalse(ALICE.equals(editedAlice));
-
         // different tags -> returns false
         editedAlice = new PatientBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
@@ -91,7 +88,7 @@ public class PatientTest {
 
     @Test
     public void toStringMethod() {
-        String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", ward=" + ALICE.getWard()
+        String expected = Patient.class.getCanonicalName() + "{name=" + ALICE.getName() + ", ward=" + ALICE.getWard()
                 + ", ic=" + ALICE.getIC() + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }

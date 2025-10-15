@@ -26,7 +26,7 @@ import seedu.noknock.logic.parser.exceptions.ParseException;
 import seedu.noknock.model.person.NameContainsKeywordsPredicate;
 import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Person;
-import seedu.noknock.testutil.EditPersonDescriptorBuilder;
+import seedu.noknock.testutil.EditPatientDescriptorBuilder;
 import seedu.noknock.testutil.PatientBuilder;
 import seedu.noknock.testutil.PersonUtil;
 
@@ -38,6 +38,7 @@ public class AddressBookParserTest {
     public void parseCommand_add() throws Exception {
         Patient person = new PatientBuilder().build();
         AddPatientCommand command = (AddPatientCommand) parser.parseCommand(PersonUtil.getAddPatientCommand(person));
+        System.out.println(command);
         assertEquals(new AddPatientCommand(person), command);
     }
 
@@ -57,7 +58,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PatientBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        EditPersonDescriptor descriptor = new EditPatientDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);

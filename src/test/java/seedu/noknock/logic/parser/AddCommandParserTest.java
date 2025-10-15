@@ -22,7 +22,6 @@ import static seedu.noknock.logic.commands.CommandTestUtil.WARD_DESC_AMY;
 import static seedu.noknock.logic.commands.CommandTestUtil.WARD_DESC_BOB;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_WARD;
 import static seedu.noknock.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.noknock.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -65,37 +64,41 @@ public class AddCommandParserTest {
         String validExpectedPersonString = NAME_DESC_BOB + WARD_DESC_BOB + IC_DESC_BOB + TAG_DESC_FRIEND;
 
         // multiple names
+        System.out.println(NAME_DESC_AMY + validExpectedPersonString);
         assertParseFailure(parser, NAME_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
 
         // multiple wards
+        System.out.println(WARD_DESC_AMY + validExpectedPersonString);
         assertParseFailure(parser, WARD_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_WARD));
 
         // multiple ic
+        System.out.println(IC_DESC_AMY + validExpectedPersonString);
         assertParseFailure(parser, IC_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_IC));
 
         // multiple fields repeated
+        System.out.println(validExpectedPersonString + WARD_DESC_AMY + IC_DESC_AMY
+                + NAME_DESC_AMY + validExpectedPersonString);
         assertParseFailure(parser,
                 validExpectedPersonString + WARD_DESC_AMY + IC_DESC_AMY + NAME_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_WARD, PREFIX_IC, PREFIX_PHONE));
-
-        // invalid value followed by valid value
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_WARD, PREFIX_IC));
 
         // invalid name
+        System.out.println(INVALID_NAME_DESC + validExpectedPersonString);
         assertParseFailure(parser, INVALID_NAME_DESC + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
 
         // invalid email
+        System.out.println(INVALID_WARD_DESC + validExpectedPersonString);
         assertParseFailure(parser, INVALID_WARD_DESC + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_WARD));
 
         // invalid phone
+        System.out.println(INVALID_IC_DESC + validExpectedPersonString);
         assertParseFailure(parser, INVALID_IC_DESC + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_IC));
-
-        // valid value followed by invalid value
 
         // invalid name
         assertParseFailure(parser, validExpectedPersonString + INVALID_NAME_DESC,
@@ -126,19 +129,18 @@ public class AddCommandParserTest {
         assertParseFailure(parser, VALID_NAME_BOB + WARD_DESC_BOB + IC_DESC_BOB,
                 expectedMessage);
 
-        // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_BOB + VALID_WARD_BOB + IC_DESC_BOB,
+        System.out.println(NAME_DESC_BOB + VALID_WARD_BOB + IC_DESC_BOB);
+        // missing ward prefix
+        assertParseFailure(parser, NAME_DESC_BOB + " " + VALID_WARD_BOB + IC_DESC_BOB,
                 expectedMessage);
 
-        // missing email prefix
+        // missing ic prefix
+        System.out.println(NAME_DESC_BOB + WARD_DESC_BOB + VALID_IC_BOB);
         assertParseFailure(parser, NAME_DESC_BOB + WARD_DESC_BOB + VALID_IC_BOB,
                 expectedMessage);
 
-        // missing address prefix
-        assertParseFailure(parser, NAME_DESC_BOB + WARD_DESC_BOB + IC_DESC_BOB,
-                expectedMessage);
-
         // all prefixes missing
+        System.out.println(VALID_NAME_BOB + VALID_WARD_BOB + VALID_IC_BOB);
         assertParseFailure(parser, VALID_NAME_BOB + VALID_WARD_BOB + VALID_IC_BOB,
                 expectedMessage);
     }
