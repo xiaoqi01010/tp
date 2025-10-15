@@ -7,14 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.noknock.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.noknock.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.noknock.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.noknock.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.noknock.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.noknock.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.noknock.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.noknock.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.noknock.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.noknock.testutil.TypicalPatients.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 

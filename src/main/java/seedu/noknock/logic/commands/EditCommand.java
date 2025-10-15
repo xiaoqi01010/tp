@@ -2,11 +2,10 @@
 package seedu.noknock.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_IC;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_WARD;
 import static seedu.noknock.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -22,7 +21,11 @@ import seedu.noknock.commons.util.ToStringBuilder;
 import seedu.noknock.logic.Messages;
 import seedu.noknock.logic.commands.exceptions.CommandException;
 import seedu.noknock.model.Model;
-import seedu.noknock.model.person.*;
+import seedu.noknock.model.person.Address;
+import seedu.noknock.model.person.IC;
+import seedu.noknock.model.person.Name;
+import seedu.noknock.model.person.Patient;
+import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 
 /**
@@ -32,18 +35,17 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the patient identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_WARD + "PHONE] "
+            + "[" + PREFIX_IC + "EMAIL] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_WARD + "4A "
+            + PREFIX_IC + "S1234567A";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -67,14 +69,14 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Patient> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Patient personToEdit = lastShownList.get(index.getZeroBased());
+        Patient editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -89,14 +91,12 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Patient createEditedPerson(Patient personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
-        assert personToEdit instanceof Patient;
-        Patient patient = (Patient) personToEdit;
-        Name updatedName = editPersonDescriptor.getName().orElse(patient.getName());
-        IC updatedIc = editPersonDescriptor.getIC().orElse(patient.getIC());
-        Ward updatedWard = editPersonDescriptor.getWard().orElse(patient.getWard());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(patient.getTags());
+        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        IC updatedIc = editPersonDescriptor.getIC().orElse(personToEdit.getIC());
+        Ward updatedWard = editPersonDescriptor.getWard().orElse(personToEdit.getWard());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Patient(updatedName, updatedWard, updatedIc, updatedTags);
     }
@@ -144,7 +144,7 @@ public class EditCommand extends Command {
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
-            setIc(toCopy.ic);
+            setIC(toCopy.ic);
             setWard(toCopy.ward);
             setTags(toCopy.tags);
         }
@@ -164,7 +164,7 @@ public class EditCommand extends Command {
             return Optional.ofNullable(name);
         }
 
-        public void setIc(IC ic) {
+        public void setIC(IC ic) {
             this.ic = ic;
         }
 

@@ -26,12 +26,14 @@ public class EditPersonDescriptorBuilder {
     /**
      * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
      */
-    public EditPersonDescriptorBuilder(Patient person) {
+    public EditPersonDescriptorBuilder(Person person) {
+        assert person instanceof Patient;
+        Patient patient = (Patient) person;
         descriptor = new EditPersonDescriptor();
-        descriptor.setName(person.getName());
-        descriptor.setWard(person.getWard());
-        descriptor.setIC(person.getIC());
-        descriptor.setTags(person.getTags());
+        descriptor.setName(patient.getName());
+        descriptor.setWard(patient.getWard());
+        descriptor.setIC(patient.getIC());
+        descriptor.setTags(patient.getTags());
     }
 
     /**
@@ -45,16 +47,16 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
+    public EditPersonDescriptorBuilder withWard(String ward) {
+        descriptor.setWard(new Ward(ward));
         return this;
     }
 
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
+    public EditPersonDescriptorBuilder withIC(String ic) {
+        descriptor.setIC(new IC(ic));
         return this;
     }
 

@@ -3,7 +3,7 @@ package seedu.noknock.storage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.noknock.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.noknock.testutil.Assert.assertThrows;
-import static seedu.noknock.testutil.TypicalPersons.BENSON;
+import static seedu.noknock.testutil.TypicalPatients.BENSON;
 
 import java.util.ArrayList;
 import java.util.List;

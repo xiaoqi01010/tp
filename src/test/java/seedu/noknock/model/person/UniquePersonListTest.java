@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.noknock.testutil.Assert.assertThrows;
-import static seedu.noknock.testutil.TypicalPersons.ALICE;
-import static seedu.noknock.testutil.TypicalPersons.BOB;
+import static seedu.noknock.testutil.TypicalPatients.ALICE;
+import static seedu.noknock.testutil.TypicalPatients.BOB;
 
 import java.util.Arrays;
 import java.util.Collections;

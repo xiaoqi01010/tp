@@ -13,12 +13,11 @@ import seedu.noknock.commons.exceptions.IllegalValueException;
 import seedu.noknock.model.person.IC;
 import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.Person;
 import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 
 /**
- * Jackson-friendly version of {@link Person}.
+ * Jackson-friendly version of {@link Patient}.
  */
 class JsonAdaptedPerson {
 
@@ -48,9 +47,10 @@ class JsonAdaptedPerson {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Patient source) {
-        name = source.getName().fullName;
-        ic = source.getIC().toString();
-        ward = source.getWard().toString();
+        Patient patient = (Patient) source;
+        name = patient.getName().fullName;
+        ic = patient.getIC().toString();
+        ward = patient.getWard().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -61,7 +61,7 @@ class JsonAdaptedPerson {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
-    public Person toModelType() throws IllegalValueException {
+    public Patient toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());

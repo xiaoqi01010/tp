@@ -30,8 +30,8 @@ import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.noknock.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.noknock.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.noknock.testutil.TypicalPersons.AMY;
-import static seedu.noknock.testutil.TypicalPersons.BOB;
+import static seedu.noknock.testutil.TypicalPatients.AMY;
+import static seedu.noknock.testutil.TypicalPatients.BOB;
 
 import org.junit.jupiter.api.Test;
 

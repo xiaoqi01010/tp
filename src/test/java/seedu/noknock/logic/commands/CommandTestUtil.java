@@ -2,7 +2,10 @@ package seedu.noknock.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.noknock.logic.parser.CliSyntax.*;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_IC;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_WARD;
 import static seedu.noknock.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -53,10 +56,10 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withWard(VALID_WARD_AMY).withIC(VALID_IC_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withWard(VALID_WARD_AMY).withIC(VALID_IC_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 

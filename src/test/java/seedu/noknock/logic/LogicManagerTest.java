@@ -8,7 +8,7 @@ import static seedu.noknock.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.noknock.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.noknock.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.noknock.testutil.Assert.assertThrows;
-import static seedu.noknock.testutil.TypicalPersons.AMY;
+import static seedu.noknock.testutil.TypicalPatients.AMY;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
