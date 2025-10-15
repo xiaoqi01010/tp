@@ -79,9 +79,7 @@ public final class Patient extends Person {
             return false;
         }
         Patient otherPatient = (Patient) otherPerson;
-        return otherPatient.getName().equals(getName())
-                && otherPatient.getWard().equals(getWard())
-                && otherPatient.getIC().equals(getIC());
+        return otherPatient.getName().equals(getName());
     }
 
     /**
