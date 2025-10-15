@@ -24,29 +24,27 @@ import seedu.noknock.model.person.Person;
 public class TypicalPersons {
 
     public static final Person ALICE = new PatientBuilder().withName("Alice Pauline")
-            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("94351253")
+            .withWard("2A").withIC("S1234567A")
             .withTags("friends").build();
     public static final Person BENSON = new PatientBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432")
+            .withWard("2A").withIC("S1234567A")
             .withTags("owesMoney", "friends").build();
-    public static final Person CARL = new PatientBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").build();
-    public static final Person DANIEL = new PatientBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends").build();
-    public static final Person ELLE = new PatientBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final Person FIONA = new PatientBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final Person GEORGE = new PatientBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").build();
+    public static final Person CARL = new PatientBuilder().withName("Carl Kurz")
+            .withWard("2A").withIC("S1234567A").build();
+    public static final Person DANIEL = new PatientBuilder().withName("Daniel Meier").withWard("2A")
+            .withIC("S1234567A").withTags("friends").build();
+    public static final Person ELLE = new PatientBuilder().withName("Elle Meyer").withWard("2A")
+            .withIC("S1234567A").build();
+    public static final Person FIONA = new PatientBuilder().withName("Fiona Kunz").withWard("2A")
+            .withIC("S1234567A").build();
+    public static final Person GEORGE = new PatientBuilder().withName("George Best").withWard("2A")
+            .withIC("S1234567A").build();
 
     // Manually added
-    public static final Person HOON = new PatientBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final Person IDA = new PatientBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").build();
+    public static final Person HOON = new PatientBuilder().withName("Hoon Meier").withWard("2A")
+            .withIC("S1234567A").build();
+    public static final Person IDA = new PatientBuilder().withName("Ida Mueller").withWard("2A")
+            .withIC("S1234567A").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PatientBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

@@ -22,12 +22,7 @@ import seedu.noknock.commons.util.ToStringBuilder;
 import seedu.noknock.logic.Messages;
 import seedu.noknock.logic.commands.exceptions.CommandException;
 import seedu.noknock.model.Model;
-import seedu.noknock.model.person.Address;
-import seedu.noknock.model.person.Email;
-import seedu.noknock.model.person.IC;
-import seedu.noknock.model.person.Name;
-import seedu.noknock.model.person.Person;
-import seedu.noknock.model.person.Phone;
+import seedu.noknock.model.person.*;
 import seedu.noknock.model.tag.Tag;
 
 /**
@@ -72,7 +67,7 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Patient> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -94,17 +89,15 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(Patient personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         IC updatedIc = editPersonDescriptor.getIc().orElse(personToEdit.getIc());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Ward updatedWard = editPersonDescriptor.getWard().orElse(personToEdit.getWard());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedIc, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Patient(updatedName, updatedWard, updatedIc, updatedTags);
     }
 
     @Override
@@ -137,9 +130,8 @@ public class EditCommand extends Command {
      */
     public static class EditPersonDescriptor {
         private Name name;
+        private Ward ward;
         private IC ic;
-        private Phone phone;
-        private Email email;
         private Address address;
         private Set<Tag> tags;
 
@@ -152,9 +144,7 @@ public class EditCommand extends Command {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setIc(toCopy.ic);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
+            setWard(toCopy.ward);
             setTags(toCopy.tags);
         }
 
@@ -162,7 +152,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, ic, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, ward, ic, tags);
         }
 
         public void setName(Name name) {
@@ -181,20 +171,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(ic);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setWard(Ward ward) {
+            this.ward = ward;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
-        }
-
-        public void setEmail(Email email) {
-            this.email = email;
-        }
-
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Ward> getWard() {
+            return Optional.ofNullable(ward);
         }
 
         public void setAddress(Address address) {
@@ -235,9 +217,8 @@ public class EditCommand extends Command {
 
             EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
-                    && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(ic, otherEditPersonDescriptor.ic)
+                    && Objects.equals(ward, otherEditPersonDescriptor.ward)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -245,8 +226,8 @@ public class EditCommand extends Command {
         public String toString() {
             return new ToStringBuilder(this)
                     .add("name", name)
-                    .add("phone", phone)
-                    .add("email", email)
+                    .add("ic", ic)
+                    .add("ward", ward)
                     .add("address", address)
                     .add("tags", tags)
                     .toString();

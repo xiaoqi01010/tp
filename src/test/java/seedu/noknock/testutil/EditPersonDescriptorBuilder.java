@@ -5,11 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.noknock.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.noknock.model.person.Address;
-import seedu.noknock.model.person.Email;
-import seedu.noknock.model.person.Name;
-import seedu.noknock.model.person.Person;
-import seedu.noknock.model.person.Phone;
+import seedu.noknock.model.person.*;
 import seedu.noknock.model.tag.Tag;
 
 /**
@@ -30,12 +26,11 @@ public class EditPersonDescriptorBuilder {
     /**
      * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
      */
-    public EditPersonDescriptorBuilder(Person person) {
+    public EditPersonDescriptorBuilder(Patient person) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
-        descriptor.setPhone(person.getPhone());
-        descriptor.setEmail(person.getEmail());
-        descriptor.setAddress(person.getAddress());
+        descriptor.setWard(person.getWard());
+        descriptor.setIC(person.getIC());
         descriptor.setTags(person.getTags());
     }
 
