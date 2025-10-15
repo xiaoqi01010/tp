@@ -47,10 +47,9 @@ class JsonAdaptedPerson {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Patient source) {
-        Patient patient = (Patient) source;
-        name = patient.getName().fullName;
-        ic = patient.getIC().toString();
-        ward = patient.getWard().toString();
+        name = source.getName().fullName;
+        ic = source.getIC().toString();
+        ward = source.getWard().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));

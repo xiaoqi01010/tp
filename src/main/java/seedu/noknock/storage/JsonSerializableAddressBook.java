@@ -20,7 +20,7 @@ import seedu.noknock.model.person.Patient;
 class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
-
+    //private static final Logger logger = LogsCenter.getLogger(JsonSerializableAddressBook.class);
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
 
     /**
@@ -49,6 +49,7 @@ class JsonSerializableAddressBook {
         AddressBook addressBook = new AddressBook();
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
             Patient person = jsonAdaptedPerson.toModelType();
+            //logger.warning(person.toString() + "---[addressBook.hasPerson(person)]" + addressBook.hasPerson(person));
             if (addressBook.hasPerson(person)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
