@@ -11,7 +11,7 @@ import seedu.noknock.model.tag.Tag;
 import seedu.noknock.model.util.SampleDataUtil;
 
 /**
- * A utility class to help with building Person objects.
+ * A utility class to help with building Patient objects.
  */
 public class PatientBuilder {
 
