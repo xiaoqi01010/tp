@@ -40,9 +40,9 @@ public class TypicalPatients {
 
     // Manually added
     public static final Patient HOON = new PatientBuilder().withName("Hoon Meier").withWard("2A")
-            .withIC("S1234567A").build();
+            .withIC("S1234568H").build();
     public static final Patient IDA = new PatientBuilder().withName("Ida Mueller").withWard("2A")
-            .withIC("S1234567A").build();
+            .withIC("S1234569I").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Patient AMY = new PatientBuilder().withName(VALID_NAME_AMY)
