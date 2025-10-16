@@ -174,7 +174,7 @@ public class ParserUtil {
      * Parses a {@code String relationship} into a {@code Relationship}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws java.text.ParseException if the given {@code relationship} is invalid.
+     * @throws ParseException if the given {@code relationship} is invalid.
      */
     public static Relationship parseRelationship(String relationship) throws ParseException {
         requireNonNull(relationship);
