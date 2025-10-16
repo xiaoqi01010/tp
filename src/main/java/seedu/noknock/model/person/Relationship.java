@@ -14,7 +14,7 @@ public enum Relationship {
     DAUGHTER("Daughter"),
     FATHER("Father"),
     MOTHER("Mother"),
-    GRANDMOTHER("GrandMother"),
+    GRANDMOTHER("Grandmother"),
     GRANDFATHER("GrandFather"),
     GRANDDAUGHTER("GrandDaughter"),
     GRANDSON("GrandSon"),
