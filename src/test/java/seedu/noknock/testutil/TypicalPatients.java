@@ -56,7 +56,7 @@ public class TypicalPatients {
     private TypicalPatients() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code AddressBook} with all the typical patients.
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
