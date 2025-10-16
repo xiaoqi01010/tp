@@ -44,7 +44,7 @@ public class TypicalPatients {
     public static final Patient IDA = new PatientBuilder().withName("Ida Mueller").withWard("2A")
             .withIC("S1234569I").build();
 
-    // Manually added - Person's details found in {@code CommandTestUtil}
+    // Manually added - Patient's details found in {@code CommandTestUtil}
     public static final Patient AMY = new PatientBuilder().withName(VALID_NAME_AMY)
             .withWard(VALID_WARD_AMY).withIC(VALID_IC_AMY).withTags(VALID_TAG_FRIEND).build();
     public static final Patient BOB = new PatientBuilder().withName(VALID_NAME_BOB)
