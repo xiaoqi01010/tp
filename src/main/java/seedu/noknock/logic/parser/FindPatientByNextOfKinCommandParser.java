@@ -9,13 +9,13 @@ import seedu.noknock.logic.parser.exceptions.ParseException;
 import seedu.noknock.model.person.PatientNokContainsKeywordsPredicate;
 
 /**
- * Parses input arguments and creates a new FindPatientByNokCommand object
+ * Parses input arguments and creates a new FindPatientByNextOfKinCommand object
  */
 public class FindPatientByNextOfKinCommandParser implements Parser<FindPatientByNextOfKinCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindPatientByNokCommand
-     * and returns a FindPatientByNokCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the FindPatientByNextOfKinCommand
+     * and returns a FindPatientByNextOfKinCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
