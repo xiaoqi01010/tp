@@ -19,7 +19,7 @@ import seedu.noknock.model.tag.Tag;
 /**
  * Jackson-friendly version of {@link Patient}.
  */
-class JsonAdaptedPerson {
+class JsonAdaptedPatient {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
@@ -30,13 +30,13 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     * Constructs a {@code JsonAdaptedPatient} with the given patient details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("ward") String ward,
-                             @JsonProperty("ic") String ic,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
-                             @JsonProperty("nextOfKins") List<JsonAdaptedNextOfKin> nextOfKins) {
+    public JsonAdaptedPatient(@JsonProperty("name") String name, @JsonProperty("ward") String ward,
+                              @JsonProperty("ic") String ic,
+                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                              @JsonProperty("nextOfKins") List<JsonAdaptedNextOfKin> nextOfKins) {
         this.name = name;
         this.ward = ward;
         this.ic = ic;
@@ -49,9 +49,9 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Patient} into this class for Jackson use.
      */
-    public JsonAdaptedPerson(Patient source) {
+    public JsonAdaptedPatient(Patient source) {
         name = source.getName().fullName;
         ic = source.getIC().toString();
         ward = source.getWard().toString();

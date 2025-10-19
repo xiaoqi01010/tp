@@ -78,7 +78,7 @@ public class EditNextOfKinCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Patient> patientList = model.getFilteredPersonList();
+        List<Patient> patientList = model.getFilteredPatientList();
 
         if (patientIndex.getZeroBased() >= patientList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -98,8 +98,8 @@ public class EditNextOfKinCommand extends Command {
         updatedNokList.set(nokIndex.getZeroBased(), editedNok);
 
         Patient editedPatient = patient.withNextOfKinList(updatedNokList);
-        model.setPerson(patient, editedPatient);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.setPatient(patient, editedPatient);
+        model.updateFilteredPatientList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_EDIT_NOK_SUCCESS,
             Messages.format(editedNok), Messages.format(patient)));
