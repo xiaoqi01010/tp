@@ -14,6 +14,7 @@ import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.NextOfKin;
 import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Ward;
+import seedu.noknock.model.session.CaringSession;
 import seedu.noknock.model.tag.Tag;
 
 /**
@@ -28,6 +29,7 @@ class JsonAdaptedPatient {
     private final String ic;
     private final List<JsonAdaptedNextOfKin> nextOfKins = new ArrayList<>();
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedCaringSession> caringSessions = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPatient} with the given patient details.
@@ -36,7 +38,8 @@ class JsonAdaptedPatient {
     public JsonAdaptedPatient(@JsonProperty("name") String name, @JsonProperty("ward") String ward,
                               @JsonProperty("ic") String ic,
                               @JsonProperty("tags") List<JsonAdaptedTag> tags,
-                              @JsonProperty("nextOfKins") List<JsonAdaptedNextOfKin> nextOfKins) {
+                              @JsonProperty("nextOfKins") List<JsonAdaptedNextOfKin> nextOfKins,
+                              @JsonProperty("sessions") List<JsonAdaptedCaringSession> sessions) {
         this.name = name;
         this.ward = ward;
         this.ic = ic;
@@ -45,6 +48,9 @@ class JsonAdaptedPatient {
         }
         if (nextOfKins != null) {
             this.nextOfKins.addAll(nextOfKins);
+        }
+        if (sessions != null) {
+            this.caringSessions.addAll(sessions);
         }
     }
 
@@ -60,6 +66,9 @@ class JsonAdaptedPatient {
             .toList());
         nextOfKins.addAll(source.getNextOfKinList().stream()
             .map(JsonAdaptedNextOfKin::new)
+            .toList());
+        caringSessions.addAll(source.getCaringSessionList().stream()
+            .map(JsonAdaptedCaringSession::new)
             .toList());
     }
 
@@ -104,7 +113,13 @@ class JsonAdaptedPatient {
         for (JsonAdaptedNextOfKin nok : nextOfKins) {
             personNextOfKins.add(nok.toModelType());
         }
-        return new Patient(modelName, modelWard, modelIC, modelTags).withNextOfKinList(personNextOfKins);
+        final List<CaringSession> modelCaringSessions = new ArrayList<>();
+        for (JsonAdaptedCaringSession nok : caringSessions) {
+            modelCaringSessions.add(nok.toModelType());
+        }
+        return new Patient(modelName, modelWard, modelIC, modelTags)
+                .withNextOfKinList(personNextOfKins)
+                .withCaringSessionList(modelCaringSessions);
     }
 
 }

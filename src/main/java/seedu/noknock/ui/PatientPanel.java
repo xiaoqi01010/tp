@@ -14,25 +14,25 @@ import seedu.noknock.model.person.Patient;
  * Panel containing the list of persons.
  */
 public class PatientPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
+    private static final String FXML = "PatientListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PatientPanel.class);
 
     @FXML
     private ListView<Patient> personListView;
 
     /**
-     * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
+     * Creates a {@code PatientListPanel} with the given {@code ObservableList}.
      */
     public PatientPanel(ObservableList<Patient> personList) {
         super(FXML);
         personListView.setItems(personList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+        personListView.setCellFactory(listView -> new PatientListViewCell());
     }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Patient} using a {@code PatientCard}.
      */
-    class PersonListViewCell extends ListCell<Patient> {
+    class PatientListViewCell extends ListCell<Patient> {
         @Override
         protected void updateItem(Patient person, boolean empty) {
             super.updateItem(person, empty);

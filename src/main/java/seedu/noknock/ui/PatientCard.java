@@ -9,13 +9,14 @@ import javafx.scene.layout.VBox;
 import seedu.noknock.model.person.NextOfKin;
 import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Person;
+import seedu.noknock.model.session.CaringSession;
 
 /**
  * An UI component that displays information of a {@code Patient}.
  */
 public class PatientCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "PatientListCard.fxml";
 
     public final Person person;
 
@@ -35,6 +36,8 @@ public class PatientCard extends UiPart<Region> {
     private VBox nextOfKins;
     @FXML
     private FlowPane tags;
+    @FXML
+    private FlowPane sessions;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -61,6 +64,17 @@ public class PatientCard extends UiPart<Region> {
                     nok.getPhone().toString()));
                 nokLabel.setWrapText(true);
                 nextOfKins.getChildren().add(nokLabel);
+            }
+            int sessionIndex = 1;
+            for (CaringSession session : patient.getCaringSessionList()) {
+                Label sessionLabel = new Label(String.format("%d. Date: %s Time: %s Type: %s (Notes: %s) ",
+                        sessionIndex++,
+                        session.getDate(),
+                        session.getTime(),
+                        session.getCareType(),
+                        session.getNote()));
+                sessionLabel.setWrapText(true);
+                sessions.getChildren().add(sessionLabel);
             }
         }
     }

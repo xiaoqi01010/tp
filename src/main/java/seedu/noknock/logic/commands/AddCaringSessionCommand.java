@@ -22,7 +22,7 @@ import seedu.noknock.model.session.CaringSession;
  * Adds a caring session to an existing patient
  */
 public class AddCaringSessionCommand extends Command {
-    public static final String COMMAND_WORD = "add-nok";
+    public static final String COMMAND_WORD = "add-session";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a care task for a patient .\n"
@@ -37,8 +37,9 @@ public class AddCaringSessionCommand extends Command {
             + PREFIX_TYPE + "medication "
             + PREFIX_NOTES + "Give insulin shot ";
 
-    public static final String MESSAGE_ADD_CARING_SESSION_SUCCESS = "Added Caring Session: %1$s to Patient: %2$s";
-    public static final String MESSAGE_INVALID_SESSION = "This session: %1$s is invalid";
+    public static final String MESSAGE_ADD_CARING_SESSION_SUCCESS = "Added Caring Session: %1$s at %2$s %3$s "
+            + "(Note: %4$s) to Patient: %5$s";
+    public static final String MESSAGE_DUPLICATE_SESSION = "This session: %1$s already exists";
 
     private final Index patientIndex;
     private final CaringSession sessionToAdd;
@@ -68,7 +69,7 @@ public class AddCaringSessionCommand extends Command {
         List<CaringSession> caringSessionList = patient.getCaringSessionList();
 
         if (caringSessionList.contains(sessionToAdd)) {
-            throw new CommandException(MESSAGE_INVALID_SESSION);
+            throw new CommandException(MESSAGE_DUPLICATE_SESSION);
         }
 
         List<CaringSession> updatedCaringSessionList = new ArrayList<>(caringSessionList);
@@ -79,7 +80,8 @@ public class AddCaringSessionCommand extends Command {
         model.updateFilteredPatientList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_ADD_CARING_SESSION_SUCCESS,
-                sessionToAdd.toString(), Messages.format(editedPatient)));
+                sessionToAdd.getCareType(), sessionToAdd.getDate(), sessionToAdd.getTime(), sessionToAdd.getNote(),
+                Messages.format(editedPatient)));
     }
 
     @Override
