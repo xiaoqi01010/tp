@@ -25,7 +25,7 @@ import seedu.noknock.model.ReadOnlyUserPrefs;
 import seedu.noknock.model.person.Patient;
 import seedu.noknock.testutil.PatientBuilder;
 
-public class AddCommandTest {
+public class AddPatientCommandTest {
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {

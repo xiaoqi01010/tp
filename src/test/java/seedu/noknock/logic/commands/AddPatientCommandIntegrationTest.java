@@ -28,13 +28,13 @@ public class AddPatientCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() {
-        Patient validPerson = new PatientBuilder().build();
+        Patient validPatient = new PatientBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPatient(validPerson);
+        expectedModel.addPatient(validPatient);
 
-        assertCommandSuccess(new AddPatientCommand(validPerson), model,
-                String.format(AddPatientCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertCommandSuccess(new AddPatientCommand(validPatient), model,
+                String.format(AddPatientCommand.MESSAGE_SUCCESS, Messages.format(validPatient)),
                 expectedModel);
     }
 
