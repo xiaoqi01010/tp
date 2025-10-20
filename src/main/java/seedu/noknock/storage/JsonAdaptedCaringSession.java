@@ -55,8 +55,8 @@ public class JsonAdaptedCaringSession {
             throw new IllegalValueException(Time.MESSAGE_CONSTRAINTS);
         }
         final Time modelTime = new Time(time);
-        if (careType == null || !careType.isBlank()) {
-            throw new IllegalValueException(Time.MESSAGE_CONSTRAINTS);
+        if (careType == null || !CareType.isValidCareType(careType)) {
+            throw new IllegalValueException(CareType.MESSAGE_CONSTRAINTS);
         }
         final CareType modelCareType = new CareType(careType);
         if (note == null || !Note.isValidNote(note)) {

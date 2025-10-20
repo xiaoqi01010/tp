@@ -29,8 +29,8 @@ public class AddCaringSessionCommand extends Command {
             + "Parameters: PATIENT_INDEX (must be a positive integer) "
             + PREFIX_DATE + "DATE "
             + PREFIX_TIME + "TIME "
-            + PREFIX_TYPE + "CARE_TYPE ["
-            + PREFIX_NOTES + "notes] "
+            + PREFIX_TYPE + "CARE_TYPE "
+            + PREFIX_NOTES + "notes "
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_DATE + "2024-12-25 "
             + PREFIX_TIME + "14:30 "
@@ -69,7 +69,7 @@ public class AddCaringSessionCommand extends Command {
         List<CaringSession> caringSessionList = patient.getCaringSessionList();
 
         if (caringSessionList.contains(sessionToAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_SESSION);
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_SESSION, sessionToAdd.getCareType()));
         }
 
         List<CaringSession> updatedCaringSessionList = new ArrayList<>(caringSessionList);
