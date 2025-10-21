@@ -6,6 +6,7 @@ import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TYPE;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import seedu.noknock.commons.core.index.Index;
@@ -59,9 +60,14 @@ public class AddCaringSessionCommandParser implements Parser<AddCaringSessionCom
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
         CareType type = ParserUtil.parseType(argMultimap.getValue(PREFIX_TYPE).get());
-        Note notes = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).get());
-
-        CaringSession session = new CaringSession(type, notes, date, time);
+        Optional<String> noteValue = argMultimap.getValue(PREFIX_NOTE);
+        Note note;
+        if (noteValue.isPresent()) {
+            note = ParserUtil.parseNote(noteValue.get()); // may throw ParseException
+        } else {
+            note = new Note(""); // or Optional<Note>
+        }
+        CaringSession session = new CaringSession(type, note, date, time);
 
         return new AddCaringSessionCommand(patientIndex, session);
     }

@@ -39,7 +39,7 @@ public class AddPatientCommandTest {
 
         CommandResult commandResult = new AddPatientCommand(validPerson).execute(modelStub);
 
-        assertEquals(String.format(AddPatientCommand.MESSAGE_SUCCESS, Messages.formatPerson(validPerson)),
+        assertEquals(String.format(AddPatientCommand.MESSAGE_SUCCESS, Messages.formatPatient(validPerson)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }

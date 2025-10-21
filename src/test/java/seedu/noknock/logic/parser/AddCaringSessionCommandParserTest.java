@@ -2,6 +2,9 @@ package seedu.noknock.logic.parser;
 
 import static seedu.noknock.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NOTE;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TIME;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.noknock.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.noknock.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -24,10 +27,12 @@ public class AddCaringSessionCommandParserTest {
     private static final String VALID_NOTE = "Check sugar";
 
     private static final String USER_INPUT_ALL_FIELDS =
-            "1 d/" + VALID_DATE + " time/" + VALID_TIME + " type/" + VALID_TYPE + " notes/" + VALID_NOTE;
+            "1 " + PREFIX_DATE + VALID_DATE + " " + PREFIX_TIME + VALID_TIME + " " + PREFIX_TYPE
+                    + VALID_TYPE + " " + PREFIX_NOTE + VALID_NOTE;
 
     private static final String USER_INPUT_EMPTY_NOTE =
-            "1 d/" + VALID_DATE + " time/" + VALID_TIME + " type/" + VALID_TYPE + " notes/";
+            "1 " + PREFIX_DATE + VALID_DATE + " " + PREFIX_TIME + VALID_TIME + " " + PREFIX_TYPE
+                    + VALID_TYPE + " " + PREFIX_NOTE;
 
     private final AddCaringSessionCommandParser parser = new AddCaringSessionCommandParser();
 
@@ -41,7 +46,7 @@ public class AddCaringSessionCommandParserTest {
     }
 
     @Test
-    public void parse_emptyNotes_success() {
+    public void parse_emptyNotes_failure() {
         CaringSession expectedSession = new CaringSession(
                 new CareType(VALID_TYPE), new Note(""), new Date(VALID_DATE), new Time(VALID_TIME));
         AddCaringSessionCommand expectedCommand = new AddCaringSessionCommand(Index.fromOneBased(1), expectedSession);
@@ -85,10 +90,12 @@ public class AddCaringSessionCommandParserTest {
     }
 
     @Test
-    public void parse_missingNotesPrefix_failure() {
+    public void parse_missingNotesPrefix_success() {
         String input = "1 d/" + VALID_DATE + " time/" + VALID_TIME + " type/" + VALID_TYPE;
-        assertParseFailure(parser, input,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCaringSessionCommand.MESSAGE_USAGE));
+        CaringSession expectedSession = new CaringSession(
+                new CareType(VALID_TYPE), new Note(""), new Date(VALID_DATE), new Time(VALID_TIME));
+        AddCaringSessionCommand expectedCommand = new AddCaringSessionCommand(Index.fromOneBased(1), expectedSession);
+        assertParseSuccess(parser, input, expectedCommand);
     }
 
     @Test

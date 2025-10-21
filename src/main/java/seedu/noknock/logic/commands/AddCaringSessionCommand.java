@@ -2,7 +2,7 @@ package seedu.noknock.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NOTES;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.noknock.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -29,13 +29,13 @@ public class AddCaringSessionCommand extends Command {
             + "Parameters: PATIENT_INDEX (must be a positive integer) "
             + PREFIX_DATE + "DATE "
             + PREFIX_TIME + "TIME "
-            + PREFIX_TYPE + "CARE_TYPE "
-            + PREFIX_NOTES + "notes "
+            + PREFIX_TYPE + "CARE_TYPE ["
+            + PREFIX_NOTE + "notes ]"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_DATE + "2024-12-25 "
             + PREFIX_TIME + "14:30 "
             + PREFIX_TYPE + "medication "
-            + PREFIX_NOTES + "Give insulin shot ";
+            + PREFIX_NOTE + "Give insulin shot ";
 
     public static final String MESSAGE_ADD_CARING_SESSION_SUCCESS = "Added Caring Session: %1$s at %2$s %3$s "
             + "(Note: %4$s) to Patient: %5$s";
@@ -62,7 +62,7 @@ public class AddCaringSessionCommand extends Command {
         List<Patient> patientList = model.getFilteredPatientList();
 
         if (patientIndex.getZeroBased() >= patientList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
         }
 
         Patient patient = patientList.get(patientIndex.getZeroBased());
@@ -81,7 +81,7 @@ public class AddCaringSessionCommand extends Command {
 
         return new CommandResult(String.format(MESSAGE_ADD_CARING_SESSION_SUCCESS,
                 sessionToAdd.getCareType(), sessionToAdd.getDate(), sessionToAdd.getTime(), sessionToAdd.getNote(),
-                Messages.format(editedPatient)));
+                Messages.formatPatient(editedPatient)));
     }
 
     @Override

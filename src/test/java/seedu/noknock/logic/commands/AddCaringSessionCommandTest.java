@@ -2,7 +2,7 @@ package seedu.noknock.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.noknock.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.noknock.logic.Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX;
 import static seedu.noknock.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.noknock.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.noknock.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -49,7 +49,7 @@ public class AddCaringSessionCommandTest {
 
         String expectedMessage = String.format(AddCaringSessionCommand.MESSAGE_ADD_CARING_SESSION_SUCCESS,
                 VALID_SESSION.getCareType(), VALID_SESSION.getDate(), VALID_SESSION.getTime(),
-                VALID_SESSION.getNote(), Messages.format(expectedEditedPatient));
+                VALID_SESSION.getNote(), Messages.formatPatient(expectedEditedPatient));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -62,7 +62,7 @@ public class AddCaringSessionCommandTest {
         AddCaringSessionCommand command =
                 new AddCaringSessionCommand(Index.fromOneBased(outOfBoundsIndex), VALID_SESSION);
 
-        assertCommandFailure(command, model, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, model, MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
     }
 
     @Test
