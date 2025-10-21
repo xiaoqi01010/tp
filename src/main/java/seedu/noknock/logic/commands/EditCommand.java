@@ -52,7 +52,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
-    private final EditPatientDescriptor editPersonDescriptor;
+    private final EditPatientDescriptor editPatientDescriptor;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -63,7 +63,7 @@ public class EditCommand extends Command {
         requireNonNull(editPersonDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPatientDescriptor(editPersonDescriptor);
+        this.editPatientDescriptor = new EditPatientDescriptor(editPersonDescriptor);
     }
 
     @Override
@@ -72,31 +72,31 @@ public class EditCommand extends Command {
         List<Patient> lastShownList = model.getFilteredPatientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
         }
 
-        Patient personToEdit = lastShownList.get(index.getZeroBased());
-        Patient editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Patient patientToEdit = lastShownList.get(index.getZeroBased());
+        Patient editedPatient = createEditedPerson(patientToEdit, editPatientDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPatient(editedPerson)) {
+        if (!patientToEdit.isSamePerson(editedPatient) && model.hasPatient(editedPatient)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPatient(personToEdit, editedPerson);
+        model.setPatient(patientToEdit, editedPatient);
         model.updateFilteredPatientList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.formatPatient(editedPatient)));
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Patient createEditedPerson(Patient personToEdit, EditPatientDescriptor editPersonDescriptor) {
+    private static Patient createEditedPerson(Patient personToEdit, EditPatientDescriptor editPatientDescriptor) {
         assert personToEdit != null;
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        IC updatedIc = editPersonDescriptor.getIC().orElse(personToEdit.getIC());
-        Ward updatedWard = editPersonDescriptor.getWard().orElse(personToEdit.getWard());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Name updatedName = editPatientDescriptor.getName().orElse(personToEdit.getName());
+        IC updatedIc = editPatientDescriptor.getIC().orElse(personToEdit.getIC());
+        Ward updatedWard = editPatientDescriptor.getWard().orElse(personToEdit.getWard());
+        Set<Tag> updatedTags = editPatientDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Patient(updatedName, updatedWard, updatedIc, updatedTags);
     }
@@ -114,14 +114,14 @@ public class EditCommand extends Command {
 
         EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index)
-                && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
+                && editPatientDescriptor.equals(otherEditCommand.editPatientDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("editPersonDescriptor", editPersonDescriptor)
+                .add("editPersonDescriptor", editPatientDescriptor)
                 .toString();
     }
 

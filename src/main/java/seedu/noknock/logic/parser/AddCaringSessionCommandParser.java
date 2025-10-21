@@ -2,7 +2,7 @@ package seedu.noknock.logic.parser;
 
 import static seedu.noknock.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NOTES;
+import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TYPE;
 
@@ -18,9 +18,10 @@ import seedu.noknock.model.session.CaringSession;
 import seedu.noknock.model.session.Note;
 
 /**
- * Parses input arguments and creates a new AddCaringSessionCommand object
+ * Parses input arguments and creates a new AddCaringSessionCommand object.
  */
 public class AddCaringSessionCommandParser implements Parser<AddCaringSessionCommand> {
+
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
@@ -34,33 +35,34 @@ public class AddCaringSessionCommandParser implements Parser<AddCaringSessionCom
      *
      * @throws ParseException if the user input does not conform the expected format
      */
+    @Override
     public AddCaringSessionCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_TIME, PREFIX_TYPE, PREFIX_NOTES);
+                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_TIME, PREFIX_TYPE, PREFIX_NOTE);
 
-        Index index;
+        Index patientIndex;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            patientIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddCaringSessionCommand.MESSAGE_USAGE), pe);
+                AddCaringSessionCommand.MESSAGE_USAGE), pe);
         }
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_TIME, PREFIX_TYPE, PREFIX_NOTES)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_TIME, PREFIX_TYPE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddCaringSessionCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_DATE, PREFIX_TIME, PREFIX_TYPE);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_DATE, PREFIX_TIME, PREFIX_TYPE, PREFIX_NOTE);
 
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
         CareType type = ParserUtil.parseType(argMultimap.getValue(PREFIX_TYPE).get());
-        Note note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTES).get());
+        Note notes = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).get());
 
-        CaringSession session = new CaringSession(type, note, date, time);
+        CaringSession session = new CaringSession(type, notes, date, time);
 
-        return new AddCaringSessionCommand(index, session);
+        return new AddCaringSessionCommand(patientIndex, session);
     }
 }

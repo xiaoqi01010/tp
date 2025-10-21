@@ -7,7 +7,7 @@ import seedu.noknock.model.date.Time;
 
 /**
  * Represents a caring session for a patient.
- * Stores the care type, note, date, time, and a reference to the patient.
+ * Stores the care type, note, date, and time of the session.
  */
 public final class CaringSession {
     private final CareType careType;
@@ -57,6 +57,19 @@ public final class CaringSession {
      */
     public Time getTime() {
         return time;
+    }
+
+    /**
+     * Checks if this caring session overlaps with another session.
+     * Overlap is defined as having the same date, time, and care type.
+     *
+     * @param other The other caring session to compare with.
+     * @return True if the sessions overlap, false otherwise.
+     */
+    public boolean overlaps(CaringSession other) {
+        return this.date.equals(other.date)
+            && this.time.equals(other.time)
+            && this.careType.equals(other.careType);
     }
 
     @Override

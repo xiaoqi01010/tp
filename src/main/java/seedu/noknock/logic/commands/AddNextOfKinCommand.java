@@ -60,7 +60,7 @@ public class AddNextOfKinCommand extends Command {
         List<Patient> patientList = model.getFilteredPatientList();
 
         if (patientIndex.getZeroBased() >= patientList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
         }
 
         Patient patient = patientList.get(patientIndex.getZeroBased());
@@ -78,7 +78,7 @@ public class AddNextOfKinCommand extends Command {
         model.updateFilteredPatientList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_ADD_NOK_SUCCESS,
-            Messages.format(nokToAdd), Messages.format(patient)));
+            Messages.formatPerson(nokToAdd), Messages.formatPerson(patient)));
     }
 
     @Override

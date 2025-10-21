@@ -50,7 +50,7 @@ public class EditPatientCommand extends Command {
     private final EditPatientDescriptor editPatientDescriptor;
 
     /**
-     * @param index                 of the patient in the filtered patient list to edit
+     * @param index                 of the patient in the filtered person list to edit
      * @param editPatientDescriptor details to edit the patient with
      */
     public EditPatientCommand(Index index, EditPatientDescriptor editPatientDescriptor) {
@@ -83,7 +83,7 @@ public class EditPatientCommand extends Command {
         List<Patient> lastShownList = model.getFilteredPatientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
         }
 
         Patient patientToEdit = lastShownList.get(index.getZeroBased());

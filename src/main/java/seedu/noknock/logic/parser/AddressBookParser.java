@@ -13,6 +13,7 @@ import seedu.noknock.logic.commands.AddNextOfKinCommand;
 import seedu.noknock.logic.commands.AddPatientCommand;
 import seedu.noknock.logic.commands.ClearCommand;
 import seedu.noknock.logic.commands.Command;
+import seedu.noknock.logic.commands.DeleteCaringSessionCommand;
 import seedu.noknock.logic.commands.DeleteCommand;
 import seedu.noknock.logic.commands.DeleteNextOfKinCommand;
 import seedu.noknock.logic.commands.DeletePatientCommand;
@@ -78,6 +79,9 @@ public class AddressBookParser {
 
         case EditNextOfKinCommand.COMMAND_WORD:
             return new EditNextOfKinCommandParser().parse(arguments);
+
+        case DeleteCaringSessionCommand.COMMAND_WORD:
+            return new DeleteCaringSessionCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
