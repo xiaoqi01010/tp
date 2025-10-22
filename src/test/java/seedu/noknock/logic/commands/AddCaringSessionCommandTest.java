@@ -80,7 +80,7 @@ public class AddCaringSessionCommandTest {
         AddCaringSessionCommand command = new AddCaringSessionCommand(Index.fromOneBased(1), VALID_SESSION);
 
         assertCommandFailure(command, model,
-                String.format(AddCaringSessionCommand.MESSAGE_DUPLICATE_SESSION, VALID_SESSION.getCareType()));
+                String.format(AddCaringSessionCommand.MESSAGE_HAS_OVERLAPPING_SESSION, VALID_SESSION.getCareType()));
     }
 
     @Test

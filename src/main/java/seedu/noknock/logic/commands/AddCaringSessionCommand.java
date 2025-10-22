@@ -39,7 +39,8 @@ public class AddCaringSessionCommand extends Command {
 
     public static final String MESSAGE_ADD_CARING_SESSION_SUCCESS = "Added Caring Session: %1$s at %2$s %3$s "
             + "(Note: %4$s) to Patient: %5$s";
-    public static final String MESSAGE_DUPLICATE_SESSION = "This session: %1$s already exists";
+    public static final String MESSAGE_HAS_OVERLAPPING_SESSION =
+        "This session (%1$s) overlaps with an existing session.";
 
     private final Index patientIndex;
     private final CaringSession sessionToAdd;
@@ -68,8 +69,8 @@ public class AddCaringSessionCommand extends Command {
         Patient patient = patientList.get(patientIndex.getZeroBased());
         List<CaringSession> caringSessionList = patient.getCaringSessionList();
 
-        if (caringSessionList.contains(sessionToAdd)) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_SESSION, sessionToAdd.getCareType()));
+        if (patient.hasOverlappingSession(sessionToAdd)) {
+            throw new CommandException(String.format(MESSAGE_HAS_OVERLAPPING_SESSION, sessionToAdd.getCareType()));
         }
 
         List<CaringSession> updatedCaringSessionList = new ArrayList<>(caringSessionList);
