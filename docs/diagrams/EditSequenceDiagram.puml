@@ -14,12 +14,16 @@ AddressBookParser -> EditCommandParser : parse(arguments)
 deactivate AddressBookParser
 
 activate EditCommandParser
-EditCommandParser -> EditDescriptor : create descriptor\n(from prefixes)
+EditCommandParser -> EditDescriptor ++: create descriptor\n(from prefixes)
+EditDescriptor --> EditCommandParser
+deactivate EditDescriptor
 EditCommandParser --> EditCommandParser : validate input\n(e.g. at least 1 field edited)
-EditCommandParser --> AddressBookParser : return EditCommand(descriptor, index)
+EditCommandParser -> EditCommand++: create EditCommand with editedEntity
+EditCommand --> EditCommandParser
+deactivate EditCommand
+EditCommandParser --> LogicManager: EditCommand
 deactivate EditCommandParser
 
-LogicManager <- AddressBookParser : EditCommand
 LogicManager -> Model : execute(EditCommand)
 
 activate Model
