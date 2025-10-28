@@ -31,22 +31,17 @@ It is designed for caregivers who prefer **fast, keyboard-based input** and need
 
 ## 📚 Documentation
 
-- [_User Guide_](https://github.com/se-edu/addressbook-level3/tree/master/docs/UserGuide.md)
-
-- [_Developer Guide_](https://github.com/se-edu/addressbook-level3/tree/master/docs/DeveloperGuide.md)
-
-- [_About Us_](https://github.com/se-edu/addressbook-level3/tree/master/docs/AboutUs.md)
+- [_User Guide_](https://ay2526s1-cs2103t-w09-2.github.io/tp/UserGuide.html)
+- [_Developer Guide_](https://ay2526s1-cs2103t-w09-2.github.io/tp/DeveloperGuide.html)
+- [_About Us_](https://ay2526s1-cs2103t-w09-2.github.io/tp/AboutUs.html)
 
 ## 🏗️ Project Goals
 
 ### NOKnock aims to:
 
 - Reduce the administrative workload of nursing home staff.
-
 - Provide a clear record of all care activities.
-
 - Ensure timely communication between caregivers and next-of-kin.
-
 - Offer a safe, offline environment for patient data management.
 
 ## 🤝 Acknowledgements
