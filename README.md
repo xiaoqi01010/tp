@@ -15,10 +15,6 @@ It is designed for caregivers who prefer **fast, keyboard-based input** and need
 - **👩‍⚕️ Patient Management** – Add, edit, and view patient details.
 - **📞 Next-of-Kin (NOK) Tracking** – Store emergency contact information linked to patients.
 - **📅 Caring Session Scheduling** – Create, edit, and complete daily or recurring sessions.
-- **⏰ Overdue Alerts** – Highlight missed or late care sessions automatically.
-- **⚠️ Urgency Levels** – Prioritize patients by care level (High / Medium / Low).
-- **📤 CSV Export** – Export patient and session data for reporting and sharing.
-- **↩️ Undo/Redo Support** – Reverse or reapply recent commands safely.
 - **🌙 Dark Mode** – Reduce eye strain for caregivers during night shifts.
 - **💻 Cross-Platform Support** – Works on Windows, macOS, and Linux.
 
