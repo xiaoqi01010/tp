@@ -25,19 +25,13 @@ It is designed for caregivers who prefer **fast, keyboard-based input** and need
 - **Java 17** or above must be installed on your system.
 - Compatible with **Windows**, **macOS**, and **Linux**.
 
-### Setup
-
-- Refer to the guide [_Setting up and getting started_](SettingUp.md).
-
-## 📚 Documentation
+### Documentation
 
 - [_User Guide_](https://ay2526s1-cs2103t-w09-2.github.io/tp/UserGuide.html)
 - [_Developer Guide_](https://ay2526s1-cs2103t-w09-2.github.io/tp/DeveloperGuide.html)
 - [_About Us_](https://ay2526s1-cs2103t-w09-2.github.io/tp/AboutUs.html)
 
 ## 🏗️ Project Goals
-
-### NOKnock aims to:
 
 - Reduce the administrative workload of nursing home staff.
 - Provide a clear record of all care activities.
