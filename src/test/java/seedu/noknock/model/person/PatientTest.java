@@ -31,12 +31,11 @@ public class PatientTest {
         // null -> returns false
         assertFalse(ALICE.isSamePerson(null));
 
-        // same name, all other attributes different -> returns true
+        // same name and ic, all other attributes different -> returns true
         Person editedAlice = new PatientBuilder(ALICE)
-                .withWard(VALID_WARD_BOB).withIC(VALID_IC_BOB)
+                .withWard(VALID_WARD_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
-
         // different name, all other attributes same -> returns false
         editedAlice = new PatientBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
@@ -45,6 +44,13 @@ public class PatientTest {
         Person editedBob = new PatientBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
         assertFalse(BOB.isSamePerson(editedBob));
 
+        // different ic, all other attributes same -> returns false
+        editedAlice = new PatientBuilder(ALICE).withIC(VALID_IC_BOB).build();
+        assertFalse(ALICE.isSamePerson(editedAlice));
+
+        // ic differs in case, all other attributes same -> returns false
+        editedBob = new PatientBuilder(BOB).withName(VALID_IC_BOB.toLowerCase()).build();
+        assertFalse(BOB.isSamePerson(editedBob));
         // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PatientBuilder(BOB).withName(nameWithTrailingSpaces).build();
