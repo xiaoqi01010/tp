@@ -6,38 +6,160 @@ pageNav: 3
 
 # NOKnock User Guide
 
-**NOKnock** is a **CLI-based nursing home management system** for tracking patients, their Next-of-Kin (NOK) contacts, and caring sessions. It is designed for **nursing home staff who prefer using command-line interfaces** for fast and efficient daily operations.
-
-NOKnock replaces manual tracking and scheduling methods, improving coordination, safety, and productivity in elderly care.
-
 <!--* Table of Contents -->
 <page-nav-print />
+
+
+## What is NOKnock?
+
+NOKnock is a fast, keyboard-driven app for nursing homes to track patients, their Next‑of‑Kin (NOK) contacts, and caring sessions. It is optimized for day-to-day floor operations where speed, accuracy, and auditability matter more than complex GUIs.
+
+### Who this guide is for
+
+- You are a nursing home staff member (nurse, care aide, coordinator, or supervisor) who:
+    - Is comfortable typing short commands or following copy‑paste instructions.
+    - May have little or no prior CLI experience. No scripting knowledge is required.
+    - Wants a reliable, offline tool that works consistently across different computers.
+- If you prefer point‑and‑click only, you can still use NOKnock’s GUI window, but the fastest workflow uses commands.
+
+<box type="tip" seamless>
+New to the command line? You can copy each command from this guide and paste it into NOKnock’s command box. Start with the “5‑minute first task” below to get confident quickly.
+</box>
+
+---
+
+## Why a CLI-first app (and how NOKnock is different)
+
+- Speed and consistency: Commands are quicker than navigating menus, especially for repetitive tasks (add → edit → schedule).
+- Fewer errors: A structured command format reduces ambiguity and helps prevent duplicate or inconsistent records.
+- Works offline: All data stays on your machine in a simple JSON file—no internet required.
+- Purpose‑built for nursing homes: Built‑in linkage between Patient ⇄ NOK ⇄ Caring Sessions fits actual eldercare workflows.
+- Lightweight and portable: A single .jar file you can run on any machine with Java 17+.
+
+How it compares:
+- Versus spreadsheets: NOKnock enforces structure (unique IDs, linked NOKs/sessions), searchable lists, and date/time‑aware scheduling.
+- Versus GUI‑only tools: Keyboard‑first commands make bulk operations and day‑to‑day updates much faster once you get the hang of it.
 
 ---
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+1. Ensure you meet the [system requirements](#system-requirements) and have Java `17` — see [Getting Java 17](#getting-java-17).
+2. [Set up the app](#setting-up).
+3. Type commands — follow the [5‑minute first task](#5-minute-tutorial) to try the core workflow.
+4. Refer to the [Features](#features) below for details of each command.
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W09-2/tp/releases).
+---
 
-   Copy the file to the folder you wish to use as your NOKnock home folder.
-3. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar noknock.jar` command to run the application.
+## System requirements
 
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+- Operating system:
+    - Windows 10 or 11 (x64)
+    - macOS 12+ (Intel or Apple Silicon)
+    - Linux (e.g., Ubuntu 20.04+/Debian 11+/Fedora 36+) with glibc compatible with Java 17
+- Java: JDK/JRE 17 or newer 
+- Disk: ~200 MB free (app + data headroom)
+- Permissions: Write access to the folder containing the .jar (for saving data to data/noknock.json)
+- Network: Not required (online access only needed to download Java/app updates)
+
+---
+
+## Getting Java 17
+
+Choose one of the following:
+
+- Windows: https://se-education.org/guides/tutorials/javaInstallationWindows.html
+- macOS: https://se-education.org/guides/tutorials/javaInstallationMac.html
+- Linux: https://se-education.org/guides/tutorials/javaInstallationLinux.html
+
+<box type="info" seamless>
+If <code>java -version</code> doesn’t work, restart your terminal or computer, then try again. If it still fails, reinstall Java using the links above.
+</box>
+
+---
+
+## Setting up
+
+1. Download the latest `.jar` file from the Releases page:
+   https://github.com/AY2526S1-CS2103T-W09-2/tp/releases
+
+2. Choose (or create) a folder to act as your NOKnock home folder, and copy the `.jar` file into it.
+
+3. Open a command terminal and change into that folder:
+    - Windows (PowerShell):
+      ```
+      cd "C:\path\to\your\NOKnock"
+      java -jar noknock.jar
+      ```
+    - macOS/Linux (Terminal):
+      ```
+      cd ~/NOKnock
+      java -jar noknock.jar
+      ```
+
+4. A GUI should appear within a few seconds. The app starts with sample data so you can try commands immediately.
 
    ![Ui](images/Ui.png)
 
-4. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
-    * `list-patients` — Lists all patients.
-    * `add-patient n/Dylan ic/S1234567A w/2A` — Adds a patient named Dylan.
-    * `add-nok 1 n/Oad p/+6598765432 r/son` — Adds a NOK for patient #1.
-    * `sessions-today` — Shows today’s caring sessions.
-    * `exit` — Exits the app.
+---
 
-5. Refer to the [Features](#features) below for details of each command.
+## 5-minute tutorial
+
+Follow this quick walkthrough to learn the core workflow. Copy each command into NOKnock’s command box and press Enter.
+
+1) List current patients (to see indexes)
+~~~
+list-patients
+~~~
+
+2) Add a new patient
+~~~
+add-patient n/Aisha Tan ic/S1234567A w/2A t/diabetes
+~~~
+Expected:
+~~~
+Patient added: Aisha Tan (S1234567A)
+~~~
+
+3) Find your patient’s index (since sample data may exist)
+~~~
+find-patient aisha
+~~~
+Note the Index shown for “Aisha Tan” (e.g., 5). Use that number in the next commands instead of X.
+
+4) Add a Next‑of‑Kin for that patient (replace X with Aisha’s index)
+~~~
+add-nok X n/Daniel Tan p/+6598765432 r/son
+~~~
+Expected:
+~~~
+NOK added for Aisha Tan: Daniel Tan (son, +6598765432)
+~~~
+
+5) Schedule a caring session (replace X; adjust date/time as needed)
+~~~
+add-session X d/2025-11-01 time/09:30 type/medication notes/Metformin 500mg
+~~~
+Expected:
+~~~
+Caring session added for Aisha Tan: medication on 2025-11-01 at 09:30
+~~~
+
+6) View the full patient profile
+~~~
+view-patient 1
+~~~
+You’ll see Aisha’s details, linked NOK(s), and upcoming sessions in one place.
+
+7) Optional: See today’s sessions
+~~~
+sessions-today
+~~~
+Tip: If you want the session to appear here, schedule one with today’s date.
+
+<box type="tip" seamless>
+Made a typo? Use <code>edit-patient</code>, <code>edit-nok</code>, or <code>edit-session</code> to update fields; or the <code>delete-*</code> commands to remove entries. See Features below for full command formats and options.
+</box>
 
 ---
 
@@ -389,6 +511,21 @@ Furthermore, certain edits can cause the NOKnock to behave in unexpected ways (e
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous NOKnock home folder.
+
+**Q**: Which files do I copy when migrating to another computer?<br>
+**A**: Copy the entire `data` folder (especially `data/noknock.json`) from your old NOKnock home folder to the same location beside the `.jar` on the new machine. Optionally copy `preferences.json` to keep window size/position and UI settings.
+
+**Q**: Where is my data stored?<br>
+**A**: By default, in `[JAR folder]/data/noknock.json`. Preferences are saved in `[JAR folder]/preferences.json`.
+
+**Q**: How do I back up and restore my data?<br>
+**A**: Close the app, then copy `data/noknock.json` to a safe location. To restore, replace the existing `data/noknock.json` with your backup (while the app is closed).
+
+**Q**: Can I change where data is saved?<br>
+**A**: Not currently. Data is stored next to the `.jar` in `data/noknock.json`. To move the data, move the `.jar` and the `data` folder together to a new location.
+
+**Q**: How do I update to a new version without losing data?<br>
+**A**: Download the new `.jar` and place it in the same folder as your existing `data` folder. Keep the folder structure intact. You can rename the new file to `noknock.jar` or use the versioned file name when running `java -jar`.
 
 ---
 
