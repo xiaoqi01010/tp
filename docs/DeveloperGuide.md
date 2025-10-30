@@ -99,6 +99,12 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </box>
+#### Sequence Diagram — Edit Command
+
+The diagram below shows how `AddressBookParser`, `EditCommandParser`, `EditDescriptor`, and `LogicManager`
+interact when parsing and executing an `edit` command.
+<puml src="diagrams/EditSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+
 
 How the `Logic` component works:
 
