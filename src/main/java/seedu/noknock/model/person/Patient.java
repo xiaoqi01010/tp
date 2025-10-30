@@ -117,7 +117,8 @@ public final class Patient extends Person {
         if (!(otherPerson instanceof Patient otherPatient)) {
             return false;
         }
-        return otherPatient.getName().equals(getName());
+
+        return getIC().equals(otherPatient.getIC());
     }
 
     /**

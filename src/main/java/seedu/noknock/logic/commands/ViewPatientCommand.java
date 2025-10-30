@@ -2,6 +2,7 @@ package seedu.noknock.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.noknock.logic.Messages.MESSAGE_VIEW_PATIENT_SUCCESS;
+import static seedu.noknock.model.Model.PREDICATE_SHOW_ALL_SESSIONS;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class ViewPatientCommand extends Command {
      * @param index The index of the patient to view.
      */
     public ViewPatientCommand(Index index) {
+        requireNonNull(index);
         this.index = index;
     }
 
@@ -49,6 +51,7 @@ public class ViewPatientCommand extends Command {
         Patient target = lastShownList.get(index.getZeroBased());
         PatientEqualsPredicate predicate = new PatientEqualsPredicate(target);
         model.updateFilteredPatientList(predicate);
+        model.setSessionDisplayFilter(PREDICATE_SHOW_ALL_SESSIONS);
         return new CommandResult(String.format(MESSAGE_VIEW_PATIENT_SUCCESS, target.getName().fullName));
     }
 
@@ -60,7 +63,7 @@ public class ViewPatientCommand extends Command {
         if (!(other instanceof ViewPatientCommand otherCommand)) {
             return false;
         }
-        return index == otherCommand.index;
+        return index.equals(otherCommand.index);
     }
 
     @Override

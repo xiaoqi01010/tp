@@ -6,6 +6,7 @@ import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_WARD;
 import static seedu.noknock.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.noknock.model.Model.PREDICATE_SHOW_ALL_SESSIONS;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -66,11 +67,11 @@ public class EditPatientCommand extends Command {
      * edited with {@code editPatientDescriptor}.
      */
     private static Patient createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor) {
-        assert patientToEdit != null;
+        requireNonNull(patientToEdit);
 
         Name updatedName = editPatientDescriptor.getName().orElse(patientToEdit.getName());
         Ward updatedWard = editPatientDescriptor.getWard().orElse(patientToEdit.getWard());
-        IC updatedIc = editPatientDescriptor.getIc().orElse(patientToEdit.getIC());
+        IC updatedIc = editPatientDescriptor.getIC().orElse(patientToEdit.getIC());
         Set<Tag> updatedTags = editPatientDescriptor.getTags().orElse(patientToEdit.getTags());
 
         return new Patient(updatedName, updatedWard, updatedIc, updatedTags).withNextOfKinList(
@@ -95,6 +96,7 @@ public class EditPatientCommand extends Command {
 
         model.setPatient(patientToEdit, editedPatient);
         model.updateFilteredPatientList(PREDICATE_SHOW_ALL_PERSONS);
+        model.setSessionDisplayFilter(PREDICATE_SHOW_ALL_SESSIONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.formatPatient(editedPatient)));
     }
 
@@ -140,7 +142,7 @@ public class EditPatientCommand extends Command {
          */
         public EditPatientDescriptor(EditPatientCommand.EditPatientDescriptor toCopy) {
             setName(toCopy.name);
-            setIc(toCopy.ic);
+            setIC(toCopy.ic);
             setWard(toCopy.ward);
             setTags(toCopy.tags);
         }
@@ -168,11 +170,11 @@ public class EditPatientCommand extends Command {
             this.ward = ward;
         }
 
-        public Optional<IC> getIc() {
+        public Optional<IC> getIC() {
             return Optional.ofNullable(ic);
         }
 
-        public void setIc(IC ic) {
+        public void setIC(IC ic) {
             this.ic = ic;
         }
 
