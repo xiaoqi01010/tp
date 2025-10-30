@@ -62,6 +62,8 @@ NOKnock replaces manual tracking and scheduling methods, improving coordination,
 * Additional parameters for commands that do not accept them will be ignored.<br>
   e.g. `help abc` = `help`.
 
+* All of the commands are 1 indexed. E.g. `delete-patient 1` means deleting the first person.
+
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
 </box>
@@ -102,6 +104,14 @@ Creates a new patient record.
 
 * `add-patient n/Dylan w/2A ic/S1234567A`
 * `add-patient n/Javier w/8B ic/S9876543B t/diabetes t/mobility-issues`
+
+💡 **Tip:** You can always enter the command phrase to be prompted the right usage of commands
+![help message](images/TipCommandHint.png)
+
+❌ **Common mistakes**: It is common for one to enter the orders of fields wrongly.
+<box type="error">
+E.g.add-patient n/Amy ic/S1234567A w/2A
+</box>
 
 <box type="tip" seamless>
 
@@ -154,6 +164,13 @@ Removes a patient and all associated data (NOKs, sessions).
 
 </box>
 
+<box type="tip" seamless>
+
+⚠️ Tip: Once the first person is deleted, the original second person becomes the first. To delete first N patients,
+use the `delete-patient 1` command for N times
+![Delete](images/TipDeletePatient.png)
+![Delete](images/TipDeletePatientAfter.png)
+</box>
 ### Viewing patient details: `view-patient`
 
 Shows full patient details including NOKs and upcoming sessions.
@@ -168,7 +185,7 @@ Shows full patient details including NOKs and upcoming sessions.
 
 * Success → Full profile with NOK list and upcoming sessions
 * Failure → `Patient not found at index X`
-
+![View](images/ViewPatient.png)
 ### Finding patients by name: `find-patient`
 
 Search for patients by name (case-insensitive, partial matching).
@@ -185,7 +202,11 @@ Search for patients by name (case-insensitive, partial matching).
 
 * Success → `2 patient(s) found:` + list
 * None → `No patients found matching: javier wong`
-
+⚠️ Tip: You can enter multiple keywords(capitalised or non-capitalised is fine) to find more than 1 patient. E.g
+![Find](images/TipFindCommand.png)
+![Find](images/TipFindCommandAfter.png)
+❗ **Common error**: keywords must match at least 1 word in patient's name. A prefix will not yield
+any result.
 ### Finding patients by NOK name: `find-by-nok`
 
 Search for patients based on their NOK’s name.
@@ -224,6 +245,11 @@ Adds a Next-of-Kin contact for a patient.
 * Success → `NOK added for Dylan: Oad (son, +6598765432)`
 * Duplicate → `NOK with same name and phone already exists for this patient`
 
+⚠️ **Tip**: you can always use the `list-patient` command to see the list of patients before deciding which patient the
+nok should be added to.
+
+After adding a patient, you should see something similar to the picture below
+![AddNOK](images/TipAddNOKCommand.png)
 ### Editing a NOK: `edit-nok`
 
 Updates NOK details.
@@ -291,6 +317,12 @@ Edit an existing care session for a patient. You may also update the session sta
 
 * Success -> `Session updated: Dylan - medication - 2024-12-25 14:30 (complete)`
 * Failure -> parameter-specific error (e.g. invalid date/time or indices)
+
+⚠️ **Tip**: To get a better view of the caring session for a specific patient before editing, use `view-patient`
+command. 
+E.g. To edit a session of first patient, limit the caring sessions view to that of the first patient only
+
+![Edit Session](images/TipEditSessionCommand.png)
 
 ### Deleting a session: `delete-session`
 
