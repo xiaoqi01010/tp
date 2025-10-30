@@ -27,6 +27,10 @@ import seedu.noknock.model.person.Patient;
 import seedu.noknock.model.person.Phone;
 import seedu.noknock.model.person.Relationship;
 
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for
+ * {@code DeleteNextOfKinCommand}.
+ */
 public class DeleteNextOfKinCommandTest {
 
     private Model model;
