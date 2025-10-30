@@ -2,270 +2,143 @@ package seedu.noknock.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.noknock.logic.Messages.MESSAGE_INVALID_NOK_DISPLAYED_INDEX;
-import static seedu.noknock.logic.Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX;
+import static seedu.noknock.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.noknock.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.noknock.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.noknock.testutil.TypicalPatients.getTypicalAddressBook;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.noknock.commons.core.GuiSettings;
 import seedu.noknock.commons.core.index.Index;
-import seedu.noknock.logic.commands.exceptions.CommandException;
+import seedu.noknock.logic.Messages;
+import seedu.noknock.model.AddressBook;
 import seedu.noknock.model.Model;
+import seedu.noknock.model.ModelManager;
+import seedu.noknock.model.UserPrefs;
+import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.NextOfKin;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.testutil.NextOfKinBuilder;
-import seedu.noknock.testutil.PatientBuilder;
+import seedu.noknock.model.person.Phone;
+import seedu.noknock.model.person.Relationship;
 
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for
+ * {@code DeleteNextOfKinCommand}.
+ */
 public class DeleteNextOfKinCommandTest {
 
-    private Patient aliceBase;
-    private NextOfKin nok1;
-    private NextOfKin nok2;
-
-    private Patient aliceWithTwoNoks;
-
-    private ModelStubCapturingSet model;
+    private Model model;
 
     @BeforeEach
     public void setUp() {
-        // Base patient
-        aliceBase = new PatientBuilder().withName("Alice").withIC("S1111111A").build();
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-        // Two NOKs
-        nok1 = new NextOfKinBuilder().withName("Lee").withPhone("0651111111").withRelationship("daughter").build();
-        nok2 = new NextOfKinBuilder().withName("Chan").withPhone("0652222222").withRelationship("son").build();
-
-        // Patient with 2 NOKs
-        aliceWithTwoNoks = aliceBase.withNextOfKinList(List.of(nok1, nok2));
-
-        // Model with a single patient in filtered list
-        model = new ModelStubCapturingSet(List.of(aliceWithTwoNoks));
-    }
-
-    //valid patient index & valid NOK index -> success, NOK removed, list refreshed
-    @Test
-    public void execute_validIndices_success() throws Exception {
-        DeleteNextOfKinCommand cmd =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(0));
-
-        CommandResult result = cmd.execute(model);
-
-        // Message
-        assertTrue(result.getFeedbackToUser().contains("Deleted NextOfKin"));
-
-        // Model.setPatient called with edited patient
-        assertSame(aliceWithTwoNoks, model.lastSetOriginal);
-        assertNotNull(model.lastSetEdited);
-
-        // NOK removed
-        List<NextOfKin> editedNoks = model.lastSetEdited.getNextOfKinList();
-        assertEquals(1, editedNoks.size());
-        assertEquals(nok2, editedNoks.get(0)); // only nok2 remains
-
-        // List refreshed to show all persons
-        assertTrue(model.updateCalled);
-        assertEquals(Model.PREDICATE_SHOW_ALL_PERSONS, model.lastPredicate);
-    }
-
-    //patient index out-of-bounds (>= size) leads to CommandException(MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX)
-    @Test
-    public void execute_outOfBoundsPatientIndex_throwsCommandException() {
-        int outOfBounds = model.getFilteredPatientList().size(); // 1
-        DeleteNextOfKinCommand cmd =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(outOfBounds), Index.fromZeroBased(0));
-
-        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
-        assertEquals(MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX, ex.getMessage());
-    }
-
-    // P3: NOK index out-of-bounds high (>= size) leads to CommandException(MESSAGE_INVALID_NOK_DISPLAYED_INDEX)
-    @Test
-    public void execute_outOfBoundsNokIndex_throwsCommandException() {
-        // alice has 2 NOKs: valid indices 0,1 so using 2 triggers out-of-bounds
-        DeleteNextOfKinCommand cmd =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(2));
-
-        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
-        assertEquals(MESSAGE_INVALID_NOK_DISPLAYED_INDEX, ex.getMessage());
-    }
-
-    //NOK list empty
-    @Test
-    public void execute_emptyNokList_throwsCommandException() {
-        Patient aliceNoNok = aliceBase.withNextOfKinList(List.of());
-        model = new ModelStubCapturingSet(List.of(aliceNoNok));
-
-        DeleteNextOfKinCommand cmd =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(0));
-
-        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
-        assertEquals(MESSAGE_INVALID_NOK_DISPLAYED_INDEX, ex.getMessage());
-    }
-
-    //model is null → NullPointerException
-    @Test
-    public void execute_nullModel_throwsNullPointerException() {
-        DeleteNextOfKinCommand cmd =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(0));
-
-        assertThrows(NullPointerException.class, () -> cmd.execute(null));
-    }
-
-    /* =========================
-       equals() EP partitions
-       ========================= */
-
-    @Test
-    public void equals_sameObject_true() {
-        DeleteNextOfKinCommand cmd =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(1));
-        assertTrue(cmd.equals(cmd));
+        Patient patient = model.getFilteredPatientList().get(INDEX_FIRST_PERSON.getZeroBased());
+        if (patient.getNextOfKinList().size() < 2) {
+            NextOfKin nok1 = new NextOfKin(new Name("Jane Doe"), new Phone("98765432"),
+                    Relationship.fromString("Mother"));
+            NextOfKin nok2 = new NextOfKin(new Name("John Doe"), new Phone("91234567"),
+                    Relationship.fromString("Father"));
+            List<NextOfKin> noks = new ArrayList<>(Arrays.asList(nok1, nok2));
+            Patient updated = patient.withNextOfKinList(noks);
+            model.setPatient(patient, updated);
+        }
     }
 
     @Test
-    public void equals_sameIndices_true() {
-        DeleteNextOfKinCommand a =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(1));
-        DeleteNextOfKinCommand b =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(1));
-        assertTrue(a.equals(b));
+    public void execute_validIndicesUnfilteredList_success() {
+        Index patientIndex = INDEX_FIRST_PERSON;
+        Patient patient = model.getFilteredPatientList().get(patientIndex.getZeroBased());
+
+        // Delete the first NOK
+        Index nokIndex = Index.fromOneBased(1);
+        NextOfKin nokToDelete = patient.getNextOfKinList().get(nokIndex.getZeroBased());
+
+        DeleteNextOfKinCommand command = new DeleteNextOfKinCommand(patientIndex, nokIndex);
+
+        List<NextOfKin> updatedNokList = new ArrayList<>(patient.getNextOfKinList());
+        updatedNokList.remove(nokToDelete);
+        Patient editedPatient = patient.withNextOfKinList(updatedNokList);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patient, editedPatient);
+        expectedModel.updateFilteredPatientList(seedu.noknock.model.Model.PREDICATE_SHOW_ALL_PERSONS);
+
+        String expectedMessage = String.format(DeleteNextOfKinCommand.MESSAGE_DELETE_NOK_SUCCESS,
+                Messages.formatNextOfKin(nokToDelete));
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void equals_differentPatientIndex_false() {
-        DeleteNextOfKinCommand a =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(1));
-        DeleteNextOfKinCommand b =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(1), Index.fromZeroBased(1));
-        assertFalse(a.equals(b));
+    public void execute_invalidPatientIndexUnfilteredList_failure() {
+        Index outOfBoundPatientIndex = Index.fromOneBased(model.getFilteredPatientList().size() + 1);
+        Index anyNokIndex = Index.fromOneBased(1); // arbitrary
+
+        DeleteNextOfKinCommand command = new DeleteNextOfKinCommand(outOfBoundPatientIndex, anyNokIndex);
+
+        assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
     }
 
     @Test
-    public void equals_differentNokIndex_false() {
-        DeleteNextOfKinCommand a =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(0));
-        DeleteNextOfKinCommand b =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(1));
-        assertFalse(a.equals(b));
+    public void execute_invalidNokIndex_failure() {
+        Index patientIndex = INDEX_FIRST_PERSON;
+        Patient patient = model.getFilteredPatientList().get(patientIndex.getZeroBased());
+
+        // NOK index out of bounds
+        int nokCount = patient.getNextOfKinList().size();
+        Index outOfBoundNokIndex = Index.fromOneBased(nokCount + 1);
+
+        DeleteNextOfKinCommand command = new DeleteNextOfKinCommand(patientIndex, outOfBoundNokIndex);
+
+        assertCommandFailure(command, model, Messages.MESSAGE_INVALID_NOK_DISPLAYED_INDEX);
     }
 
     @Test
-    public void equals_nullOrDifferentType_false() {
-        DeleteNextOfKinCommand a =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(0), Index.fromZeroBased(0));
-        assertFalse(a.equals(null));
-        assertFalse(a.equals("not-a-command"));
+    public void equals() {
+        Index pIdx1 = INDEX_FIRST_PERSON;
+        Index pIdx2 = Index.fromOneBased(2);
+        Index nIdx1 = Index.fromOneBased(1);
+        Index nIdx2 = Index.fromOneBased(2);
+
+        DeleteNextOfKinCommand standardCommand = new DeleteNextOfKinCommand(pIdx1, nIdx1);
+
+        // same values -> true
+        DeleteNextOfKinCommand commandWithSameValues = new DeleteNextOfKinCommand(pIdx1, nIdx1);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // null -> false
+        assertFalse(standardCommand.equals(null));
+
+        // different type -> false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different patient index -> false
+        assertFalse(standardCommand.equals(new DeleteNextOfKinCommand(pIdx2, nIdx1)));
+
+        // different nok index -> false
+        assertFalse(standardCommand.equals(new DeleteNextOfKinCommand(pIdx1, nIdx2)));
     }
 
     @Test
-    public void toString_containsIndices() {
-        DeleteNextOfKinCommand a =
-                new DeleteNextOfKinCommand(Index.fromZeroBased(3), Index.fromZeroBased(5));
-        String s = a.toString();
-        assertTrue(s.contains("patientIndex"));
-        assertTrue(s.contains("nokIndex"));
-    }
-    //A stub for replacing actual model
-    private static class ModelStubCapturingSet implements Model {
-        private final ObservableList<Patient> filtered;
-        private Patient lastSetOriginal;
-        private Patient lastSetEdited;
-        private GuiSettings guiSettings;
+    public void toStringMethod() {
+        Index patientIndex = Index.fromOneBased(1);
+        Index nokIndex = Index.fromOneBased(2);
+        DeleteNextOfKinCommand command = new DeleteNextOfKinCommand(patientIndex, nokIndex);
 
-        private boolean updateCalled = false;
-        private Predicate<Patient> lastPredicate;
+        String expected = DeleteNextOfKinCommand.class.getCanonicalName()
+                + "{patientIndex=" + patientIndex
+                + ", nokIndex=" + nokIndex + "}";
 
-        ModelStubCapturingSet(List<Patient> filtered) {
-            this.filtered = FXCollections.observableArrayList(filtered);
-        }
-
-        @Override
-        public ObservableList<Patient> getFilteredPatientList() {
-            return filtered;
-        }
-
-        @Override
-        public void setPatient(Patient target, Patient editedPatient) {
-            this.lastSetOriginal = target;
-            this.lastSetEdited = editedPatient;
-
-            int idx = filtered.indexOf(target);
-            if (idx >= 0) {
-                filtered.set(idx, editedPatient);
-            }
-        }
-
-        @Override
-        public void updateFilteredPatientList(Predicate<Patient> predicate) {
-            this.updateCalled = true;
-            this.lastPredicate = predicate;
-        }
-
-        @Override
-        public void setUserPrefs(seedu.noknock.model.ReadOnlyUserPrefs userPrefs) {
-            throw new UnsupportedOperationException();
-        }
-        @Override
-        public seedu.noknock.model.ReadOnlyUserPrefs getUserPrefs() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public GuiSettings getGuiSettings() {
-            return null;
-        }
-
-        @Override
-        public void setGuiSettings(GuiSettings guiSettings) {
-            this.guiSettings = guiSettings;
-        }
-
-        @Override
-        public java.nio.file.Path getAddressBookFilePath() {
-            throw new UnsupportedOperationException();
-        }
-        @Override
-        public void setAddressBookFilePath(java.nio.file.Path addressBookFilePath) {
-            throw new UnsupportedOperationException();
-        }
-        @Override
-        public void setAddressBook(seedu.noknock.model.ReadOnlyAddressBook addressBook) {
-            throw new UnsupportedOperationException();
-        }
-        @Override
-        public seedu.noknock.model.ReadOnlyAddressBook getAddressBook() {
-            throw new UnsupportedOperationException();
-        }
-        @Override
-        public boolean hasPatient(Patient patient) {
-            throw new UnsupportedOperationException();
-        }
-        @Override
-        public void addPatient(Patient patient) {
-            throw new UnsupportedOperationException();
-        }
-        @Override
-        public void deletePatient(Patient target) {
-            throw new UnsupportedOperationException();
-        }
-        public void addNextOfKin(Patient patient, NextOfKin nok) {
-            throw new UnsupportedOperationException();
-        }
-        public void setNok(Patient patient, NextOfKin target, NextOfKin editedNok) {
-            throw new UnsupportedOperationException();
-        }
-        public void deleteNextOfKin(Patient patient, NextOfKin nok) {
-            throw new UnsupportedOperationException();
-        }
+        assertEquals(expected, command.toString());
     }
 }
