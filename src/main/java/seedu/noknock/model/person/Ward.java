@@ -1,12 +1,14 @@
 package seedu.noknock.model.person;
 
-import java.util.Objects;
+import static seedu.noknock.commons.util.StringUtil.removeSpaces;
 
+import java.util.Objects;
 /**
  * Represents a hospital ward assigned to a person.
  * <p>
  * A ward is identified by a room number that must be a positive integer followed by an alphabet (e.g., "2A").
  * This class provides validation for the ward format and stores the ward information for a person.
+ *
  */
 public class Ward {
     public static final String REGEX_PATTERN = "[1-9]\\d*[a-zA-Z]";
@@ -20,7 +22,7 @@ public class Ward {
      * @param room
      */
     public Ward(String room) {
-        this.room = room;
+        this.room = removeSpaces(room).toUpperCase();
     }
 
     public static boolean isValidWard(String ward) {
