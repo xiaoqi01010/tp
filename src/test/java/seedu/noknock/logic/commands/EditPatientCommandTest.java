@@ -12,6 +12,7 @@ import static seedu.noknock.logic.commands.CommandTestUtil.VALID_WARD_BOB;
 import static seedu.noknock.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.noknock.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.noknock.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.noknock.testutil.Assert.assertThrows;
 import static seedu.noknock.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.noknock.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.noknock.testutil.TypicalPatients.getTypicalAddressBook;
@@ -43,7 +44,7 @@ public class EditPatientCommandTest {
         EditPatientCommand editPatientCommand = new EditPatientCommand(INDEX_FIRST_PERSON, descriptor);
 
         String expectedMessage = String.format(EditPatientCommand.MESSAGE_EDIT_PERSON_SUCCESS,
-            Messages.formatPatient(editedPatient));
+                Messages.formatPatient(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPatient(model.getFilteredPatientList().get(0), editedPatient);
@@ -58,8 +59,8 @@ public class EditPatientCommandTest {
 
         PatientBuilder personInList = new PatientBuilder(lastPerson);
         Patient editedPatient = personInList.withName(VALID_NAME_BOB)
-            .withWard(VALID_WARD_BOB).withIC(VALID_IC_BOB)
-            .withTags(VALID_TAG_HUSBAND).build();
+                .withWard(VALID_WARD_BOB).withIC(VALID_IC_BOB)
+                .withTags(VALID_TAG_HUSBAND).build();
 
         EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB)
             .withWard(VALID_WARD_BOB).withIC(VALID_IC_BOB).withTags(VALID_TAG_HUSBAND).build();
@@ -106,6 +107,14 @@ public class EditPatientCommandTest {
     }
 
     @Test
+    public void createEditedPatient_failure() {
+        Patient firstPerson = model.getFilteredPatientList().get(INDEX_FIRST_PERSON.getZeroBased());
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(firstPerson).build();
+        assertThrows(NullPointerException.class, () -> new EditPatientCommand(null,
+                new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB).build()));
+    }
+
+    @Test
     public void execute_duplicatePersonUnfilteredList_failure() {
         Patient firstPerson = model.getFilteredPatientList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(firstPerson).build();
@@ -145,6 +154,7 @@ public class EditPatientCommandTest {
     public void execute_invalidPersonIndexFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
+
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPatientList().size());
 

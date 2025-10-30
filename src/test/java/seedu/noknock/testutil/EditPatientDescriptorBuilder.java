@@ -8,7 +8,6 @@ import seedu.noknock.logic.commands.EditPatientCommand.EditPatientDescriptor;
 import seedu.noknock.model.person.IC;
 import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.Patient;
-import seedu.noknock.model.person.Person;
 import seedu.noknock.model.person.Ward;
 import seedu.noknock.model.tag.Tag;
 
@@ -30,13 +29,12 @@ public class EditPatientDescriptorBuilder {
     /**
      * Returns an {@code EditPatientDescriptor} with fields containing {@code person}'s details
      */
-    public EditPatientDescriptorBuilder(Person person) {
-        assert person instanceof Patient;
-        Patient patient = (Patient) person;
+    public EditPatientDescriptorBuilder(Patient patient) {
+        assert patient instanceof Patient;
         descriptor = new EditPatientDescriptor();
         descriptor.setName(patient.getName());
         descriptor.setWard(patient.getWard());
-        descriptor.setIc(patient.getIC());
+        descriptor.setIC(patient.getIC());
         descriptor.setTags(patient.getTags());
     }
 
@@ -60,7 +58,7 @@ public class EditPatientDescriptorBuilder {
      * Sets the {@code Email} of the {@code EditPatientDescriptor} that we are building.
      */
     public EditPatientDescriptorBuilder withIC(String ic) {
-        descriptor.setIc(new IC(ic));
+        descriptor.setIC(new IC(ic));
         return this;
     }
 
