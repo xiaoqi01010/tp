@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 import seedu.noknock.commons.core.index.Index;
 import seedu.noknock.logic.Messages;
 import seedu.noknock.logic.commands.EditPatientCommand;
-import seedu.noknock.logic.commands.EditPatientCommand.EditPatientDescriptor;
 import seedu.noknock.model.person.IC;
 import seedu.noknock.model.person.Name;
 import seedu.noknock.model.person.Ward;
@@ -109,7 +108,7 @@ public class EditPatientCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         String userInput = "1" + NAME_DESC_BOB + WARD_DESC_BOB + IC_DESC_BOB + TAG_DESC_HUSBAND;
 
-        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+        EditPatientCommand.EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
             .withName(VALID_NAME_BOB)
             .withWard(VALID_WARD_BOB)
             .withIC(VALID_IC_BOB)
@@ -123,7 +122,7 @@ public class EditPatientCommandParserTest {
     public void parse_someFieldsSpecified_success() {
         String userInput = "1" + NAME_DESC_BOB + WARD_DESC_BOB;
 
-        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+        EditPatientCommand.EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
             .withName(VALID_NAME_BOB)
             .withWard(VALID_WARD_BOB)
             .build();
@@ -136,7 +135,7 @@ public class EditPatientCommandParserTest {
     public void parse_oneFieldSpecified_success() {
         // name
         String userInput = "1" + NAME_DESC_BOB;
-        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+        EditPatientCommand.EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
             .withName(VALID_NAME_BOB)
             .build();
         EditPatientCommand expectedCommand = new EditPatientCommand(Index.fromOneBased(1), descriptor);
@@ -171,7 +170,7 @@ public class EditPatientCommandParserTest {
     public void parse_multipleTagsSpecified_success() {
         String userInput = "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
 
-        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+        EditPatientCommand.EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
             .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
             .build();
         EditPatientCommand expectedCommand = new EditPatientCommand(Index.fromOneBased(1), descriptor);
@@ -183,7 +182,7 @@ public class EditPatientCommandParserTest {
     public void parse_resetTags_success() {
         String userInput = "1" + TAG_EMPTY;
 
-        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+        EditPatientCommand.EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
             .withTags()
             .build();
         EditPatientCommand expectedCommand = new EditPatientCommand(Index.fromOneBased(1), descriptor);
