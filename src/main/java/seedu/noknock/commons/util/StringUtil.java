@@ -35,10 +35,8 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         return Arrays.stream(wordsInPreppedSentence)
-                .anyMatch(w -> {
-                    String lw = w.toLowerCase();
-                    return lw.startsWith(preppedWord);
-                });
+                .anyMatch(wordInSentence ->
+                wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()));
     }
 
     /**
