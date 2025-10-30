@@ -53,8 +53,8 @@ CaringSessionCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
 
-CaringSessionCard ..> Model
-PatientCard ..> Model
+CaringSessionCard ..down..> Model
+PatientCard ..down..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
