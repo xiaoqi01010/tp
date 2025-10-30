@@ -37,8 +37,10 @@ public class DeleteNextOfKinCommandTest {
 
         Patient patient = model.getFilteredPatientList().get(INDEX_FIRST_PERSON.getZeroBased());
         if (patient.getNextOfKinList().size() < 2) {
-            NextOfKin nok1 = new NextOfKin(new Name("Jane Doe"), new Phone("98765432"), Relationship.fromString("Mother"));
-            NextOfKin nok2 = new NextOfKin(new Name("John Doe"), new Phone("91234567"), Relationship.fromString("Father"));
+            NextOfKin nok1 = new NextOfKin(new Name("Jane Doe"), new Phone("98765432"),
+                    Relationship.fromString("Mother"));
+            NextOfKin nok2 = new NextOfKin(new Name("John Doe"), new Phone("91234567"),
+                    Relationship.fromString("Father"));
             List<NextOfKin> noks = new ArrayList<>(Arrays.asList(nok1, nok2));
             Patient updated = patient.withNextOfKinList(noks);
             model.setPatient(patient, updated);
