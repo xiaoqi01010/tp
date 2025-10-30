@@ -12,10 +12,10 @@ Class AddressBook
 Class ModelManager
 Class UserPrefs
 
-Class UniquePersonList
-Class Person
-Class Address
-Class Email
+Class UniquePatientList
+Class Patient
+abstract class Person
+Class NextOfKin
 Class Name
 Class Phone
 Class Tag
