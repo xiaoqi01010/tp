@@ -9,6 +9,7 @@ pageNav: 3
 <!--* Table of Contents -->
 <page-nav-print />
 
+
 ## What is NOKnock?
 
 Do you have trouble keeping track of the care your patients need? Do you wish that you didn't have to go through entire Excel sheets whenever you need to contact a patient's family? We've got the solution!
@@ -120,11 +121,11 @@ list-patients
 
 **2) Add a new patient**
 ~~~
-add-patient n/Aisha Tan ic/S1234567A w/2A t/diabetes
+add-patient n/Aisha Tan ic/S1111111A w/2A t/diabetes
 ~~~
 Expected:
 ~~~
-Patient added: Aisha Tan (S1234567A)
+New patient added: Aisha Tan
 ~~~
 
 **3) Find your patient’s index**
@@ -135,25 +136,25 @@ Note the Index shown for “Aisha Tan” (e.g., 5). Use that number in the next 
 
 **4) Add a Next‑of‑Kin for that patient (replace X with patient index)**
 ~~~
-add-nok X n/Daniel Tan p/98765432 r/son
+add-nok X n/Daniel Tan p/6598765432 r/son
 ~~~
 Expected:
 ~~~
-NOK added for Aisha Tan: Daniel Tan (son, 98765432)
+Added NextOfKin: Daniel Tan to Patient: Aisha Tan
 ~~~
 
 **5) Schedule a caring session (replace X; adjust date/time as needed)**
 ~~~
-add-session X d/2025-11-01 time/09:30 type/medication notes/Metformin 500mg
+add-session X d/2025-10-31 time/09:30 type/medication notes/Metformin 500mg
 ~~~
 Expected:
 ~~~
-Caring session added for Aisha Tan: medication on 2025-11-01 at 09:30
+Added Caring Session: medication on 2025-10-31 at 09:30 to Patient: Aisha Tan
 ~~~
 
 **6) View the full patient profile**
 ~~~
-view-patient 1
+view-patient X
 ~~~
 You’ll see Aisha’s details, linked NOK(s), and upcoming sessions in one place.
 
@@ -169,6 +170,10 @@ If you want the session to appear here, schedule one with today’s date.
 <box type="tip" seamless>
 Made a typo? Use <code>edit-patient</code>, <code>edit-nok</code>, or <code>edit-session</code> to update fields; or the <code>delete-*</code> commands to remove entries. See Features below for full command formats and options.
 </box>
+
+---
+
+## Features
 
 <box type="info" seamless>
 
@@ -238,7 +243,7 @@ Creates a new patient record.
 **Examples:**
 
 * `add-patient n/Dylan w/2A ic/S1234567A`
-* `add-patient n/Javier w/8B ic/S9876543B t/diabetes t/mobility-issues`
+* `add-patient n/Javier w/8B ic/S9876543B t/diabetes t/mobilityIssues`
 
 <box type="tip" seamless>
 
@@ -248,14 +253,9 @@ Creates a new patient record.
 
 ![help message](images/TipCommandHint.png)
 
-<box type="warning" seamless>
-
-**Common mistakes**: It is common for one to enter the orders of fields wrongly, e.g.,
-
-```
-add-patient n/Amy ic/S1234567A w/2A
-```
-
+**Note**: The order of fields does not matter. For example,
+<box type="error">
+add-patient t/Urgent ic/S2345678A w/2A n/Amy
 </box>
 
 <box type="tip" seamless>
@@ -266,8 +266,8 @@ add-patient n/Amy ic/S1234567A w/2A
 
 **Output:**
 
-* Success → `Patient added: Dylan (S1234567A)`
-* Duplicate → `Patient with IC S1234567A already exists`
+* Success → `New patient added: Dylan`
+* Duplicate → `This patient already exists in the address book`
 * Invalid input → parameter-specific error message
 
 **Note:** A patient is considered a **duplicate** when the **IC** matches exactly.
@@ -286,8 +286,8 @@ Updates an existing patient’s information. At least one field must be provided
 
 **Output:**
 
-* Success → `Patient updated: Yue Yang (S1234567A)`
-* Invalid index → `Patient index X is out of range`
+* Success → `Edited Patient: Yue Yang`
+* Invalid index → `The patient index provided is invalid`
 * Duplicate IC → `This patient already exists in the address book`
 
 ❌ **Possible mistake**: `edit-patient 1` is incorrect because no field was provided.
@@ -303,7 +303,7 @@ Removes a patient and all associated data (NOKs, sessions).
 
 **Output:**
 
-* Success → `Patient deleted: Yue Yang`
+* Success → `Deleted Patient: Yue Yang`
 * Failure → `Invalid patient index. Please use a number from the patient list.`
 
 <box type="warning" seamless>
@@ -335,9 +335,8 @@ Shows full patient details including NOKs and upcoming sessions.
 
 **Output:**
 
-* Success → Full profile with NOK list and upcoming sessions.
+* Success → Full profile with NOK list and upcoming sessions
 * Failure → `The patient index provided is invalid`
-
 ![View](images/ViewPatient.png)
 ### Finding patients by name: `find-patient`
 
@@ -353,26 +352,13 @@ Search for patients by name (case-insensitive, partial matching).
 
 **Output:**
 
-* Success → `2 persons listed!` + list
+* Success → `X persons listed!` + list
 * None → `0 persons listed!`
-
-<box type="tip" seamless>
-
-**Tip**: You can enter multiple keywords(capitalised or non-capitalised is fine) to find more than 1 patient. E.g
-
-</box>
-
+⚠️ Tip: You can enter multiple keywords(capitalised or non-capitalised is fine) to find more than 1 patient. E.g
 ![Find](images/TipFindCommand.png)
 
 ![Find](images/TipFindCommandAfter.png)
-
-<box type="warning" seamless>
-
-**Common Mistake**: keywords must match at least 1 word in patient's name. A prefix will not yield
-any result.
-
-</box>
-
+❗ **Common error**: Keywords can match any part of a patient’s name from the start of a word. For example, searching Alex will match “Alex Tan” and “Tan Alex”, but not “Malex Tan” (since the match is in the middle of a word).
 ### Finding patients by NOK name: `find-by-nok`
 
 Search for patients based on their NOK’s name.
@@ -387,7 +373,7 @@ Search for patients based on their NOK’s name.
 
 **Output:**
 
-* Success → `2 persons listed!` + list
+* Success → `1 persons listed!` + list
 * None → `0 persons listed!`
 
 ---
@@ -403,15 +389,14 @@ Adds a Next-of-Kin contact for a patient.
 
 **Examples:**
 
-* `add-nok 1 n/Oad p/98765432 r/son`
-* `add-nok 2 n/Dr. Kapikapi p/6234-5678 r/doctor`
+* `add-nok 1 n/Oad p/6598765432 r/son`
 
 **Output:**
 
 * Success → `Added NextOfKin: Oad to Patient: Dylan`
 * Duplicate → `This next of kin already exists for this patient`
 
-**Note:** A NOK is considered a **duplicate** when both the **Name** and **Phone** match exactly. *(Comparison is case-sensitive.)*
+**Note**: Relationship must be one of: Daughter, Father, Mother, Grandmother, Grandfather, Granddaughter, GrandSon, Son (case-insensitive)
 
 <box type="tip" seamless>
 
@@ -431,11 +416,11 @@ Updates NOK details.
 `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`
 
 **Example:**  
-`edit-nok 1 1 p/88888888`
+`edit-nok 1 1 p/6588888888`
 
 **Output:**
 
-* Success → `Edited NextOfKin: oad of Patient: Dylan`
+* Success → `Edited NextOfKin: Jane Doe of Patient: Bernice Yu`
 * Failure → `The patient/Next-of-Kin index provided is invalid`
 
 ### Deleting a NOK: `delete-nok`
@@ -450,7 +435,7 @@ Removes a NOK from a patient.
 
 **Output:**
 
-* Success → `Deleted NextOfKin: oad`
+* Success → `Deleted NextOfKin: Oad`
 * Failure → `The patient/Next-of-Kin index provided is invalid`
 
 ---
@@ -466,29 +451,29 @@ Schedules a care session for a patient.
 
 **Examples:**
 
-* `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot`
-* `add-session 2 d/25-12-2024 time/2:30pm type/hygiene`
+* `add-session 1 d/2025-10-31 time/14:30 type/medication notes/Give insulin shot`
+* `add-session 2 d/25-10-2025 time/2:30pm type/hygiene`
 
 **Output:**
 
-* Success → `Caring session added for Dylan: medication on 2024-12-25 at 14:30`
+* Success → `Added Caring Session: hygiene on 2024-12-25 at 14:30 to Patient: Dylan`
 * Failure → parameter-specific error (e.g. invalid date/time)
 
 ### Editing a session: `edit-session`
 
-Edit an existing care session for a patient. You may also update the session status (`complete` or `incomplete`).
+Edit an existing care session for a patient. You may also update the session status (`completed` or `incomplete`).
 
 **Format:**
 `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`
 
 **Examples:**
 
-* `edit-session 1 2 d/2024-12-25 t/14:30 type/medication notes/Adjust dose status/complete`
+* `edit-session 1 1 d/2024-12-25 time/14:30 type/medication notes/Adjust dose status/completed`
 * `edit-session 2 1 status/incomplete`
 
 **Output:**
 
-* Success -> `Added Caring Session: medication on 2025-12-25 at 14:30 to Patient: Javier`
+* Success -> `Edited CaringSession: medication on 2024-12-25 at 14:30 of Patient: Dylan`
 * Failure -> parameter-specific error (e.g. invalid date/time or indices)
 
 <box type="tip" seamless>
@@ -512,7 +497,7 @@ Deletes a care session from a patient.
 
 **Output:**
 
-* Success → `Deleted caring session for medication on 2025-12-25 at 14:30: Javier`
+* Success → `Deleted caring session for medication on 2025-10-31 at 14:30: Dylan`
 * Failure → `The patient/caring session index provided is invalid`
 
 ### Viewing today’s sessions: `sessions-today`
@@ -524,8 +509,8 @@ Displays all caring sessions scheduled for today.
 
 **Output:**
 
-* Success → `today's sessions list` + list
-* None → `No caring sessions scheduled for today` + Shows an empty table with column headers but no entries.
+* Success → `Today's caring sessions: X patients.` + list
+* None → `Today's caring sessions: 0 patients. Type 'list-patients' to undo`
 
 ### Viewing this week’s sessions: `sessions-week`
 
@@ -536,8 +521,8 @@ Displays all caring sessions scheduled for the current week (Monday to Sunday).
 
 **Output:**
 
-* Success → `this week's sessions` + list
-* None → `No caring sessions scheduled for this week` + Shows an empty table with column headers but no entries.
+* Success → `This week's caring sessions: X patients.` + list
+* None → `This week's caring sessions: 0 patients. Type 'list-patients' to undo`
 
 ---
 
@@ -592,23 +577,23 @@ Furthermore, certain edits can cause the NOKnock to behave in unexpected ways (e
 
 ## Command Summary
 
-| **Action**                                                       | **Format / Example**                                                                                                                                                                      |
-|------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**List Patients**](#listing-all-patients-list-patients)         | `list-patients`                                                                                                                                                                           |
-| [**View Patient**](#viewing-patient-details-view-patient)        | `view-patient INDEX`                                                                                                                                                                      |
-| [**Add Patient**](#adding-a-patient-add-patient)                 | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                            |
-| [**Edit Patient**](#editing-a-patient-edit-patient)              | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                      |
-| [**Delete Patient**](#deleting-a-patient-delete-patient)         | `delete-patient INDEX`<br>e.g. `delete-patient 2`                                                                                                                                         |
-| [**Add NOK**](#adding-a-nok-add-nok)                             | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/+6598765432 r/son`                                                                                       |
-| [**Edit NOK**](#editing-a-nok-edit-nok)                          | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/+6588888888`                                                                               |
-| [**Delete NOK**](#deleting-a-nok-delete-nok)                     | `delete-nok PATIENT_INDEX NOK_INDEX`                                                                                                                                                      |
-| [**Add Caring Session**](#adding-a-session-add-session)          | `add-caring-session PATIENT_INDEX d/DATE t/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-caring-session 1 d/2024-12-25 t/14:30 type/medication notes/Give insulin shot`                 |
-| [**Edit Caring Session**](#editing-a-session-edit-session)       | `edit-caring-session PATIENT_INDEX SESSION_INDEX [d/DATE] [t/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`<br>e.g. `edit-caring-session 1 2 d/2024-12-25 t/14:30 status/complete` |
-| [**Delete Caring Session**](#deleting-a-session-delete-session)  | `delete-caring-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-caring-session 1 2`                                                                                                   |
-| [**Sessions Today**](#viewing-today-s-sessions-sessions-today)   | `sessions-today`                                                                                                                                                                          |
-| [**Sessions Week**](#viewing-this-week-s-sessions-sessions-week) | `sessions-week`                                                                                                                                                                           |
-| [**Help**](#viewing-help-help)                                  | `help`                                                                                                                                                                                    |
-| **Exit**                                                         | `exit`                                                                                                                                                                                    |
+| **Action**                                                       | **Format / Example**                                                                                                                                                                                                 |
+|------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**List Patients**](#listing-all-patients-list-patients)         | `list-patients`                                                                                                                                                                                                      |
+| [**View Patient**](#viewing-patient-details-view-patient)        | `view-patient INDEX`                                                                                                                                                                                                 |
+| [**Add Patient**](#adding-a-patient-add-patient)                 | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                                                       |
+| [**Edit Patient**](#editing-a-patient-edit-patient)              | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                                                 |
+| [**Delete Patient**](#deleting-a-patient-delete-patient)         | `delete-patient INDEX`<br>e.g. `delete-patient 2`                                                                                                                                                                    |
+| [**Add NOK**](#adding-a-nok-add-nok)                             | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/6598765432 r/son`                                                                                                                   |
+| [**Edit NOK**](#editing-a-nok-edit-nok)                          | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/6588888888`                                                                                                           |
+| [**Delete NOK**](#deleting-a-nok-delete-nok)                     | `delete-nok PATIENT_INDEX NOK_INDEX`                                                                                                                                                                                 |
+| [**Add Caring Session**](#adding-a-session-add-session)          | `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-session 1 d/2025-10-31 time/14:30 type/medication notes/Give insulin shot`                                                    |
+| [**Edit Caring Session**](#editing-a-session-edit-session)       | `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`<br>e.g. `edit-session 1 1 d/2024-12-25 time/14:30 type/medication notes/Adjust dose status/completed` |
+| [**Delete Caring Session**](#deleting-a-session-delete-session)  | `delete-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-session 1 2`                                                                                                                                            |
+| [**Sessions Today**](#viewing-today-s-sessions-sessions-today)   | `sessions-today`                                                                                                                                                                                                     |
+| [**Sessions Week**](#viewing-this-week-s-sessions-sessions-week) | `sessions-week`                                                                                                                                                                                                      |
+| [**Help**](#viewing-help-help)                                   | `help`                                                                                                                                                                                                               |
+| **Exit**                                                         | `exit`                                                                                                                                                                                                               |
 
 ## Glossary
 
