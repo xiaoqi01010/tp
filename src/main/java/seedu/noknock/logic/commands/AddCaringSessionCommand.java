@@ -31,7 +31,7 @@ public class AddCaringSessionCommand extends Command {
         + PREFIX_DATE + "DATE "
         + PREFIX_TIME + "TIME "
         + PREFIX_CARE_TYPE + "CARE_TYPE ["
-        + PREFIX_NOTES + "notes ]"
+        + PREFIX_NOTES + "NOTES]\n"
         + "Example: " + COMMAND_WORD + " 1 "
         + PREFIX_DATE + "2024-12-25 "
         + PREFIX_TIME + "14:30 "
