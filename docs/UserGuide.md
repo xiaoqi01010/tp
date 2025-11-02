@@ -237,6 +237,12 @@ Displays all patients with basic information.
 * Success → Table with Index, Name, IC, Ward, Tags, NOK List, Caring Session List
 * None → Shows an empty table with column headers but no entries.
 
+<box type="info" seamless>
+
+**Note:** Using `list-patients` will automatically show all caring sessions (past and upcoming) for each patient in the right panel. By default, it should clear any filters applied by previous `find-patient` or `find-by-nok` commands.
+
+</box>
+
 ![List Example](images/screenshots/screenshot_list.png)
 
 ### Adding a patient: `add-patient`
@@ -440,7 +446,7 @@ Adds a Next-of-Kin contact for a patient.
 
 </box>
 
-After adding a patient, you should see something similar to the picture below
+After adding a NOK, you should see something similar to the picture below
 
 ![AddNOK](images/TipAddNOKCommand.png)
 
@@ -495,6 +501,14 @@ Schedules a care session for a patient.
 * Success → `Added Caring Session: hygiene on 2024-12-25 at 14:30 to Patient: Dylan`
 * Failure → parameter-specific error (e.g. invalid date/time)
 
+<box type="info" seamless>
+
+**Note**: Two caring sessions for the same patient cannot be scheduled at the same date and time. If you attempt to add a session with identical date and time to an existing session, NOKnock will reject it.
+
+Additionally, caring session **can be scheduled in the past.** This is to allow users to log past caring sessions that were not recorded at the time they occurred.
+
+</box>
+
 ### Editing a session: `edit-session`
 
 Edit an existing care session for a patient. You may also update the session status (`completed` or `incomplete`).
@@ -512,10 +526,15 @@ Edit an existing care session for a patient. You may also update the session sta
 * Success -> `Edited CaringSession: medication on 2024-12-25 at 14:30 of Patient: Dylan`
 * Failure -> parameter-specific error (e.g. invalid date/time or indices)
 
-<box type="tip" seamless>
+<box type="warning" seamless>
 
-**Tip**: To get a better view of the caring session for a specific patient before editing, use `view-patient`
-command. E.g. To edit a session of first patient, limit the caring sessions view to that of the first patient only
+**Important**: `SESSION_INDEX` refers to the index of the session **for that specific patient**, not the global index across all sessions. It is ordered by the time each session was added to that patient.
+
+To find the correct `SESSION_INDEX`:
+
+1. Use `find-patient NAME` to locate your patient (if needed)
+2. Use `view-patient PATIENT_INDEX` to see all sessions for that patient with their indices
+3. Use the session index displayed in the `view-patient` output for your edit command
 
 </box>
 
@@ -548,7 +567,7 @@ Displays all caring sessions scheduled for today.
 * Success → `Today's caring sessions: X patients.` + list
 * None → `Today's caring sessions: 0 patients. Type 'list-patients' to undo`
 
-### Viewing this week’s sessions: `sessions-week`
+### Viewing this week's sessions: `sessions-week`
 
 Displays all caring sessions scheduled for the current week (Monday to Sunday).
 
@@ -559,6 +578,12 @@ Displays all caring sessions scheduled for the current week (Monday to Sunday).
 
 * Success → `This week's caring sessions: X patients.` + list
 * None → `This week's caring sessions: 0 patients. Type 'list-patients' to undo`
+
+<box type="tip" seamless>
+
+**Tip**: To see all sessions across all patients (including past sessions) for record-keeping purposes, simply use: `list-patients`. This displays all patients and their associated caring sessions in one comprehensive view.
+
+</box>
 
 ---
 
@@ -622,13 +647,13 @@ Furthermore, certain edits can cause the NOKnock to behave in unexpected ways (e
 | **Action**                                                       | **Format / Example**                                                                                                                                                                                                 |
 |------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [**List Patients**](#listing-all-patients-list-patients)         | `list-patients`                                                                                                                                                                                                      |
-| [**View Patient**](#viewing-patient-details-view-patient)        | `view-patient INDEX`                                                                                                                                                                                                 |
-| [**Add Patient**](#adding-a-patient-add-patient)                 | `add-patient n/NAME ic/NRIC w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                                                            |
-| [**Edit Patient**](#editing-a-patient-edit-patient)              | `edit-patient INDEX [n/NAME] [w/WARD] [ic/NRIC] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                                                      |
+| [**View Patient**](#viewing-patient-details-view-patient)        | `view-patient INDEX`<br>e.g. `view-patient 1`                                                                                                                                                                        | 
+| [**Add Patient**](#adding-a-patient-add-patient)                 | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                                                       |
+| [**Edit Patient**](#editing-a-patient-edit-patient)              | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                                                 |
 | [**Delete Patient**](#deleting-a-patient-delete-patient)         | `delete-patient INDEX`<br>e.g. `delete-patient 2`                                                                                                                                                                    |
 | [**Add NOK**](#adding-a-nok-add-nok)                             | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/6598765432 r/son`                                                                                                                   |
 | [**Edit NOK**](#editing-a-nok-edit-nok)                          | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/6588888888`                                                                                                           |
-| [**Delete NOK**](#deleting-a-nok-delete-nok)                     | `delete-nok PATIENT_INDEX NOK_INDEX`                                                                                                                                                                                 |
+| [**Delete NOK**](#deleting-a-nok-delete-nok)                     | `delete-nok PATIENT_INDEX NOK_INDEX`<br>e.g. `delete-nok 1`                                                                                                                                                          |
 | [**Add Caring Session**](#adding-a-session-add-session)          | `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-session 1 d/2025-10-31 time/14:30 type/medication notes/Give insulin shot`                                                    |
 | [**Edit Caring Session**](#editing-a-session-edit-session)       | `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`<br>e.g. `edit-session 1 1 d/2024-12-25 time/14:30 type/medication notes/Adjust dose status/completed` |
 | [**Delete Caring Session**](#deleting-a-session-delete-session)  | `delete-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-session 1 2`                                                                                                                                            |
@@ -639,15 +664,15 @@ Furthermore, certain edits can cause the NOKnock to behave in unexpected ways (e
 
 ## Glossary
 
-| Term / Acronym     | Definition                                                                                                                                                                                                                                  |
-|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **IC**             | **Identification Code** — a **Singapore NRIC (National Registration Identity Card)**, a unique 9-character identifier for each patient. Includes citizens (S-prefix) and permanent residents (T-prefix). Example: `S1234567A`, `T9876543B`. |
-| **NOK**            | **Next-of-Kin** — a person designated as the patient’s emergency or primary contact (e.g., family member, caregiver).                                                                                                                       |
-| **GUI**            | **Graphical User Interface** — a visual interface of the app with windows, buttons, and menus, as opposed to the CLI (command-line interface).                                                                                              |
-| **Ward**           | A designated area or unit within the nursing home where the patient resides, e.g., `2A`.                                                                                                                                                    |
-| **Caring Session** | A scheduled task or activity related to patient care, such as administering medication, hygiene assistance, or medical observation.                                                                                                         |
-| **CLI**            | **Command-Line Interface** — an interface where the user types text commands to perform actions.                                                                                                                                            |
-| **JSON**           | **JavaScript Object Notation** — a lightweight data format used to store and exchange data; NOKnock stores patient/NOK/session data in JSON.                                                                                                |
-| **JAR**            | **Java ARchive** — a packaged file containing the Java application, which can be run on any system with Java installed.                                                                                                                     |
-| **Index**          | A 1-based number representing a patient, NOK, or session in a list (e.g., patient 1, NOK 2).                                                                                                                                                |
-| **Tag**            | A label used to classify a patient’s condition or requirement, e.g., `diabetes`, `mobility-issues`.                                                                                                                                         |
+| Term / Acronym     | Definition                                                                                                                                     |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| **IC**             | **Identification Code** — a unique identifier for each patient, e.g., `S1234567A`.                                                             |
+| **NOK**            | **Next-of-Kin** — a person designated as the patient’s emergency or primary contact (e.g., family member, caregiver).                          |
+| **GUI**            | **Graphical User Interface** — a visual interface of the app with windows, buttons, and menus, as opposed to the CLI (command-line interface). |
+| **Ward**           | A designated area or unit within the nursing home where the patient resides, e.g., `2A`.                                                       |
+| **Caring Session** | A scheduled task or activity related to patient care, such as administering medication, hygiene assistance, or medical observation.            |
+| **CLI**            | **Command-Line Interface** — an interface where the user types text commands to perform actions.                                               |
+| **JSON**           | **JavaScript Object Notation** — a lightweight data format used to store and exchange data; NOKnock stores patient/NOK/session data in JSON.   |
+| **JAR**            | **Java ARchive** — a packaged file containing the Java application, which can be run on any system with Java installed.                        |
+| **Index**          | A 1-based number representing a patient, NOK, or session in a list (e.g., patient 1, NOK 2).                                                   |
+| **Tag**            | A label used to classify a patient’s condition or requirement, e.g., `diabetes`, `mobility-issues`.                                            |
