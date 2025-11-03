@@ -364,7 +364,7 @@ Shows full patient details including NOKs and upcoming sessions.
 
 ### Finding patients by name: `find-patient`
 
-Search for patients by name (case-insensitive, partial matching).
+Search for patients by name (case-insensitive, partial matching from first letter).
 
 **Format:**  
 `find-patient KEYWORD [MORE_KEYWORDS]...`
