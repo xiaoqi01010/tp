@@ -200,6 +200,14 @@ Made a typo? Use <code>edit-patient</code>, <code>edit-nok</code>, or <code>edit
 * Additional parameters for commands that do not accept them will be ignored.<br>
   e.g. `help abc` = `help`.
 
+* Names accept letters (including accents), numbers, spaces, apostrophes ('), slashes (/), and hyphens (-)
+
+* Avoid using command prefixes inside field values. Do not include n/, ic/, w/, t/ within names or other values, as they will be interpreted as new fields.
+  Example: add-patient n/Javier w/o life ic/S1234567A → will be parsed as name = Javier, ward = o life (invalid).
+
+* Only the documented prefixes are recognized. Any other xxx/ token (e.g., e/ or email/) is treated as part of the previous field’s value.
+  e.g. w/2A e/email@gmail.com → will be read as ward = "2A e/email@gmail.com" and likely rejected by ward validation. Use only the prefixes shown in this guide.
+
 * NOKnock automatically trims leading, trailing, and excess intermediate spaces in user input for key fields:
   e.g. <code>ic/S1234567A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code> → <code>ic/S1234567A</code>,  
   <code>n/Jane&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Doe</code> → <code>n/Jane Doe</code>.
@@ -211,6 +219,8 @@ Made a typo? Use <code>edit-patient</code>, <code>edit-nok</code>, or <code>edit
 </box>
 
 ---
+
+### Features
 
 ## Viewing help : `help`
 
@@ -310,6 +320,9 @@ Updates an existing patient’s information. At least one field must be provided
 <box type="warning" seamless>
 
 **Possible Mistake**: `edit-patient 1` is incorrect because no field was provided.
+**Tag Behavior**: 
+* Supplying t/TAG during edit-patient replaces the entire set of tags.
+* To remove all tags, use t/ with no values.
 
 </box>
 
@@ -600,6 +613,25 @@ Displays all caring sessions scheduled for the current week (Monday to Sunday).
 
 ---
 
+## Clearing Database
+
+## Purging all data (irreversible)
+
+Completely wipes all patients, NOKs, and caring sessions from the database. This operation cannot be undone and data cannot be recovered.
+
+<box type="warning" seamless> This action is permanent. Ensure you have backed up `data/noknock.json` before proceeding. </box>
+
+**Format:**
+`i-understand-and-confirm-purge-database-will-lose-all-data`
+
+**Output:**
+
+* Success → Database (noknock.json) has been cleared!
+
+After purging, you can start fresh or restore from a backup by replacing data/noknock.json while the app is closed.
+
+---
+
 ## Data Management
 
 ### Saving the data
@@ -657,23 +689,24 @@ Furthermore, certain edits can cause the NOKnock to behave in unexpected ways (e
 
 ## Command Summary
 
-| **Action**                                                       | **Format / Example**                                                                                                                                                                                                 |
-|------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**List Patients**](#listing-all-patients-list-patients)         | `list-patients`                                                                                                                                                                                                      |
-| [**View Patient**](#viewing-patient-details-view-patient)        | `view-patient INDEX`<br>e.g. `view-patient 1`                                                                                                                                                                        | 
-| [**Add Patient**](#adding-a-patient-add-patient)                 | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                                                       |
-| [**Edit Patient**](#editing-a-patient-edit-patient)              | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                                                 |
-| [**Delete Patient**](#deleting-a-patient-delete-patient)         | `delete-patient INDEX`<br>e.g. `delete-patient 2`                                                                                                                                                                    |
-| [**Add NOK**](#adding-a-nok-add-nok)                             | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/6598765432 r/son`                                                                                                                   |
-| [**Edit NOK**](#editing-a-nok-edit-nok)                          | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/6588888888`                                                                                                           |
-| [**Delete NOK**](#deleting-a-nok-delete-nok)                     | `delete-nok PATIENT_INDEX NOK_INDEX`<br>e.g. `delete-nok 1`                                                                                                                                                          |
-| [**Add Caring Session**](#adding-a-session-add-session)          | `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-session 1 d/2025-10-31 time/14:30 type/medication notes/Give insulin shot`                                                    |
-| [**Edit Caring Session**](#editing-a-session-edit-session)       | `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`<br>e.g. `edit-session 1 1 d/2024-12-25 time/14:30 type/medication notes/Adjust dose status/completed` |
-| [**Delete Caring Session**](#deleting-a-session-delete-session)  | `delete-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-session 1 2`                                                                                                                                            |
-| [**Sessions Today**](#viewing-today-s-sessions-sessions-today)   | `sessions-today`                                                                                                                                                                                                     |
-| [**Sessions Week**](#viewing-this-week-s-sessions-sessions-week) | `sessions-week`                                                                                                                                                                                                      |
-| [**Help**](#viewing-help-help)                                   | `help`                                                                                                                                                                                                               |
-| **Exit**                                                         | `exit`                                                                                                                                                                                                               |
+| **Action**                                                              | **Format / Example**                                                                                                                                                                                                   |
+|-------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**List Patients**](#listing-all-patients-list-patients)                | `list-patients`                                                                                                                                                                                                        |
+| [**View Patient**](#viewing-patient-details-view-patient)               | `view-patient INDEX`<br>e.g. `view-patient 1`                                                                                                                                                                          | 
+| [**Add Patient**](#adding-a-patient-add-patient)                        | `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`<br>e.g. `add-patient n/Dylan ic/S1234567A w/2A t/diabetes`                                                                                                         |
+| [**Edit Patient**](#editing-a-patient-edit-patient)                     | `edit-patient INDEX [n/NAME] [w/WARD] [ic/IC_NUMBER] [t/TAG]...`<br>e.g. `edit-patient 1 n/Yue Yang`                                                                                                                   |
+| [**Delete Patient**](#deleting-a-patient-delete-patient)                | `delete-patient INDEX`<br>e.g. `delete-patient 2`                                                                                                                                                                      |
+| [**Add NOK**](#adding-a-nok-add-nok)                                    | `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`<br>e.g. `add-nok 1 n/Oad p/6598765432 r/son`                                                                                                                     |
+| [**Edit NOK**](#editing-a-nok-edit-nok)                                 | `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`<br>e.g. `edit-nok 1 1 p/6588888888`                                                                                                             |
+| [**Delete NOK**](#deleting-a-nok-delete-nok)                            | `delete-nok PATIENT_INDEX NOK_INDEX`<br>e.g. `delete-nok 1`                                                                                                                                                            |
+| [**Add Caring Session**](#adding-a-session-add-session)                 | `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]`<br>e.g. `add-session 1 d/2025-10-31 time/14:30 type/medication notes/Give insulin shot`                                                      |
+| [**Edit Caring Session**](#editing-a-session-edit-session)              | `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`<br>e.g. `edit-session 1 1 d/2024-12-25 time/14:30 type/medication notes/Adjust dose status/completed`   |
+| [**Delete Caring Session**](#deleting-a-session-delete-session)         | `delete-session PATIENT_INDEX SESSION_INDEX`<br>e.g. `delete-session 1 2`                                                                                                                                              |
+| [**Sessions Today**](#viewing-today-s-sessions-sessions-today)          | `sessions-today`                                                                                                                                                                                                       |
+| [**Sessions Week**](#viewing-this-week-s-sessions-sessions-week)        | `sessions-week`                                                                                                                                                                                                        |
+| [**Help**](#viewing-help-help)                                          | `help`                                                                                                                                                                                                                 |
+| [**Purging All Data (Irreversible)**](#purging-all-data-irreversible)   | `i-understand-and-confirm-purge-database-will-lose-all-data`                                                                                                                                                           |
+| **Exit**                                                                | `exit`                                                                                                                                                                                                                 |
 
 ## Glossary
 
