@@ -292,7 +292,7 @@ Creates a new patient record.
 **Output:**
 
 * Success → `New patient added: Dylan`
-* Duplicate → `This patient already exists in the address book`
+* Duplicate → `A patient with this IC already exists in the database.`
 * Invalid input → parameter-specific error message
 
 **Note:** A patient is considered a **duplicate** when the **IC** matches exactly.
@@ -315,7 +315,7 @@ Updates an existing patient’s information. At least one field must be provided
 
 * Success → `Edited Patient: Yue Yang`
 * Invalid index → `The patient index provided is invalid`
-* Duplicate IC → `This patient already exists in the address book`
+* Duplicate IC → `A patient with this IC already exists in the database`
 
 <box type="warning" seamless>
 
@@ -389,8 +389,8 @@ Search for patients by name (case-insensitive, partial matching).
 
 **Output:**
 
-* Success → `X persons listed!` + list
-* None → `0 persons listed!`
+* Success → `X person(s) listed!` + list
+* None → `0 person(s) listed!`
 
 <box type="tip" seamless>
 
@@ -422,8 +422,8 @@ Search for patients based on their NOK’s name.
 
 **Output:**
 
-* Success → `1 persons listed!` + list
-* None → `0 persons listed!`
+* Success → `1 person(s) listed!` + list
+* None → `0 person(s) listed!`
 
 ---
 
@@ -549,8 +549,8 @@ Edit an existing care session for a patient. You may also update the session sta
 
 **Output:**
 
-* Success -> `Edited CaringSession: medication on 2024-12-25 at 14:30 of Patient: Dylan`
-* Failure -> parameter-specific error (e.g. invalid date/time or indices)
+* Success → `Edited CaringSession: medication on 2024-12-25 at 14:30 of Patient: Dylan`
+* Failure → parameter-specific error (e.g. invalid date/time or indices)
 
 <box type="warning" seamless>
 
