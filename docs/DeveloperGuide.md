@@ -105,6 +105,11 @@ The diagram below shows how `AddressBookParser`, `EditCommandParser`, `EditDescr
 interact when parsing and executing an `edit` command.
 <puml src="diagrams/EditSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
+### Sequence diagram for - `sessions-today` command.
+
+<puml src="diagrams/SessionsTodayCommandSequenceDiagram.puml" width="850" />
+
+
 How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
@@ -616,7 +621,8 @@ These instructions combine quick-start steps and feature-specific test cases to 
     1. `list-patients` — Expected: table or list of patients or `No patients in the system`.
     2. `add-patient n/Dylan ic/S1234567A w/2A` — Expected: `New patient added: Dylan`.
     3. `add-nok 1 n/Oad p/6598765432 r/son` — Expected: `Added NextOfKin: Oad to Patient: Yue Yan`.
-    4. `sessions-today` — Expected: list of today's sessions or `Today's caring sessions: 0 patients.`.
+    4. `sessions-today` — Expected: list of today's sessions or `Today's caring sessions: 0 patients. Type list-patients to undo.`.
+    5. `sessions-week` — Expected: list of today's sessions or `This week's caring sessions: 0 patients. Type list-patients to undo.`.
     5. `exit` — Expected: application exits cleanly.
 
 3. Window preferences
@@ -632,7 +638,9 @@ Add patient to NOKnock
 
 1. Command: `add-patient n/Name ic/IC_NUMBER w/WARD [t/TAG]...`
 2. Expected: success message with name and IC.
-3. Edge cases: add with duplicate IC → `Patient with IC ... already exists`. Missing params → parameter-specific error.
+3. Edge cases: add with duplicate IC → `Patient with IC ... already exists`. 
+   * Missing params → parameter-specific error. 
+   * Duplicate field → if duplicate field is not `t`, `Multiple values specified for the following single-valued field(s)...`
 
 #### List and view
 
@@ -655,6 +663,8 @@ Edit a patient's details.
    Expected: Index Error
 3. Test Case: duplicate IC \
    Expected: Duplicate Error
+4. Test Case: duplicate Field \
+   Expected: Mutiple values for single-valued field(s) error\
 
 #### Delete patient (important: cascades)
 
@@ -706,10 +716,6 @@ Prerequisites: Ensure multiple patients listed with `list-patients`.
 1. `sessions-today` — Expected: today's sessions list or `Today's caring sessions: 0 patients.`.
 2. `sessions-week` — Expected: this week's sessions or `This week's caring sessions: 0 patients.`.
 
-<puml src="diagrams/SessionsTodayCommandSequenceDiagram.puml" width="850" />
-
-Sequence diagram for `sessions-today` command.
-
 #### Complete session
 
 1. Mark complete via `edit-session` with `status/completed` or dedicated command if present.
@@ -726,6 +732,7 @@ Sequence diagram for `sessions-today` command.
 
 1. `find-by-nok KEYWORD [MORE_KEYWORDS]...`
 2. Expected: patients matched via NOK name or `No patients found with NOK matching: ...`.
+3. find-by-nok supports prefix i.e. `find-by-nok PREFIX` result includes that of `find-by-nok KEYWORD`
 
 ### Saving and data integrity
 
@@ -739,7 +746,11 @@ Modify data (add/edit/delete). Close app and reopen.
 
 1. Simulate: rename or corrupt `data/noknock.json`.
 2. Launch app.
-    - Expected: app starts with empty data and creates a fresh data file; warn user (follow the app's documented behavior). Backup file before editing manually.
+    - Expected: The app starts with an empty dataset and automatically creates a new noknock.json file in the data folder.
+    - No warning message is displayed to the user.
+    - The new data file replaces the corrupted or missing one silently.
+3. Note:
+    - Back up any existing noknock.json file before intentionally modifying or deleting it during testing.
 
 #### Backup and restore manual test (if supported)
 
