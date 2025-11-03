@@ -724,11 +724,11 @@ Sequence diagram for `sessions-today` command.
 
 Modify data (add/edit/delete). Close app and reopen.
 
-- Expected: changes persisted in `data/addressbook.json` next to the jar.
+- Expected: changes persisted in `data/noknock.json` next to the jar.
 
 ### Corrupted/missing data file
 
-1. Simulate: rename or corrupt `data/addressbook.json`.
+1. Simulate: rename or corrupt `data/noknock.json`.
 2. Launch app.
     - Expected: app starts with empty data and creates a fresh data file; warn user (follow the app's documented behavior). Backup file before editing manually.
 

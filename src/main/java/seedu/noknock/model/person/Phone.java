@@ -10,7 +10,7 @@ import static seedu.noknock.commons.util.AppUtil.checkArgument;
 public class Phone {
 
     public static final String MESSAGE_CONSTRAINTS =
-        "Phone numbers should only contain numbers, and it should be at least 3 digits long";
+        "Phone numbers should only contain numbers, and it should be 8 to 15 digits long";
     public static final String VALIDATION_REGEX = "\\d{8,15}";
     public final String value;
 
