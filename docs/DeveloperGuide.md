@@ -682,8 +682,9 @@ Prerequisites: Ensure multiple patients listed with `list-patients`.
 #### Add session
 
 1. Command: `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]` \
-   Expected: `Caring session added for <Name>: <type> on <DATE> at <TIME>`. Invalid date/time → parameter-specific error.
-2. Example: `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot` \
+   Expected: `Added Caring Session: <CARE_TYPE> on <DATE> at <TIME> to Patient: <NAME>`. Invalid date/time → parameter-specific error.
+2. Example: `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot` where patient at 1 is John Doe\
+   Expected: `Added Caring Session: medication on 2024-12-25 at 14:30 to Patient: John Doe`
 
 #### Edit session
 
