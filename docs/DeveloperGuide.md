@@ -272,7 +272,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
     Use case ends.
 
 * 2b. Duplicate IC → System informs nurse of duplication.
-  Use case ends.
+    Use case ends.
 
 #### UC2: Edit patient
 
@@ -375,6 +375,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 * 2b. Invalid indices → System informs nurse and requests for valid index.
   Use case ends.
+  
 * 2b. Invalid input → System informs nurse requests for valid input.
   Use case ends.
 
@@ -410,6 +411,9 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2b. Invalid patient index → System informs nurse and requests valid index.  
   Use case ends.
 
+* 2c. Invalid careType → System informs nurse and requests correction.
+  Use case ends
+
 #### UC10: Edit caring session
 
 **MSS**
@@ -425,6 +429,9 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
   Use case ends.
 * 2b. Invalid date, time, or status → System informs nurse and requests valid input.  
   Use case ends.
+
+* 2c. Invalid careType → System informs nurse and requests correction.
+  Use case ends
 
 #### UC11: Delete caring session
 
@@ -710,11 +717,11 @@ Sequence diagram for `sessions-today` command.
 
 Modify data (add/edit/delete). Close app and reopen.
 
-- Expected: changes persisted in `data/addressbook.json` next to the jar.
+- Expected: changes persisted in `data/noknock.json` next to the jar.
 
 ### Corrupted/missing data file
 
-1. Simulate: rename or corrupt `data/addressbook.json`.
+1. Simulate: rename or corrupt `data/noknock.json`.
 2. Launch app.
     - Expected: app starts with empty data and creates a fresh data file; warn user (follow the app's documented behavior). Backup file before editing manually.
 
