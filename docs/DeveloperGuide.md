@@ -430,6 +430,9 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2b. Invalid date/time/status → System shows parameter-specific error.
   Use case ends.
 
+* 2c. Invalid careType → System shows careType is invalid.
+  Use case ends
+
 #### UC11: Delete caring session
 
 **MSS**
