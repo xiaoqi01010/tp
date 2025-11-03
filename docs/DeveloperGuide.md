@@ -274,9 +274,6 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2b. Duplicate IC → System informs nurse of duplication.
     Use case ends.
 
-* 2c. Duplicate fields → System informs nurse of duplication.
-    Use case ends.
-
 #### UC2: Edit patient
 
 **MSS**
@@ -378,6 +375,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 * 2b. Invalid indices → System informs nurse and requests for valid index.
   Use case ends.
+  
 * 2b. Invalid input → System informs nurse requests for valid input.
   Use case ends.
 
