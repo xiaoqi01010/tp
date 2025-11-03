@@ -366,7 +366,7 @@ Shows full patient details including NOKs and upcoming sessions.
 
 ### Finding patients by name: `find-patient`
 
-Search for patients by name (case-insensitive, partial matching from first letter).
+Search for patients by name (case-insensitive, partial matching).
 
 **Format:**  
 `find-patient KEYWORD [MORE_KEYWORDS]...`
@@ -389,7 +389,7 @@ Search for patients by name (case-insensitive, partial matching from first lette
 
 <box type="warning" seamless>
 
-**Common error**: Keywords can match any part of a patient’s name from the start of a word. For example, searching Alex will match “Alex Tan” and “Tan Alex”, but not “Malex Tan” (since the match is in the middle of a word).
+**Common error**: Keywords can match any part of a patient’s name. For example, searching Alex will match “Alex Tan”, “Tan Alex”, and “Malex Tan” (since the match is in the middle of a word).
 
 </box>
 
