@@ -13,13 +13,14 @@ import java.util.Arrays;
 public class StringUtil {
 
     /**
-     * Returns true if the {@code sentence} contains the {@code word}.
-     *   Ignores case, but a full word match is required.
-     *   <br>examples:<pre>
-     *       containsWordIgnoreCase("ABc def", "abc") == true
-     *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
-     *       </pre>
+     * Returns true if the {@code sentence} contains the {@code word} (case-insensitive),
+     * even if it's part of a larger word.
+     * <br>examples:<pre>
+     *     containsWordIgnoreCase("ABc def", "abc") == true
+     *     containsWordIgnoreCase("ABc def", "DEF") == true
+     *     containsWordIgnoreCase("Benjamin", "jam") == true
+     *     containsWordIgnoreCase("ABc def", "AB") == true
+     * </pre>
      * @param sentence cannot be null
      * @param word cannot be null, cannot be empty, must be a single word
      */
@@ -36,7 +37,7 @@ public class StringUtil {
 
         return Arrays.stream(wordsInPreppedSentence)
                 .anyMatch(wordInSentence ->
-                wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()));
+                wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()));
     }
 
     /**

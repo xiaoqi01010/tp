@@ -24,7 +24,7 @@ public class SessionsTodayCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_TODAY_SESSIONS =
-            "Today's caring sessions: %1$d patients.\n";
+            "Today's caring sessions: %1$d patients.\nType 'list-patients' to undo";
 
     public SessionsTodayCommand() {}
 

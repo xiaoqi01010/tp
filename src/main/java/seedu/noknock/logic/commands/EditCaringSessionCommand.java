@@ -1,6 +1,7 @@
 package seedu.noknock.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.noknock.logic.commands.AddCaringSessionCommand.MESSAGE_HAS_OVERLAPPING_SESSION;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_CARE_TYPE;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.noknock.logic.parser.CliSyntax.PREFIX_NOTES;
@@ -41,14 +42,14 @@ public class EditCaringSessionCommand extends Command {
         + "Parameters: PATIENT_INDEX (must be a positive integer) "
         + "SESSION_INDEX (must be a positive integer) "
         + "[" + PREFIX_CARE_TYPE + "CARE_TYPE] "
-        + "[" + PREFIX_NOTES + "NOTE] "
+        + "[" + PREFIX_NOTES + "NOTES] "
         + "[" + PREFIX_DATE + "DATE] "
         + "[" + PREFIX_TIME + "TIME] "
-        + "[" + PREFIX_STATUS + "STATUS]\n"
+        + "[" + PREFIX_STATUS + "STATUS (must be completed/incomplete (case-insensitive))]\n"
         + "Example: " + COMMAND_WORD + " 1 2 "
         + PREFIX_CARE_TYPE + "Physio "
         + PREFIX_NOTES + "\"Follow up\" "
-        + PREFIX_STATUS + "Complete";
+        + PREFIX_STATUS + "Completed";
 
     public static final String MESSAGE_EDIT_SESSION_SUCCESS = "Edited CaringSession: %1$s of Patient: %2$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -107,6 +108,10 @@ public class EditCaringSessionCommand extends Command {
 
         CaringSession sessionToEdit = sessionList.get(sessionIndex.getZeroBased());
         CaringSession editedSession = createEditedSession(sessionToEdit, editSessionDescriptor);
+
+        if (patient.hasOverlappingSession(editedSession, sessionToEdit)) {
+            throw new CommandException(String.format(MESSAGE_HAS_OVERLAPPING_SESSION, editedSession.getCareType()));
+        }
 
         List<CaringSession> updatedSessionList = new ArrayList<>(sessionList);
         updatedSessionList.set(sessionIndex.getZeroBased(), editedSession);
