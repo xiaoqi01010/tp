@@ -259,7 +259,7 @@ Creates a new patient record.
 
 <box type="info" seamless>
 
-**Important:** The IC field must contain a valid **Singapore NRIC** in the format `[S|T]XXXXXXX[A-Z]`:
+**Important:** The IC field must contain a valid **Singapore NRIC** with **capital letters** in the format `[S|T]XXXXXXX[A-Z]`:
 
 - **S-prefix:** Singapore Citizen
 - **T-prefix:** Singapore Permanent Resident (FIN holders not supported)
