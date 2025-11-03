@@ -35,6 +35,8 @@ New to the command line? You can copy each command from this guide and paste it 
 
 </box>
 
+![UI](images/Ui.png)
+
 ### Why a CLI-first app (and how NOKnock is different)
 
 - **Speed and consistency**: Commands are quicker than navigating menus, especially for repetitive tasks (add → edit → schedule).
@@ -103,7 +105,7 @@ If <code>java -version</code> fails, restart your terminal or computer, then try
 
 4. A GUI should appear within a few seconds. The app starts with sample data so you can try commands immediately.
 
-   ![Ui](images/Ui.png)
+   ![Step 4 Example](images/eg.png)
 
 ### 5-minute tutorial
 
@@ -269,7 +271,7 @@ Creates a new patient record.
 
 <box type="info" seamless>
 
-**Important:** The IC field must contain a valid **Singapore NRIC** in the format `[S|T]XXXXXXX[A-Z]`:
+**Important:** The IC field must contain a valid **Singapore NRIC** with **capital letters** in the format `[S|T]XXXXXXX[A-Z]`:
 
 - **S-prefix:** Singapore Citizen
 - **T-prefix:** Singapore Permanent Resident (FIN holders not supported)
@@ -400,7 +402,7 @@ Search for patients by name (case-insensitive, partial matching).
 
 <box type="warning" seamless>
 
-**Common error**: Keywords can match any part of a patient’s name from the start of a word. For example, searching Alex will match “Alex Tan” and “Tan Alex”, but not “Malex Tan” (since the match is in the middle of a word).
+**Common error**: Keywords can match any part of a patient’s name. For example, searching Alex will match “Alex Tan”, “Tan Alex”, and “Malex Tan” (since the match is in the middle of a word).
 
 </box>
 
