@@ -20,21 +20,23 @@ public class AddPatientCommand extends Command {
 
     public static final String COMMAND_WORD = "add-patient";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient to the database"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_WARD + "WARD "
-            + PREFIX_IC + "IC "
+            + PREFIX_IC + "IC"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_WARD + "2A "
             + PREFIX_IC + "S1234567A "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "owesMoney\n"
+            + "Note: IC must be entered in capital letters."
+            ;
 
     public static final String MESSAGE_SUCCESS = "New patient added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PATIENT = "This patient already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PATIENT = "A patient with this IC already exists in the database";
 
     private final Patient toAdd;
 

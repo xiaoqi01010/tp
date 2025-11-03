@@ -29,7 +29,12 @@
 * [Home]({{ baseUrl }}/index.html)
 * [User Guide]({{ baseUrl }}/UserGuide.html) :expanded:
   * [Quick Start]({{ baseUrl }}/UserGuide.html#quick-start)
+  * [Tutorial]({{ baseUrl }}/UserGuide.html#5-minute-tutorial)
   * [Features]({{ baseUrl }}/UserGuide.html#features)
+    * [Patient Management]({{ baseUrl }}/UserGuide.html#patient-management)
+    * [Next of Kin (NOK) Management]({{ baseUrl }}/UserGuide.html#next-of-kin-nok-management)
+    * [Caring Session Management]({{ baseUrl }}/UserGuide.html#caring-session-management)
+  * [Data Management]({{ baseUrl }}/UserGuide.html#data-management)
   * [FAQ]({{ baseUrl }}/UserGuide.html#faq)
   * [Command Summary]({{ baseUrl }}/UserGuide.html#faq)
 * [Developer Guide]({{ baseUrl }}/DeveloperGuide.html) :expanded:

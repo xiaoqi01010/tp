@@ -130,7 +130,7 @@ How the parsing works:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Patient` objects (which are contained in a `UniquePatientList` object).
+* stores the data i.e., all `Patient` objects (which are contained in a `UniquePatientList` object).
 * stores the currently 'selected' `Patient` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Patient>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
@@ -143,7 +143,7 @@ The `Model` component,
 
 The `Storage` component,
 
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+* can save both the data and user preferences in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
@@ -259,7 +259,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **MSS**
 
-1. Nurse enters `add-patient n/NAME ic/IC_NUMBER w/WARD [t/TAG]...`.
+1. Nurse requests to add patient with details.
 2. System validates inputs.
 3. System adds the patient to the patient list.
 4. System returns success message with patient name and IC.
@@ -268,20 +268,20 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid input → System shows parameter-specific error.
-  Use case ends.
+* 2a. Invalid input → System informs nurse and requests correction.
+    Use case ends.
 
-* 2b. Duplicate IC → System shows that the patient already exists in the address book.
-  Use case ends.
+* 2b. Duplicate IC → System informs nurse of duplication.
+    Use case ends.
 
 * 2c. Duplicate fields → System informs nurse of duplication.
-  Use case ends.
+    Use case ends.
 
 #### UC2: Edit patient
 
 **MSS**
 
-1. Nurse enters `edit-patient INDEX [n/NAME] [ic/IC_NUMBER] [w/WARD] [t/TAG]...`.
+1. Nurse requests to edit patient with new details.
 2. System validates index and inputs.
 3. System updates patient record.
 4. System returns confirmation.
@@ -290,36 +290,33 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Index out of range → System shows `The patient index provided is invalid`.
+* 2a. Index out of range → System informs nurse and requests valid index.
   Use case ends.
 
-* 2b. Duplicate IC → System shows `This patient already exists in the address book`.
+* 2b. Duplicate IC → System informs nurse of duplication.
   Use case ends.
 
 #### UC3: Delete patient
 
 **MSS**
 
-1. Nurse enters `delete-patient INDEX`.
+1. Nurse requests to delete patient by index.
 2. System validates index.
-3. System deletes patient and cascades deletion of related NOKs and sessions.
+3. System deletes patient and deletes related NOKs and sessions.
 4. System returns deletion confirmation.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. Invalid index → System shows `Invalid patient index. Please use a number from the patient list.`.
-  Use case ends.
-
-* 2b. Confirm prompt (if implemented) → Nurse confirms/cancels.
+* 2a. Invalid index → System informs nurse and requests correction.
   Use case ends.
 
 #### UC4: View patient details
 
 **MSS**
 
-1. Nurse enters `view-patient INDEX`.
+1. Nurse requests to view specific patient by index.
 2. System retrieves patient, NOK list, and upcoming sessions.
 3. System displays full profile.
 
@@ -327,28 +324,28 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid index → System shows `The patient index provided is invalid`.
+* 2a. Invalid index → System informs nurse and requests correction.
   Use case ends.
 
 #### UC5: List patients
 
 **MSS**
 
-1. Nurse enters `list-patients`.
-2. System displays all patients (index, name, IC, ward, tags).
+1. Nurse requests to see all patients.
+2. System displays all patients with index, name, IC, ward, tags.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. No patients → System shows `0 persons listed!`.
+* 2a. No patients → System informs nurse of lack of patients.
   Use case ends.
 
 #### UC6: Add Next-of-Kin (NOK)
 
 **MSS**
 
-1. Nurse enters `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP`.
+1. Nurse requests to add next-of-kin associated to patient at an index.
 2. System validates patient index and NOK fields.
 3. System associates NOK with patient and persists.
 4. System returns confirmation.
@@ -357,18 +354,21 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid patient index → System shows `The patient index provided is invalid`.
+* 2a. Invalid patient index → System informs nurse and requests correction.
   Use case ends.
 
-* 2b. Duplicate NOK → System shows `This next of kin already exists for this patient`.
+* 2b. Invalid phone number → System informs nurse and requests for valid phone number.
+  Use case ends.
+
+* 2c. Duplicate NOK → System informs nurse of duplication.
   Use case ends.
 
 #### UC7: Edit NOK
 
 **MSS**
 
-1. Nurse enters `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`.
-2. System validates indices and inputs.
+1. Nurse requests to edit information of next-of-kin
+2. System validates inputs for validity of data and patient indices.
 3. System updates NOK record.
 4. System returns confirmation.
 
@@ -376,14 +376,16 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid indices → System shows `The patient/Next-of-Kin index provided is invalid`.
+* 2b. Invalid indices → System informs nurse and requests for valid index.
+  Use case ends.
+* 2b. Invalid input → System informs nurse requests for valid input.
   Use case ends.
 
 #### UC8: Delete NOK
 
 **MSS**
 
-1. Nurse enters `delete-nok PATIENT_INDEX NOK_INDEX`.
+1. Nurse requests to delete next-of-kin at an index for a patient at an index.
 2. System validates indices.
 3. System removes NOK from patient.
 4. System returns confirmation.
@@ -392,26 +394,23 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid indices → System shows `The patient/Next-of-Kin index provided is invalid`.
+* 2a. Invalid indices → System informs and user and requests for correction.
   Use case ends.
 
 #### UC9: Add caring session
 
 **MSS**
-
-1. Nurse enters `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]`.
-2. System validates index, date, time, and business rules (e.g., not in past).
-3. System adds session to patient schedule and persists.
+1. Nurse requests to add a caring session for a patient with date, time, type, and optional notes.
+2. System validates patient index, date, time, and business rules (e.g. session not in the past).
+3. System adds the session to the patient’s schedule and persists the change.
 4. System returns confirmation with session details.
 
    Use case ends.
 
 **Extensions**
-
-* 2a. Invalid date/time → System shows parameter-specific error.
+* 2a. Invalid date or time → System informs nurse and requests correction.  
   Use case ends.
-
-* 2b. Invalid patient index → System shows `The patient index provided is invalid`.
+* 2b. Invalid patient index → System informs nurse and requests valid index.  
   Use case ends.
 
 * 2c. Invalid careType → System informs nurse and requests correction.
@@ -420,20 +419,17 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 #### UC10: Edit caring session
 
 **MSS**
-
-1. Nurse enters `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`.
-2. System validates indices and fields.
-3. System updates session and persists.
-4. System returns confirmation including updated status.
+1. Nurse requests to edit details of an existing caring session (e.g. date, time, type, notes, or status).
+2. System validates patient and session indices, and checks input fields.
+3. System updates the session record and persists the change.
+4. System returns confirmation including updated details.
 
    Use case ends.
 
 **Extensions**
-
-* 2a. Invalid indices → System shows `The patient/caring session index provided is invalid`.
+* 2a. Invalid indices → System informs nurse and requests valid indices.  
   Use case ends.
-
-* 2b. Invalid date/time/status → System shows parameter-specific error.
+* 2b. Invalid date, time, or status → System informs nurse and requests valid input.  
   Use case ends.
 
 * 2c. Invalid careType → System informs nurse and requests correction.
@@ -442,108 +438,97 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 #### UC11: Delete caring session
 
 **MSS**
-
-1. Nurse enters `delete-session PATIENT_INDEX SESSION_INDEX`.
+1. Nurse requests to delete a caring session for a specific patient.
 2. System validates indices.
-3. System deletes the session from the patient.
+3. System removes the session from the patient’s schedule.
 4. System returns confirmation.
 
    Use case ends.
 
 **Extensions**
-
-* 2a. Invalid indices → System shows `The patient/caring session index provided is invalid`.
+* 2a. Invalid indices → System informs nurse and requests correction.  
   Use case ends.
 
 #### UC12: View today’s sessions
 
 **MSS**
-
-1. Nurse enters `sessions-today`.
-2. System collects sessions scheduled for today.
-3. System displays list or message if none.
+1. Nurse requests to view sessions scheduled for today.
+2. System retrieves all sessions scheduled for the current date.
+3. System displays the list of sessions.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. No sessions → System shows `Today's caring sessions: 0 patients.`.
+* 2a. No sessions → System informs nurse that there are no sessions scheduled for today.  
   Use case ends.
 
 #### UC13: View this week’s sessions
 
 **MSS**
-
-1. Nurse enters `sessions-week`.
-2. System computes current week range and collects sessions.
-3. System displays list or message if none.
+1. Nurse requests to view sessions scheduled for the current week.
+2. System retrieves sessions within the current week’s date range.
+3. System displays the list of sessions.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. No sessions → System shows `This week's caring sessions: 0 patients.`.
+* 2a. No sessions → System informs nurse that there are no sessions scheduled for this week.  
   Use case ends.
 
 #### UC14: Complete caring session
 
 **MSS**
-
-1. Nurse enters `edit-session PATIENT_INDEX SESSION_INDEX status/complete` (or uses dedicated complete command).
-2. System validates indices and current status.
-3. System marks session as completed and persists.
+1. Nurse requests to mark a caring session as completed.
+2. System validates indices and ensures the session is currently incomplete.
+3. System updates the session status to “completed” and persists the change.
 4. System returns confirmation.
 
    Use case ends.
 
 **Extensions**
-
-* 2a. Invalid indices → System shows `The patient/caring session index provided is invalid`.
+* 2a. Invalid indices → System informs nurse and requests valid indices.  
+  Use case ends.
+* 2b. Session already completed → System informs nurse that the session is already marked as complete.  
   Use case ends.
 
 #### UC15: Find patients by name
 
 **MSS**
-
-1. Nurse enters `find-patient KEYWORD [MORE_KEYWORDS]...`.
-2. System performs case-insensitive partial match search on patient names.
-3. System displays matching results or none message.
+1. Nurse requests to find patients by name or keyword.
+2. System performs a case-insensitive partial match search on patient names.
+3. System displays the matching patients.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. No matches → System shows `0 persons listed!`.
+* 2a. No matches found → System informs nurse that no patients match the search.  
   Use case ends.
 
-#### UC16: Find patients by NOK name
+#### UC16: Find patients by next-of-kin (NOK) name
 
 **MSS**
-
-1. Nurse enters `find-by-nok KEYWORD [MORE_KEYWORDS]...`.
-2. System searches NOK lists and returns associated patients.
-3. System displays results or none message.
+1. Nurse requests to find patients by their next-of-kin’s name.
+2. System searches NOK lists and identifies associated patients.
+3. System displays the matching patients.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. No matches → System shows `0 persons listed!`.
+* 2a. No matches found → System informs nurse that no patients match the search.  
   Use case ends.
 
 #### UC17: Help and command discovery
 
 **MSS**
-
-1. Nurse enters `help` or uses Help menu/F1.
-2. System displays help window or inline guidance.
+1. Nurse requests help.
+2. System displays help content.
 
    Use case ends.
 
-**Extensions**
-
-* 2a. Help window minimized → System attempts to restore or notifies user where to find it.
-  Use case ends.
 
 ### Non-Functional Requirements
 
@@ -615,8 +600,8 @@ These instructions combine quick-start steps and feature-specific test cases to 
 2. Quick start commands (verify basic command parsing and responses)
     1. `list-patients` — Expected: table or list of patients or `No patients in the system`.
     2. `add-patient n/Dylan ic/S1234567A w/2A` — Expected: `New patient added: Dylan`.
-    3. `add-nok 1 n/Oad p/6598765432 r/son` — Expected: `Added NextOfKin: Oad to Patient: Yue Yan`.
-    4. `sessions-today` — Expected: list of today's sessions or `Today's caring sessions: 0 patients.`.
+    3. `add-nok 1 n/Oad p/6598765432 r/son` — Expected: `Added NextOfKin: Oad to Patient: Yue Yang`.
+    4. `sessions-today` — Expected: list of today's sessions or `Today's caring sessions: 0 patients`.
     5. `exit` — Expected: application exits cleanly.
 
 3. Window preferences
@@ -632,8 +617,8 @@ Add patient to NOKnock
 
 1. Command: `add-patient n/Name ic/IC_NUMBER w/WARD [t/TAG]...`
 2. Expected: success message with name and IC.
-3. Edge cases: add with duplicate IC → `Patient with IC ... already exists`. Missing params → parameter-specific error.
-
+3. Edge cases: add with duplicate IC → `A patient with this IC already exists in the database`. Missing params → parameter-specific error.
+![img_1.png](img_1.png)
 #### List and view
 
 List and view all patients in the database.
@@ -672,7 +657,7 @@ Prerequisites: Ensure multiple patients listed with `list-patients`.
 1. Test case: `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP` \
    Expected: Success message.
 2. Test case: Duplicate NOK with same name and phone for same patient \
-   Expected: Duplicate error. Message -> `This next of kin already exists for this patient`.
+   Expected: Duplicate error. Message → `This next of kin already exists for this patient`.
 
 #### Edit NOK
 
@@ -688,14 +673,15 @@ Prerequisites: Ensure multiple patients listed with `list-patients`.
 #### Add session
 
 1. Command: `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]` \
-   Expected: `Caring session added for <Name>: <type> on <DATE> at <TIME>`. Invalid date/time → parameter-specific error.
-2. Example: `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot` \
+   Expected: `Added Caring Session: <CARE_TYPE> on <DATE> at <TIME> to Patient: <NAME>`. Invalid date/time → parameter-specific error.
+2. Example: `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot` where patient at 1 is John Doe\
+   Expected: `Added Caring Session: medication on 2024-12-25 at 14:30 to Patient: John Doe`
 
 #### Edit session
 
 1. `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`
 2. Example: `edit-session 1 2 d/2024-12-25 time/14:30 status/completed`
-3. Expected: `Session updated: <Name> - <type> - <DATE> <TIME> (<status>)`.
+3. Expected: `Edited CaringSession: <TYPE> on <DATE> at <TIME> of Patient: <NAME>`.
 
 #### Delete session
 
@@ -703,8 +689,8 @@ Prerequisites: Ensure multiple patients listed with `list-patients`.
 
 #### Views
 
-1. `sessions-today` — Expected: today's sessions list or `Today's caring sessions: 0 patients.`.
-2. `sessions-week` — Expected: this week's sessions or `This week's caring sessions: 0 patients.`.
+1. `sessions-today` — Expected: today's sessions list or `Today's caring sessions: 0 patients`.
+2. `sessions-week` — Expected: this week's sessions or `This week's caring sessions: 0 patients`.
 
 <puml src="diagrams/SessionsTodayCommandSequenceDiagram.puml" width="850" />
 
