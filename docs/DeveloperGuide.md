@@ -278,7 +278,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **MSS**
 
-1. Nurse uses command and provides details to edit patient.
+1. Nurse requests to edit patient with new details.
 2. System validates index and inputs.
 3. System updates patient record.
 4. System returns confirmation.
