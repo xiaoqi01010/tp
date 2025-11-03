@@ -274,7 +274,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2b. Duplicate IC → System shows that the patient already exists in the address book.
   Use case ends.
 
-* 2c. Duplicate fields → System shows that multiple values are specified for the first duplicate field that is not `t/`.
+* 2c. Duplicate fields → System informs nurse of duplication.
   Use case ends.
 
 #### UC2: Edit patient
@@ -436,7 +436,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2b. Invalid date/time/status → System shows parameter-specific error.
   Use case ends.
 
-* 2c. Invalid careType → System shows careType is invalid.
+* 2c. Invalid careType → System informs nurse and requests correction.
   Use case ends
 
 #### UC11: Delete caring session
