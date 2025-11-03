@@ -271,7 +271,10 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2a. Invalid input → System shows parameter-specific error.
   Use case ends.
 
-* 2b. Duplicate IC → System shows `This patient already exists in the address book`.
+* 2b. Duplicate IC → System shows that the patient already exists in the address book.
+  Use case ends.
+
+* 2c. Duplicate fields → System shows that multiple values are specified for the first duplicate field that is not `t/`.
   Use case ends.
 
 #### UC2: Edit patient
