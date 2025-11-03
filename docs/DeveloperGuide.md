@@ -411,6 +411,9 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2b. Invalid patient index → System shows `The patient index provided is invalid`.
   Use case ends.
 
+* 2c. Invalid careType → System shows careType is invalid.
+  Use case ends
+
 #### UC10: Edit caring session
 
 **MSS**
