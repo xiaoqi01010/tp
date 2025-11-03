@@ -35,6 +35,8 @@ New to the command line? You can copy each command from this guide and paste it 
 
 </box>
 
+![UI](images/Ui.png)
+
 ### Why a CLI-first app (and how NOKnock is different)
 
 - **Speed and consistency**: Commands are quicker than navigating menus, especially for repetitive tasks (add → edit → schedule).
@@ -103,7 +105,7 @@ If <code>java -version</code> fails, restart your terminal or computer, then try
 
 4. A GUI should appear within a few seconds. The app starts with sample data so you can try commands immediately.
 
-   ![Ui](images/Ui.png)
+   ![Step 4 Example](images/eg.png)
 
 ### 5-minute tutorial
 
