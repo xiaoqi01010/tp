@@ -9,8 +9,6 @@ pageNav: 3
 <!-- * Table of Contents -->
 <page-nav-print />
 
---------------------------------------------------------------------------------------------------------------------
-
 ## **Acknowledgements**
 
 This project is based on the AddressBook-Level3 project by the [SE-EDU initiative](https://se-education.org/). NOKnock uses the following libraries: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5).
@@ -51,7 +49,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete-patient 1`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
@@ -72,7 +70,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PatientListPanel`, `CaringSessionsPanel `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PatientListPanel`, `CaringSessionsPanel`, `StatusBarFooter`, etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -98,13 +96,14 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 <box type="info" seamless>
 
 **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+
 </box>
+
 #### Sequence Diagram — Edit Command
 
 The diagram below shows how `AddressBookParser`, `EditCommandParser`, `EditDescriptor`, and `LogicManager`
 interact when parsing and executing an `edit` command.
 <puml src="diagrams/EditSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
-
 
 How the `Logic` component works:
 
@@ -128,7 +127,6 @@ How the parsing works:
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
-
 
 The `Model` component,
 
@@ -158,97 +156,6 @@ Classes used by multiple components are in the `seedu.noknock.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
-
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete-patient 5` command to delete the 5th patient in the address book. The `delete-patient` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete-patient 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add-patient n/David …​` to add a new patient. The `add-patient` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-    * Pros: Easy to implement.
-    * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-    * Cons: We must ensure that the implementation of each individual command are correct.
 
 ### Viewing Caring Sessions for Today/This Week
 
@@ -364,7 +271,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2a. Invalid input → System shows parameter-specific error.
   Use case ends.
 
-* 2b. Duplicate IC → System shows `Patient with IC ... already exists`.
+* 2b. Duplicate IC → System shows `This patient already exists in the address book`.
   Use case ends.
 
 #### UC2: Edit patient
@@ -380,10 +287,10 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Index out of range → System shows `Patient index X is out of range`.
+* 2a. Index out of range → System shows `The patient index provided is invalid`.
   Use case ends.
 
-* 2b. Duplicate IC → System shows `IC number already exists for another patient`.
+* 2b. Duplicate IC → System shows `This patient already exists in the address book`.
   Use case ends.
 
 #### UC3: Delete patient
@@ -399,7 +306,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid index → System shows `Patient not found at index X`.
+* 2a. Invalid index → System shows `Invalid patient index. Please use a number from the patient list.`.
   Use case ends.
 
 * 2b. Confirm prompt (if implemented) → Nurse confirms/cancels.
@@ -417,7 +324,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid index → System shows `Patient not found at index X`.
+* 2a. Invalid index → System shows `The patient index provided is invalid`.
   Use case ends.
 
 #### UC5: List patients
@@ -431,7 +338,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No patients → System shows `No patients in the system`.
+* 2a. No patients → System shows `0 persons listed!`.
   Use case ends.
 
 #### UC6: Add Next-of-Kin (NOK)
@@ -447,10 +354,13 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid patient index → System shows `Patient not found at index X`.
+* 2a. Invalid patient index → System shows `The patient index provided is invalid`.
   Use case ends.
 
-* 2b. Duplicate NOK → System shows `NOK with same name and phone already exists for this patient`.
+* 2b. Invalid phone number → System shows `Phone numbers should only contain numbers, and it should be at least 3 digits long`.
+  Use case ends.
+
+* 2c. Duplicate NOK → System shows `This next of kin already exists for this patient`.
   Use case ends.
 
 #### UC7: Edit NOK
@@ -466,7 +376,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid indices → System shows `Patient/NOK not found`.
+* 2a. Invalid indices → System shows `The patient/Next-of-Kin index provided is invalid`.
   Use case ends.
 
 #### UC8: Delete NOK
@@ -482,7 +392,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid indices → System shows `Patient/NOK not found`.
+* 2a. Invalid indices → System shows `The patient/Next-of-Kin index provided is invalid`.
   Use case ends.
 
 #### UC9: Add caring session
@@ -501,7 +411,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2a. Invalid date/time → System shows parameter-specific error.
   Use case ends.
 
-* 2b. Invalid patient index → System shows `Patient not found at index X`.
+* 2b. Invalid patient index → System shows `The patient index provided is invalid`.
   Use case ends.
 
 #### UC10: Edit caring session
@@ -517,7 +427,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid indices → System shows `Patient/Session not found`.
+* 2a. Invalid indices → System shows `The patient/caring session index provided is invalid`.
   Use case ends.
 
 * 2b. Invalid date/time/status → System shows parameter-specific error.
@@ -536,7 +446,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid indices → System shows `Patient/Session not found`.
+* 2a. Invalid indices → System shows `The patient/caring session index provided is invalid`.
   Use case ends.
 
 #### UC12: View today’s sessions
@@ -551,7 +461,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No sessions → System shows `No caring sessions scheduled for today`.
+* 2a. No sessions → System shows `Today's caring sessions: 0 patients.`.
   Use case ends.
 
 #### UC13: View this week’s sessions
@@ -566,7 +476,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No sessions → System shows `No caring sessions scheduled for this week`.
+* 2a. No sessions → System shows `This week's caring sessions: 0 patients.`.
   Use case ends.
 
 #### UC14: Complete caring session
@@ -582,10 +492,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid indices → System shows `Session not found`.
-  Use case ends.
-
-* 2b. Already completed → System shows `Session already completed`.
+* 2a. Invalid indices → System shows `The patient/caring session index provided is invalid`.
   Use case ends.
 
 #### UC15: Find patients by name
@@ -600,7 +507,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No matches → System shows `No patients found matching: ...`.
+* 2a. No matches → System shows `0 persons listed!`.
   Use case ends.
 
 #### UC16: Find patients by NOK name
@@ -615,7 +522,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No matches → System shows `No patients found with NOK matching: ...`.
+* 2a. No matches → System shows `0 persons listed!`.
   Use case ends.
 
 #### UC17: Help and command discovery
@@ -701,9 +608,9 @@ These instructions combine quick-start steps and feature-specific test cases to 
 
 2. Quick start commands (verify basic command parsing and responses)
     1. `list-patients` — Expected: table or list of patients or `No patients in the system`.
-    2. `add-patient n/Dylan ic/S1234567A w/2A` — Expected: `Patient added: Dylan (S1234567A)`.
-    3. `add-nok 1 n/Oad p/+6598765432 r/son` — Expected: `NOK added for Dylan: Oad (son, +6598765432)`.
-    4. `sessions-today` — Expected: list of today's sessions or `No caring sessions scheduled for today`.
+    2. `add-patient n/Dylan ic/S1234567A w/2A` — Expected: `New patient added: Dylan`.
+    3. `add-nok 1 n/Oad p/6598765432 r/son` — Expected: `Added NextOfKin: Oad to Patient: Yue Yan`.
+    4. `sessions-today` — Expected: list of today's sessions or `Today's caring sessions: 0 patients.`.
     5. `exit` — Expected: application exits cleanly.
 
 3. Window preferences
@@ -714,6 +621,7 @@ These instructions combine quick-start steps and feature-specific test cases to 
 ### Patient management
 
 #### Add patient
+
 Add patient to NOKnock
 
 1. Command: `add-patient n/Name ic/IC_NUMBER w/WARD [t/TAG]...`
@@ -721,81 +629,84 @@ Add patient to NOKnock
 3. Edge cases: add with duplicate IC → `Patient with IC ... already exists`. Missing params → parameter-specific error.
 
 #### List and view
+
 List and view all patients in the database.
 
 1. Test case: `list-patients` \
-Expected: all patients.
+   Expected: all patients.
 2. Test case: `view-patient 1` \
-Expected: full profile including NOKs and sessions.
-3. Test case: `view-patient 999` (Invalid Index where index > size) 
-Expected: Index Error → `Patient not found at index 999`.
+   Expected: full profile including NOKs and sessions.
+3. Test case: `view-patient 999` (Invalid Index where index > size)
+   Expected: Index Error → `The patient index provided is invalid`.
 
 #### Edit patient
+
 Edit a patient's details.
 
 1. Test Case: `edit-patient 1 n/Bob w/1A`  \
-Expected: The first patient's name and ward are updated to "Bob" and "1A" respectively.
+   Expected: The first patient's name and ward are updated to "Bob" and "1A" respectively.
 2. Test Case: Invalid index \
-Expected: Index Error
+   Expected: Index Error
 3. Test Case: duplicate IC \
-Expected: Duplicate Error
+   Expected: Duplicate Error
 
 #### Delete patient (important: cascades)
 
 Prerequisites: Ensure multiple patients listed with `list-patients`.
-1. Test case: `delete-patient 1` \ 
-Expected: patient deleted and related NOKs/sessions removed; status message updated. 
+
+1. Test case: `delete-patient 1` \
+   Expected: patient deleted and related NOKs/sessions removed; status message updated.
 2. Test case: `delete-patient 0` / `delete-patient` / `delete-patient x` where x > size \
-Expected: error message, no deletion.
+   Expected: error message, no deletion.
 
 ### Next-of-Kin (NOK) management
 
 #### Add NOK
 
 1. Test case: `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP` \
-Expected: Success message. 
+   Expected: Success message.
 2. Test case: Duplicate NOK with same name and phone for same patient \
-Expected: Duplicate error. Message -> `NOK with same name and phone already exists for this patient`.
+   Expected: Duplicate error. Message -> `This next of kin already exists for this patient`.
 
 #### Edit NOK
 
 1. Test case: `edit-nok PATIENT_INDEX NOK_INDEX [n/NAME] [p/PHONE] [r/RELATIONSHIP]`\
-Expected: updated NOK message or error if patient/NOK not found.
+   Expected: updated NOK message or error if patient/NOK not found.
 
 #### Delete NOK
 
-1. `delete-nok PATIENT_INDEX NOK_INDEX` — Expected: success message, or `Patient/NOK not found`.
+1. `delete-nok PATIENT_INDEX NOK_INDEX` — Expected: success message, or `The patient/Next-of-Kin index provided is invalid`.
 
 ### Caring session management
 
 #### Add session
 
-1. Command: `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]` \ 
-Expected: `Caring session added for <Name>: <type> on <DATE> at <TIME>`. Invalid date/time → parameter-specific error.
-2. Example: `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot` \ 
+1. Command: `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]` \
+   Expected: `Caring session added for <Name>: <type> on <DATE> at <TIME>`. Invalid date/time → parameter-specific error.
+2. Example: `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot` \
 
 #### Edit session
 
 1. `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`
-2. Example: `edit-session 1 2 d/2024-12-25 time/14:30 status/complete`
+2. Example: `edit-session 1 2 d/2024-12-25 time/14:30 status/completed`
 3. Expected: `Session updated: <Name> - <type> - <DATE> <TIME> (<status>)`.
 
 #### Delete session
 
-1`delete-session PATIENT_INDEX SESSION_INDEX` — Expected: session removed message or `Patient/Session not found`.
+1`delete-session PATIENT_INDEX SESSION_INDEX` — Expected: session removed message or `The patient/caring session index provided is invalid`.
 
 #### Views
 
-1. `sessions-today` — Expected: today's sessions list or `No caring sessions scheduled for today`.
-2. `sessions-week` — Expected: this week's sessions or `No caring sessions scheduled for this week`.
+1. `sessions-today` — Expected: today's sessions list or `Today's caring sessions: 0 patients.`.
+2. `sessions-week` — Expected: this week's sessions or `This week's caring sessions: 0 patients.`.
 
-<puml src="diagrams/SessionsTodayCommandSequenceDiagram.puml" width="280" />
+<puml src="diagrams/SessionsTodayCommandSequenceDiagram.puml" width="850" />
 
 Sequence diagram for `sessions-today` command.
 
 #### Complete session
 
-1. Mark complete via `edit-session` with `status/complete` or dedicated command if present.
+1. Mark complete via `edit-session` with `status/completed` or dedicated command if present.
 2. Already completed → `Session already completed`.
 
 ### Finding / searching
@@ -833,10 +744,10 @@ Export/backup, then restore, verify data matches original.
 1. Launch app.
 2. `add-patient n/Test ic/T1234567A w/1B`
 3. `list-patients` → confirm presence.
-4. `add-nok 1 n/Lee p/+651234567 r/daughter`
+4. `add-nok 1 n/Lee p/651234567 r/daughter`
 5. `add-session 1 d/2025-12-01 time/09:00 type/hygiene notes/Assist with shower`
 6. `view-patient 1` → confirm NOK and session shown.
-7. `edit-session 1 1 status/complete`
+7. `edit-session 1 1 status/completed`
 8. `delete-nok 1 1`
 9. `delete-patient 1`
 10. Close and reopen app → confirm persistent state matches expectations.
