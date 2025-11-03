@@ -130,7 +130,7 @@ How the parsing works:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Patient` objects (which are contained in a `UniquePatientList` object).
+* stores the data i.e., all `Patient` objects (which are contained in a `UniquePatientList` object).
 * stores the currently 'selected' `Patient` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Patient>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
@@ -143,7 +143,7 @@ The `Model` component,
 
 The `Storage` component,
 
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+* can save both the data and user preferences in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
@@ -271,7 +271,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2a. Invalid input → System shows parameter-specific error.
   Use case ends.
 
-* 2b. Duplicate IC → System shows `This patient already exists in the address book`.
+* 2b. Duplicate IC → System shows `A patient with this IC already exists in the database`.
   Use case ends.
 
 #### UC2: Edit patient
@@ -290,7 +290,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 * 2a. Index out of range → System shows `The patient index provided is invalid`.
   Use case ends.
 
-* 2b. Duplicate IC → System shows `This patient already exists in the address book`.
+* 2b. Duplicate IC → System shows `A patient with this IC already exists in the database`.
   Use case ends.
 
 #### UC3: Delete patient
@@ -306,7 +306,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. Invalid index → System shows `Invalid patient index. Please use a number from the patient list.`.
+* 2a. Invalid index → System shows `Invalid patient index. Please use a number from the patient list`.
   Use case ends.
 
 * 2b. Confirm prompt (if implemented) → Nurse confirms/cancels.
@@ -338,7 +338,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No patients → System shows `0 persons listed!`.
+* 2a. No patients → System shows `0 person(s) listed!`.
   Use case ends.
 
 #### UC6: Add Next-of-Kin (NOK)
@@ -461,7 +461,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No sessions → System shows `Today's caring sessions: 0 patients.`.
+* 2a. No sessions → System shows `Today's caring sessions: 0 patients`.
   Use case ends.
 
 #### UC13: View this week’s sessions
@@ -476,7 +476,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No sessions → System shows `This week's caring sessions: 0 patients.`.
+* 2a. No sessions → System shows `This week's caring sessions: 0 patients`.
   Use case ends.
 
 #### UC14: Complete caring session
@@ -507,7 +507,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No matches → System shows `0 persons listed!`.
+* 2a. No matches → System shows `0 person(s) listed!`.
   Use case ends.
 
 #### UC16: Find patients by NOK name
@@ -522,7 +522,7 @@ For all use cases below, the **System** is `NOKnock` and the **Actor** is the `n
 
 **Extensions**
 
-* 2a. No matches → System shows `0 persons listed!`.
+* 2a. No matches → System shows `0 person(s) listed!`.
   Use case ends.
 
 #### UC17: Help and command discovery
@@ -609,8 +609,8 @@ These instructions combine quick-start steps and feature-specific test cases to 
 2. Quick start commands (verify basic command parsing and responses)
     1. `list-patients` — Expected: table or list of patients or `No patients in the system`.
     2. `add-patient n/Dylan ic/S1234567A w/2A` — Expected: `New patient added: Dylan`.
-    3. `add-nok 1 n/Oad p/6598765432 r/son` — Expected: `Added NextOfKin: Oad to Patient: Yue Yan`.
-    4. `sessions-today` — Expected: list of today's sessions or `Today's caring sessions: 0 patients.`.
+    3. `add-nok 1 n/Oad p/6598765432 r/son` — Expected: `Added NextOfKin: Oad to Patient: Yue Yang`.
+    4. `sessions-today` — Expected: list of today's sessions or `Today's caring sessions: 0 patients`.
     5. `exit` — Expected: application exits cleanly.
 
 3. Window preferences
@@ -626,8 +626,8 @@ Add patient to NOKnock
 
 1. Command: `add-patient n/Name ic/IC_NUMBER w/WARD [t/TAG]...`
 2. Expected: success message with name and IC.
-3. Edge cases: add with duplicate IC → `Patient with IC ... already exists`. Missing params → parameter-specific error.
-
+3. Edge cases: add with duplicate IC → `A patient with this IC already exists in the database`. Missing params → parameter-specific error.
+![img_1.png](img_1.png)
 #### List and view
 
 List and view all patients in the database.
@@ -666,7 +666,7 @@ Prerequisites: Ensure multiple patients listed with `list-patients`.
 1. Test case: `add-nok PATIENT_INDEX n/NAME p/PHONE r/RELATIONSHIP` \
    Expected: Success message.
 2. Test case: Duplicate NOK with same name and phone for same patient \
-   Expected: Duplicate error. Message -> `This next of kin already exists for this patient`.
+   Expected: Duplicate error. Message → `This next of kin already exists for this patient`.
 
 #### Edit NOK
 
@@ -682,14 +682,14 @@ Prerequisites: Ensure multiple patients listed with `list-patients`.
 #### Add session
 
 1. Command: `add-session PATIENT_INDEX d/DATE time/TIME type/CARE_TYPE [notes/NOTES]` \
-   Expected: `Caring session added for <Name>: <type> on <DATE> at <TIME>`. Invalid date/time → parameter-specific error.
+   Expected: `Caring session added for <NAME>: <TYPE> on <DATE> at <TIME>`. Invalid date/time → parameter-specific error.
 2. Example: `add-session 1 d/2024-12-25 time/14:30 type/medication notes/Give insulin shot` \
 
 #### Edit session
 
 1. `edit-session PATIENT_INDEX SESSION_INDEX [d/DATE] [time/TIME] [type/CARE_TYPE] [notes/NOTES] [status/STATUS]`
 2. Example: `edit-session 1 2 d/2024-12-25 time/14:30 status/completed`
-3. Expected: `Session updated: <Name> - <type> - <DATE> <TIME> (<status>)`.
+3. Expected: `Edited CaringSession: <TYPE> on <DATE> at <TIME> of Patient: <NAME>`.
 
 #### Delete session
 
@@ -697,8 +697,8 @@ Prerequisites: Ensure multiple patients listed with `list-patients`.
 
 #### Views
 
-1. `sessions-today` — Expected: today's sessions list or `Today's caring sessions: 0 patients.`.
-2. `sessions-week` — Expected: this week's sessions or `This week's caring sessions: 0 patients.`.
+1. `sessions-today` — Expected: today's sessions list or `Today's caring sessions: 0 patients`.
+2. `sessions-week` — Expected: this week's sessions or `This week's caring sessions: 0 patients`.
 
 <puml src="diagrams/SessionsTodayCommandSequenceDiagram.puml" width="850" />
 
