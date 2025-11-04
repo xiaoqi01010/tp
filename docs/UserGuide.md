@@ -281,16 +281,18 @@ Creates a new patient record.
 
 <box type="tip" seamless>
 
-**Tip:** You can always enter the command phrase to be prompted the right usage of commands. The order of fields does not matter. For example, `add-patient t/Urgent ic/S2345678A w/2A n/Amy` is also valid.
-
-</box>
-![help message](images/TipCommandHint.png)
-<box type="tip" seamless>
-
 **Tip:** Tags are optional and can be used to describe medical or care-related info.
 
 </box>
 
+<box type="tip" seamless>
+
+**Tip:** You can always enter the command phrase to be prompted the right usage of commands. The order of fields does not matter. For example, `add-patient t/Urgent ic/S2345678A w/2A n/Amy` is also valid.
+
+</box>
+
+The image below illustrates the prompt that appears when an invalid command is entered. Since tags are optional, this message will not appear if the t/ prefix is omitted.
+![help message](images/TipCommandHint.png)
 **Output:**
 
 * Success → `New patient added: Dylan`
