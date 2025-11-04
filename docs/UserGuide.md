@@ -283,6 +283,8 @@ Creates a new patient record.
 
 </box>
 
+![help message](images/TipCommandHint.png)
+
 <box type="tip" seamless>
 
 **Tip:** You can always enter the command phrase to be prompted the right usage of commands. The order of fields does not matter. For example, `add-patient t/Urgent ic/S2345678A w/2A n/Amy` is also valid.
