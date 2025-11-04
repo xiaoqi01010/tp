@@ -284,7 +284,7 @@ Creates a new patient record.
 **Tip:** You can always enter the command phrase to be prompted the right usage of commands. The order of fields does not matter. For example, `add-patient t/Urgent ic/S2345678A w/2A n/Amy` is also valid.
 
 </box>
-
+![help message](images/TipCommandHint.png)
 <box type="tip" seamless>
 
 **Tip:** Tags are optional and can be used to describe medical or care-related info.
@@ -299,7 +299,6 @@ Creates a new patient record.
 
 **Note:** A patient is considered a **duplicate** when the **IC** matches exactly.
 
-![help message](images/TipCommandHint.png)
 
 ### Editing a patient: `edit-patient`
 
@@ -396,7 +395,7 @@ Search for patients by name (case-insensitive, partial matching).
 
 <box type="tip" seamless>
 
-**Tip:** You can enter multiple keywords(capitalised or non-capitalised is fine) to find more than 1 patient. E.g
+**Tip:** You can enter multiple keywords(capitalised or non-capitalised is fine) to find more than 1 patient.
 
 </box>
 
